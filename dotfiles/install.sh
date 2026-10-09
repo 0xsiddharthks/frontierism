@@ -34,6 +34,13 @@ copy() {
     mv "$2.tmp.$$" "$2"
 }
 
+# This repo is public, so --pull refuses a file that looks like it holds a credential.
+key_formats='(^|[^A-Za-z0-9_-])(sk-(ant-)?[A-Za-z0-9_-]{20}|gh[pousr]_[A-Za-z0-9]{30}|github_pat_[A-Za-z0-9_]{20}|xox[abprs]-[A-Za-z0-9-]{10}|(AKIA|ASIA)[0-9A-Z]{16}|AIza[0-9A-Za-z_-]{35})|-----BEGIN [A-Z ]*PRIVATE KEY'
+assignments="(api[_-]?key|secret|token|passw(or)?d)[a-z_]*[\"']?[[:space:]]*[:=][[:space:]]*[\"']?[A-Za-z0-9+/_.-]{16}"
+holds_credential() {
+    grep -Eq -e "$key_formats" "$1" || grep -Eiq -e "$assignments" "$1"
+}
+
 for entry in "${files[@]}"; do
     src="$root/${entry%%|*}"
     dst="${entry#*|}"
@@ -51,6 +58,9 @@ for entry in "${files[@]}"; do
         cp -p "$dst" "$dst.bak-$stamp"
         copy "$src" "$dst"
         echo "updated  $dst (the old one is $dst.bak-$stamp)"
+    elif [[ "$mode" == --pull ]] && holds_credential "$dst"; then
+        echo "REFUSED  $dst looks like it holds a credential; take it out before pulling"
+        failed=1
     elif [[ "$mode" == --pull ]]; then
         copy "$dst" "$src"
         echo "pulled   $dst"

@@ -23,6 +23,8 @@ My terminal, editor and agent config for macOS.
 
 The files are copied, not linked, because the apps rewrite them. After changing a setting in an app, run `--pull` and commit. After editing a file here, run `--push`.
 
+This repo is public, so `--pull` refuses a file that looks like it holds a credential.
+
 ## New machine
 
 1. Install the apps, then run `./install.sh --push` here.
