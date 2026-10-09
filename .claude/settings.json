@@ -1,0 +1,59 @@
+{
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "Read(*)",
+      "Write(*)",
+      "Edit(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "NotebookEdit(*)",
+      "Agent(*)",
+      "Skill(*)",
+      "WebFetch(*)",
+      "WebSearch(*)",
+      "TodoWrite(*)",
+      "TaskCreate(*)",
+      "TaskUpdate(*)",
+      "TaskGet(*)",
+      "TaskList(*)",
+      "TaskOutput(*)",
+      "TaskStop(*)",
+      "Artifact(*)",
+      "Monitor(*)",
+      "Workflow(*)",
+      "SendMessage(*)",
+      "ScheduleWakeup(*)",
+      "EnterPlanMode(*)",
+      "ExitPlanMode(*)",
+      "EnterWorktree(*)",
+      "ExitWorktree(*)",
+      "LSP(*)",
+      "PushNotification(*)",
+      "RemoteTrigger(*)",
+      "DesignSync(*)",
+      "CronCreate(*)",
+      "CronList(*)",
+      "CronDelete(*)",
+      "ToolSearch(*)",
+      "ReportFindings(*)",
+      "mcp__ide",
+      "mcp__claude-in-chrome",
+      "mcp__computer-use",
+      "mcp__deepwiki",
+      "mcp__plugin_exa_exa__web_search_exa",
+      "mcp__plugin_exa_exa__web_fetch_exa"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "skillOverrides": {
+    "anthropic-skills:morning": "off",
+    "anthropic-skills:learn": "off"
+  }
+}
