@@ -23,5 +23,11 @@ rustc-ice-*.txt
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+# Claude Code and Codex: agent worktrees and local settings stay out of this public repo
+.claude/worktrees/
+.claude/settings.local.json
+.codex/worktrees/
+.codex/settings.local.json
+
 # macOS
 .DS_Store
