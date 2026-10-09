@@ -1,0 +1,28 @@
+query ($owner: String!, $name: String!, $number: Int!) {
+  repository(owner: $owner, name: $name) {
+    pullRequest(number: $number) {
+      timelineItems(
+        last: 100
+        itemTypes: [HEAD_REF_FORCE_PUSHED_EVENT, BASE_REF_CHANGED_EVENT]
+      ) {
+        nodes {
+          __typename
+          ... on HeadRefForcePushedEvent {
+            createdAt
+            beforeCommit {
+              oid
+            }
+            afterCommit {
+              oid
+            }
+          }
+          ... on BaseRefChangedEvent {
+            createdAt
+            previousRefName
+            currentRefName
+          }
+        }
+      }
+    }
+  }
+}

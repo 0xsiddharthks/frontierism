@@ -1,0 +1,7 @@
+{
+  "name": "pr-stack",
+  "version": "0.1.0",
+  "author": { "name": "Siddharth Sharma" },
+  "description": "/prs opens a pane of your open pull requests in this repo, drawn as stacks with CI and review state, refreshed while it is open.",
+  "types": "./types/index.d.ts"
+}
