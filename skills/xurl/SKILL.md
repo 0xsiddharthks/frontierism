@@ -1,6 +1,6 @@
 ---
 name: xurl
-description: Read and analyze X (Twitter) within the mysten repository and its worktrees, using the in-app browser by default for individual posts, links, images, reply threads, profiles, and ordinary browsing. Use the existing read-only xurl API login for explicit API requests or bounded bulk and structured analysis. Not for unrelated projects, posting, engagement, DMs, or account changes.
+description: Read and analyze X (Twitter), using the in-app browser by default for individual posts, links, images, reply threads, profiles, and ordinary browsing. Use the existing read-only xurl API login for explicit API requests or bounded bulk and structured analysis. Not for posting, engagement, DMs, or account changes.
 metadata:
   upstream: https://github.com/xdevplatform/xurl/blob/v1.3.1/SKILL.md
   variant: Personal read-only adaptation
@@ -9,10 +9,6 @@ metadata:
 # X reading and analysis: browser default, xurl for API work
 
 Adapted from the official xdevplatform/xurl skill at tag v1.3.1. This local adaptation intentionally replaces the upstream write workflows and broad OAuth reauthorization advice. Preserve these boundaries when updating it.
-
-## Repository scope
-
-The user wants X access only for tasks in `/Users/siddharthks/Developer/0xsiddharthks/mysten` and worktrees of that repository. Apply this workflow only there; do not access X from unrelated projects unless the user explicitly changes that scope.
 
 The source of truth is `skills/xurl/SKILL.md` in the frontierism repository. Keep X-specific guidance here; `install.sh` links this folder into each supported agent's skills directory.
 
