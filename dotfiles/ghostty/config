@@ -1,0 +1,88 @@
+# Ghostty starter config for macOS
+
+#
+
+# Keep this file intentionally small: Ghostty already has strong defaults.
+
+# Reload changes with Command + Shift + comma.
+
+# Appearance
+
+theme = dark:Github Dark Default,light:Github Light Default
+# dark:Github Dark,light:Github Light
+# dark:Builtin Pastel Dark,light:Builtin Light
+# dark:Github Dark Default,light:Github Light Default
+
+# Preserve JetBrains Mono for text and use its Nerd Font build only when a
+
+# Neovim plugin needs icon glyphs.
+
+font-family = "JetBrainsMono Nerd Font Mono"
+font-size = 18
+
+# A little more breathing room, closer to Warp's visual density.
+
+adjust-cell-height = 8%
+window-padding-x = 10
+window-padding-y = 8
+window-padding-balance = true
+
+# Put native tabs in the titlebar and restore the workspace after quitting.
+
+macos-titlebar-style = tabs
+window-save-state = always
+
+# Interaction
+
+mouse-hide-while-typing = true
+cursor-click-to-move = true
+
+# Make the left Option key behave as Alt in shells and terminal apps. This
+
+# enables Option + arrows/Backspace in zsh and Option + Up in Codex, while the
+
+# right Option key remains available for macOS accent and symbol input.
+
+macos-option-as-alt = left
+
+# Match Cursor, VS Code, and normal macOS behavior: selecting highlights text;
+
+# Command + C copies it. This avoids silently replacing the clipboard.
+
+copy-on-select = false
+
+# Keep inactive panes readable while retaining a clear focus cue.
+
+unfocused-split-opacity = 0.90
+
+# Notify only when a long command finishes in a pane you are not looking at.
+
+notify-on-command-finish = unfocused
+notify-on-command-finish-action = no-bell,notify
+notify-on-command-finish-after = 10s
+
+# Render supported shell progress indicators in the tab/titlebar.
+
+progress-style = true
+
+# Useful familiar shortcuts are already Ghostty defaults:
+
+# Command + T / W new tab / close surface
+
+# Command + 1 ... 9 switch tabs
+
+# Command + Shift + [ / ] previous / next tab
+
+# Command + D split right
+
+# Command + Shift + D split down
+
+# Command + Option + arrows focus a Ghostty split
+
+# Command + Shift + Enter zoom the focused Ghostty split
+
+# Command + F / K search / clear screen
+
+# Command + Shift + P command palette
+
+# Command + Up / Down previous / next shell prompt

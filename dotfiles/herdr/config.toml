@@ -1,0 +1,30 @@
+onboarding = false
+[theme]
+name = "tokyo-night-day"
+auto_switch = false
+light_name = "tokyo-night-day"
+dark_name = "tokyo-night"
+
+[keys]
+switch_tab = ""
+switch_workspace = "prefix+1..9"
+
+[ui]
+status_indicators = "symbols"
+
+show_agent_labels_on_pane_borders = true
+agent_panel_sort = "priority"
+window_title = "{terminal_title}"
+hide_tab_bar_when_single_tab = true
+
+[ui.sidebar.agents]
+rows = [["state_icon", "terminal_title_stripped"], ["agent"]]
+
+[ui.toast]
+delivery = "terminal"
+
+[ui.sound]
+enabled = false
+
+[experimental]
+pane_history = true
