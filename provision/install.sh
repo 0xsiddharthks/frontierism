@@ -108,7 +108,7 @@ done
 tool() {
     local name="$1" path="$2" url="$3" script
     shift 3
-    if [[ -x "$path" ]]; then
+    if [[ -e "$path" ]]; then
         echo "ok       $name"
     elif [[ -n "$mode" ]]; then
         echo "missing  $name"
@@ -127,6 +127,10 @@ tool rustup "$HOME/.cargo/bin/rustup" https://sh.rustup.rs sh -s -- -y
 tool "Claude Code" "$HOME/.local/bin/claude" https://claude.ai/install.sh bash
 tool Codex "$HOME/.local/bin/codex" https://chatgpt.com/codex/install.sh sh
 tool herdr "$HOME/.local/bin/herdr" https://herdr.dev/install.sh sh
+# Its installer also writes a ~/.zshrc, unless one is there: --keep-zshrc leaves that one alone.
+tool "Oh My Zsh" "$HOME/.oh-my-zsh/oh-my-zsh.sh" \
+    https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh \
+    sh -s -- --unattended --keep-zshrc
 
 if [[ -z "$mode" && "$stale" == 1 ]]; then
     echo "note     open a new terminal, so that what was installed is on PATH"

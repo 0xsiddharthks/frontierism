@@ -12,7 +12,7 @@ What I install on a new Mac: Homebrew and its formulae and casks, and a few tool
 From a Mac with nothing on it to one that has everything here:
 
 1. Create the macOS account with the account name `siddharthks`. The skills and the Claude settings name files by their full path under `/Users/siddharthks`.
-2. Bring `~/.Brewfile.private` over from the old Mac and put it in the home folder. It lists the apps [kept out of this repo](#kept-out-of-this-repo), and they are only installed if it is there.
+2. Bring `~/.Brewfile.private` over from the old Mac and put it in the home folder. It lists the apps [kept out of this repo](#kept-out-of-this-repo), and they are only installed if it is there. Bring `~/.zshrc.private` at the same time, for the [dotfiles](../dotfiles/README.md#zsh).
 3. Install Apple's Command Line Tools, which bring git, and wait for that to finish:
 
    ```sh
@@ -37,7 +37,7 @@ From a Mac with nothing on it to one that has everything here:
    It installs three things, in this order:
    - Homebrew. Its installer says what it will do, waits for Return, and asks for the password.
    - Everything in the `Brewfile`. This is the long part, and some casks ask for the password again.
-   - rustup, Claude Code, Codex and herdr.
+   - rustup, Claude Code, Codex, herdr and Oh My Zsh.
 
    If something fails to install, run it again. It skips what is already there.
 
@@ -82,9 +82,12 @@ The installer installs from both files, and `--pull` leaves those entries out of
 
 These have their own installers and update themselves, so they aren't taken from Homebrew. Each is installed only if it isn't there yet.
 
-| Tool        | Installer                              |
-| ----------- | -------------------------------------- |
-| rustup      | `https://sh.rustup.rs`                 |
-| Claude Code | `https://claude.ai/install.sh`         |
-| Codex       | `https://chatgpt.com/codex/install.sh` |
-| herdr       | `https://herdr.dev/install.sh`         |
+| Tool        | Installer                                                                   |
+| ----------- | --------------------------------------------------------------------------- |
+| rustup      | `https://sh.rustup.rs`                                                      |
+| Claude Code | `https://claude.ai/install.sh`                                              |
+| Codex       | `https://chatgpt.com/codex/install.sh`                                      |
+| herdr       | `https://herdr.dev/install.sh`                                              |
+| Oh My Zsh   | `https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh` |
+
+Oh My Zsh's installer writes a starter `~/.zshrc` when there isn't one, and leaves one that is there alone. The [dotfiles](../dotfiles/README.md#zsh) put mine in its place.

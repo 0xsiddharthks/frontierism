@@ -14,7 +14,8 @@ failed=0
 support="$HOME/Library/Application Support"
 stamp="$(date +%Y%m%d-%H%M%S)"
 
-# The apps rewrite their config, so the files are copied, not linked.
+# The apps rewrite their config, and installers add to the zsh files, so the files are copied, not
+# linked.
 files=(
     "claude/cw|$HOME/.local/bin/cw"
     "claude/settings.json|$HOME/.claude/settings.json"
@@ -23,6 +24,8 @@ files=(
     "herdr/config.toml|$HOME/.config/herdr/config.toml"
     "vscode/settings.json|$support/Code/User/settings.json"
     "zed/settings.json|$HOME/.config/zed/settings.json"
+    "zsh/zprofile|$HOME/.zprofile"
+    "zsh/zshrc|$HOME/.zshrc"
 )
 
 # Replaces $2 with a copy of $1, keeping the mode of the file it replaces.
