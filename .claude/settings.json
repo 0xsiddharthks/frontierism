@@ -5,6 +5,8 @@
   "permissions": {
     "allow": [
       "Bash(*)",
+      "Bash(bash*)",
+      "Bash(brew*)",
       "Read(*)",
       "Write(*)",
       "Edit(*)",
