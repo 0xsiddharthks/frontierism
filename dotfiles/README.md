@@ -32,11 +32,11 @@ This repo is public, so `--pull` refuses a file that looks like it holds a crede
 
 ```sh
 cw                # new worktree and branch named wt-<date>-<time>
-cw fix-login      # new worktree and branch named fix-login, or back into it if it exists
+cw fix-login      # new worktree, branch and session named fix-login, or back into it if it exists
 cw fix-login -c   # anything after the name is passed to claude
 ```
 
-Run it anywhere inside a repo. Worktrees go under `.claude/worktrees/` in the main checkout, and a new one branches from the current `HEAD`.
+Run it anywhere inside a repo. Worktrees go under `.claude/worktrees/` in the main checkout, and a new one branches from the current `HEAD`. A name you give is also the session's name, which is what the prompt bar, the terminal title and Remote Control show.
 
 I use it instead of `claude -w`. A `-w` session checks every shell command and refuses the ones it can't prove keep git inside the worktree. That catches harmless commands such as `bash --version`, and the check can't be turned off. A worktree made with git doesn't get those checks. In exchange, nothing stops the session from touching the main checkout, and nothing is cleaned up on exit:
 

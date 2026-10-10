@@ -10,6 +10,8 @@ root="$(git worktree list --porcelain | sed -n '1s/^worktree //p')"
 if [[ $# -gt 0 && "$1" != -* ]]; then
     name="$1"
     shift
+    # A name you chose also names the session, so the prompt bar and Remote Control show it.
+    set -- --name "$name" "$@"
 else
     name="wt-$(date +%m%d-%H%M%S)"
 fi
