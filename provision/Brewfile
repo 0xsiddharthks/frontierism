@@ -132,6 +132,8 @@ cask "linear"
 cask "lm-studio"
 # Software for Logitech devices
 cask "logi-options+"
+# App to write, plan, collaborate, and get organised
+cask "notion"
 # Calendar for professionals and teams
 cask "notion-calendar"
 # Command-line interface for Notion
@@ -160,6 +162,8 @@ cask "telegram-desktop"
 cask "visual-studio-code"
 # Multimedia player
 cask "vlc"
+# Native desktop client for WhatsApp
+cask "whatsapp"
 # Auth-enabled curl-like CLI for the X API
 cask "xdevplatform/tap/xurl", trusted: true
 # Full-featured companion app to the YubiKey
