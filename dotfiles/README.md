@@ -73,7 +73,7 @@ Tokens and work details go in `~/.zshrc.private`, which `~/.zshrc` reads if it i
 
 1. Install the apps and tools with [`../provision/install.sh`](../provision/README.md#new-machine), then run `./install.sh --push` here. It is `--push` because some installers have already written a config of their own by then, such as the `~/.zshrc` that Oh My Zsh starts with.
 2. Bring `~/.zshrc.private` over from the old Mac, and open a new terminal.
-3. Run `../install.sh` to link the skills.
+3. Run `../install.sh` to link the skills and mods.
 4. Run `herdr integration install claude` and `herdr integration install codex`. herdr manages its own hook scripts, so they aren't kept here.
 5. Run the installer in my private guides repo for the other hook the Claude settings name.
 

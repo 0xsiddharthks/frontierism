@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Links the skills into Claude Code and Codex. Safe to re-run; --check only reports.
+# Links the skills into Claude Code and Codex, and the mods into Claude Code. Safe to re-run;
+# --check only reports.
 set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -34,6 +35,25 @@ for dir in "$root"/skills/*/; do
     name="$(basename "$dir")"
     link "$root/skills/$name" "$HOME/.claude/skills/$name"
     link "$root/skills/$name" "$HOME/.agents/skills/$name"
+done
+
+# Claude Code loads a plugin folder it finds in its skills directory. Codex can't run a mod.
+for dir in "$root"/mods/*/; do
+    [[ -d "$dir" ]] || continue
+    name="$(basename "$dir")"
+    link "$root/mods/$name" "$HOME/.claude/skills/$name"
+done
+
+# A skill or mod that moved or was deleted leaves its old link behind.
+for path in "$HOME"/.claude/skills/* "$HOME"/.agents/skills/*; do
+    [[ -L "$path" && ! -e "$path" && "$(readlink "$path")" == "$root"/* ]] || continue
+    if $check; then
+        echo "stale    $path -> $(readlink "$path")"
+        failed=1
+    else
+        rm "$path"
+        echo "removed  $path, whose target is gone"
+    fi
 done
 
 exit "$failed"

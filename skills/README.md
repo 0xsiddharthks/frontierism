@@ -8,7 +8,6 @@ My agent skills for Claude Code and Codex.
 | `audit-memory`                                                   | `/audit-memory`: re-checks those guides against current code, fills gaps, and reports what it saw. |
 | `pr-self-review`, `pr-groom`, `pr-address-feedback`, `pr-rebase` | For my own PRs. They chain, and share `pr-common.md`.                                              |
 | `pr-peer-review`                                                 | For colleagues' PRs: keeps only real issues, and posts the review when I say so.                   |
-| `pr-stack`                                                       | `/prs`: a Claude Code mod, not a skill. A pane of my open PRs as stacks, with CI and review state. |
 | `socratic-learning`                                              | Socratic tutoring and debate practice.                                                             |
 | `xurl`                                                           | Read-only X research: in-app browser by default, xurl for explicit API requests.                   |
 
@@ -27,5 +26,6 @@ The skills are written for my own setup. They refer to each other and to my agen
 
 ## Adding one
 
-- **Skill:** create `<name>/SKILL.md` in this folder, then run `./install.sh`. For a skill that should run only when invoked, set `disable-model-invocation: true` for Claude and add `agents/openai.yaml` with `policy: allow_implicit_invocation: false` for Codex. Codex doesn't substitute `$ARGUMENTS`, so say where to find the arguments when it's left as is.
-- **Mod:** put the plugin folder (`.claude-plugin/plugin.json` and `hooks/`) in `<name>/` here and run `./install.sh`; Claude Code loads it from `~/.claude/skills`. Gitignore the `.claude-plugin/types/` and `tsconfig.json` it writes there.
+Create `<name>/SKILL.md` in this folder, then run `./install.sh`. For a skill that should run only when invoked, set `disable-model-invocation: true` for Claude and add `agents/openai.yaml` with `policy: allow_implicit_invocation: false` for Codex. Codex doesn't substitute `$ARGUMENTS`, so say where to find the arguments when it's left as is.
+
+A plugin whose code runs inside Claude Code, such as `/prs`, is a mod and goes in [`../mods/`](../mods/README.md).

@@ -50,7 +50,7 @@ From a Mac with nothing on it to one that has everything here:
 
    Every line should start with `ok`.
 
-7. Carry on with the [dotfiles](../dotfiles/README.md#new-machine), which copy my config into place, install the VS Code extensions and link the skills.
+7. Carry on with the [dotfiles](../dotfiles/README.md#new-machine), which copy my config into place, install the VS Code extensions and link the skills and mods.
 
 Still to install by hand: apps from the App Store, apps that aren't in Homebrew, other tools that have their own installers, such as uv, and whatever was installed with `cargo`, `go`, `uv` or `npm`.
 
