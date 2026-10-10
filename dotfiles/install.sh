@@ -23,7 +23,6 @@ files=(
     "ghostty/config|$support/com.mitchellh.ghostty/config"
     "herdr/config.toml|$HOME/.config/herdr/config.toml"
     "vscode/settings.json|$support/Code/User/settings.json"
-    "zed/settings.json|$HOME/.config/zed/settings.json"
     "zsh/zprofile|$HOME/.zprofile"
     "zsh/zshrc|$HOME/.zshrc"
 )

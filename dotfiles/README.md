@@ -11,7 +11,6 @@ My terminal, shell, editor and agent config for macOS.
 | `herdr/config.toml`            | `~/.config/herdr/config.toml`                                |
 | `vscode/settings.json`         | `~/Library/Application Support/Code/User/settings.json`      |
 | `vscode/extensions.txt`        | installed with `code --install-extension`                    |
-| `zed/settings.json`            | `~/.config/zed/settings.json`                                |
 | `zsh/zprofile`                 | `~/.zprofile`                                                |
 | `zsh/zshrc`                    | `~/.zshrc`                                                   |
 
