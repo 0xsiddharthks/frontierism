@@ -61,8 +61,6 @@ git branch -d fix-login
 
 I keep nothing in `.claude/settings.local.json`. Git ignores that file, so what it holds stays on one machine. Claude Code writes it when I pick "don't ask again" on a permission prompt. When one turns up, I move what it holds into the repo's `.claude/settings.json` and delete it.
 
-`"tui": "fullscreen"` turns on the fullscreen renderer, which draws on the terminal's alternate screen and doesn't flicker. Claude Code picks its renderer at startup, so the setting applies from the next session. `/tui default` switches a running session back and saves that to `~/.claude/settings.json`, so run `--pull` afterwards.
-
 ## New machine
 
 1. Install the apps and tools with [`../provision/install.sh`](../provision/README.md#new-machine), then run `./install.sh --push` here.
