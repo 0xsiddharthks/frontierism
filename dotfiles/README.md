@@ -49,7 +49,7 @@ git branch -d fix-login
 
 ## New machine
 
-1. Install the apps, then run `./install.sh --push` here.
+1. Install the apps and tools with [`../provision/install.sh`](../provision/README.md#new-machine), then run `./install.sh --push` here.
 2. Run `../install.sh` to link the skills.
 3. Run `herdr integration install claude` and `herdr integration install codex`. herdr manages its own hook scripts, so they aren't kept here.
 4. Run the installer in my private guides repo for the other hook the Claude settings name.
