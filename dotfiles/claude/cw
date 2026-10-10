@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Starts Claude Code in a git worktree of the repo you are in, making the worktree first if it isn't
+# there. `claude -w` does the same, but then refuses some harmless shell commands; a worktree made
+# with git doesn't switch those checks on.
+# usage: cw [name] [claude args...]
+set -euo pipefail
+
+# The main checkout is listed first, so worktrees land in one place wherever this is run from.
+root="$(git worktree list --porcelain | sed -n '1s/^worktree //p')"
+if [[ $# -gt 0 && "$1" != -* ]]; then
+    name="$1"
+    shift
+else
+    name="wt-$(date +%m%d-%H%M%S)"
+fi
+dir="$root/.claude/worktrees/$name"
+
+if [[ ! -d "$dir" ]]; then
+    git worktree add -b "$name" "$dir"
+fi
+cd "$dir"
+exec claude "$@"

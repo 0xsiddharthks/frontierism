@@ -14,8 +14,9 @@ failed=0
 support="$HOME/Library/Application Support"
 stamp="$(date +%Y%m%d-%H%M%S)"
 
-# The apps rewrite these files, so they are copied, not linked.
+# The apps rewrite their config, so the files are copied, not linked.
 files=(
+    "claude/cw|$HOME/.local/bin/cw"
     "claude/settings.json|$HOME/.claude/settings.json"
     "claude/statusline-command.sh|$HOME/.claude/statusline-command.sh"
     "ghostty/config|$support/com.mitchellh.ghostty/config"

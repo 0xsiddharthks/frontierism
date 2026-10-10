@@ -4,6 +4,7 @@ My terminal, editor and agent config for macOS.
 
 | Here                           | Goes to                                                      |
 | ------------------------------ | ------------------------------------------------------------ |
+| `claude/cw`                    | `~/.local/bin/cw`                                            |
 | `claude/settings.json`         | `~/.claude/settings.json`                                    |
 | `claude/statusline-command.sh` | `~/.claude/statusline-command.sh`                            |
 | `ghostty/config`               | `~/Library/Application Support/com.mitchellh.ghostty/config` |
@@ -21,9 +22,30 @@ My terminal, editor and agent config for macOS.
 ./install.sh --push   # overwrite home's copies from here, keeping a .bak-<time> of each
 ```
 
-The files are copied, not linked, because the apps rewrite them. After changing a setting in an app, run `--pull` and commit. After editing a file here, run `--push`.
+The files are copied, not linked, because the apps rewrite their config. After changing a setting in an app, run `--pull` and commit. After editing a file here, run `--push`.
 
 This repo is public, so `--pull` refuses a file that looks like it holds a credential.
+
+## cw
+
+`cw` starts Claude Code in its own git worktree, so sessions running side by side don't share files.
+
+```sh
+cw                # new worktree and branch named wt-<date>-<time>
+cw fix-login      # new worktree and branch named fix-login, or back into it if it exists
+cw fix-login -c   # anything after the name is passed to claude
+```
+
+Run it anywhere inside a repo. Worktrees go under `.claude/worktrees/` in the main checkout, and a new one branches from the current `HEAD`.
+
+I use it instead of `claude -w`. A `-w` session checks every shell command and refuses the ones it can't prove keep git inside the worktree. That catches harmless commands such as `bash --version`, and the check can't be turned off. A worktree made with git doesn't get those checks. In exchange, nothing stops the session from touching the main checkout, and nothing is cleaned up on exit:
+
+```sh
+git worktree remove .claude/worktrees/fix-login
+git branch -d fix-login
+```
+
+`cw` is installed to `~/.local/bin`, which has to be on `PATH`. Claude Code's installer puts `claude` there too.
 
 ## New machine
 
