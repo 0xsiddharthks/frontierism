@@ -8,7 +8,7 @@ My agent skills for Claude Code and Codex.
 | `audit-memory`                                                   | `/audit-memory`: re-checks those guides against current code, fills gaps, and reports what it saw. |
 | `pr-self-review`, `pr-groom`, `pr-address-feedback`, `pr-rebase` | For my own PRs. They chain, and share `pr-common.md`.                                              |
 | `pr-peer-review`                                                 | For colleagues' PRs: keeps only real issues, and posts the review when I say so.                   |
-| `socratic-learning`                                              | Socratic tutoring and debate practice.                                                             |
+| `socratic-social-science`                                        | Explicitly invoked Socratic tutoring for politics, economics, and social science; excludes technical instruction. |
 | `xurl`                                                           | Read-only X research: in-app browser by default, xurl for explicit API requests.                   |
 
 ## Install
@@ -21,6 +21,11 @@ Run `install.sh` from the repo root:
 ```
 
 Re-run it after adding a skill or moving this repo. `~/.agents/skills` is Codex's user skills directory.
+
+Invoke `socratic-social-science` with `$socratic-social-science` in Codex or
+`/socratic-social-science` in Claude Code. It replaces `socratic-learning` and
+runs only when explicitly requested. Re-run the installer after this rename to
+create the new links and remove the obsolete ones.
 
 The skills are written for my own setup. They refer to each other and to my agent guides, which live in a private repo, by absolute path, because agents load them through symlinks.
 
