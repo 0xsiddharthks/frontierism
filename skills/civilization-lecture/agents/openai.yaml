@@ -1,0 +1,4 @@
+interface:
+  display_name: "Civilization Lecture"
+  short_description: "Build source-grounded Notion lecture study pages"
+  default_prompt: "Use $civilization-lecture to turn this Civilization lecture URL into a verified Notion study page."

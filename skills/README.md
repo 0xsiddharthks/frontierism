@@ -10,6 +10,7 @@ My agent skills for Claude Code and Codex.
 | `pr-peer-review`                                                 | For colleagues' PRs: keeps only real issues, and posts the review when I say so.                   |
 | `socratic-social-science`                                        | Explicitly invoked Socratic tutoring for politics, economics, and social science; excludes technical instruction. |
 | `xurl`                                                           | Read-only X research: linked browser for posts and threads; xurl when API access fits better.      |
+| `civilization-lecture`                                          | Build and verify layered Notion study pages from Predictive History Civilization lectures, with a complete source inventory and reusable extraction tools. |
 
 ## Install
 
