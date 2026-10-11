@@ -2,10 +2,23 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from export_obsidian import convert, markdown_table, validate_wikilinks
+from export_obsidian import convert, markdown_table, space_blocks, validate_wikilinks
 
 
 class ObsidianExportTests(unittest.TestCase):
+    def test_adjacent_answers_become_independent_foldable_callouts(self):
+        source = '\n'.join(f'<details>\n<summary>{n}. Question?</summary>\n\tAnswer {n}.\n</details>' for n in range(1, 5))
+        result = convert(source, pages={}, images={}, files={})
+        self.assertEqual(result, '\n\n'.join(f'> [!question]- {n}. Question?\n> Answer {n}.' for n in range(1, 5)) + '\n')
+
+    def test_nested_sibling_callouts_keep_their_parent(self):
+        source = '> [!info] Parent\n> > [!question]- First\n> > One\n> > [!question]- Second\n> > Two'
+        self.assertEqual(space_blocks(source), '> [!info] Parent\n> > [!question]- First\n> > One\n>\n> > [!question]- Second\n> > Two')
+
+    def test_callout_examples_inside_quoted_code_stay_literal(self):
+        source = '> [!info] Example\n> ```markdown\n> [!question]- First\n> One\n> [!question]- Second\n> Two\n> ```'
+        self.assertEqual(space_blocks(source), source)
+
     def test_nested_details_and_table_stay_inside_callouts(self):
         source = '<details>\n<summary>Concept</summary>\n\tBefore\n\t<details>\n\t<summary>Answer cues</summary>\n\t\tA\n\t</details>\n\t<table><tr><td>Choice</td><td>Value</td></tr><tr><td>A</td><td>4</td></tr></table>\n</details>'
         result = convert(source, pages={}, images={}, files={})

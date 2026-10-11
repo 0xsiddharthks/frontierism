@@ -63,19 +63,29 @@ def markdown_table(value):
 
 def space_blocks(body):
     """Restore block boundaries omitted by Notion's compact fetch serializer."""
-    out, in_fence = [], False
+    out, in_fence, fence_depth = [], False, None
     for line in body.splitlines():
         line = line.lstrip('\t')
         previous = out[-1] if out else ''
+        quote, content = re.match(r'((?:> ?)*)(.*)', line).groups()
+        depth = quote.count('>')
         if line and previous and not in_fence:
             same_quote = line.startswith('>') and previous.startswith('>')
             same_list = bool(re.match(r'(?:[-*]|\d+\.) ', line) and re.match(r'(?:[-*]|\d+\.) ', previous))
             same_table = line.startswith('|') and previous.startswith('|')
-            if not (same_quote or same_list or same_table):
+            previous_depth = re.match(r'(?:> ?)*', previous)[0].count('>')
+            new_callout = bool(re.match(r'\[![\w-]+\][+-]?(?:\s|$)', content))
+            if same_quote and new_callout and previous_depth >= depth:
+                # End a sibling callout while retaining any containing quote.
+                out.append(('> ' * (depth - 1)).rstrip())
+            elif not (same_quote or same_list or same_table):
                 out.append('')
         out.append(line)
-        if line.startswith('```'):
-            in_fence = not in_fence
+        if content.startswith('```'):
+            if not in_fence:
+                in_fence, fence_depth = True, depth
+            elif depth == fence_depth and content.strip() == '```':
+                in_fence, fence_depth = False, None
     return '\n'.join(out)
 
 
