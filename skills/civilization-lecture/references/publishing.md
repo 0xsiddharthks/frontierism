@@ -41,7 +41,7 @@ Readback checks include:
 
 - Correct unique lecture number, title, source URL, destination parent, and ledger page ID.
 - Expected properties, rendered sections, links, and content. Compare normalized text where the connector changes equivalent Markdown formatting; investigate missing semantics rather than requiring byte equality across serializers.
-- All source figures have the intended link/embed/omission treatment, with honest inspection status.
+- All source figures have the intended embed/omission treatment, with honest inspection status. Each figure or artifact is displayed once, without a redundant hyperlink list; captions survive any consolidation.
 - Previous and next links point to actual neighboring lecture pages, with sensible first/last boundaries.
 - No error or unknown/unsupported blocks, unfinished placeholders, accidental prompt text, broken local links presented as public files, or duplicate page creations.
 

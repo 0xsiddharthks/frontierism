@@ -75,7 +75,7 @@ def normalize(raw, notes):
     actual_urls = set(re.findall(r'https?://[^\s)>"\]]+', body))
     if expected_urls != actual_urls:
         raise ValueError('URL set changed in readback')
-    for tag in ['details', 'summary', 'callout', 'file']:
+    for tag in ['details', 'summary', 'callout', 'file', 'columns', 'column']:
         if len(re.findall('<' + tag + r'(?:\s|>)', body)) != len(re.findall('<' + tag + r'(?:\s|>)', notes['content'])):
             raise ValueError('Notion structure changed: ' + tag)
     publication = notes.get('publication', {})
