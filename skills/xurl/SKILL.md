@@ -1,12 +1,12 @@
 ---
 name: xurl
-description: Read and analyze X (Twitter), using the in-app browser by default for individual posts, links, images, reply threads, profiles, and ordinary browsing. Use the existing read-only xurl API login for explicit API requests or bounded bulk and structured analysis. Not for posting, engagement, DMs, or account changes.
+description: Read and analyze X (Twitter). Use the user's linked browser for explicit links, individual tweets, and tracing specific threads. Use the existing read-only xurl API login when requested or when API access is a better fit for the specific task, such as bounded bulk or structured analysis. Not for posting, engagement, DMs, or account changes.
 metadata:
   upstream: https://github.com/xdevplatform/xurl/blob/v1.3.1/SKILL.md
   variant: Personal read-only adaptation
 ---
 
-# X reading and analysis: browser default, xurl for API work
+# X reading and analysis: linked browser first, xurl for API work
 
 Adapted from the official xdevplatform/xurl skill at tag v1.3.1. This local adaptation intentionally replaces the upstream write workflows and broad OAuth reauthorization advice. Preserve these boundaries when updating it.
 
@@ -14,11 +14,13 @@ The source of truth is `skills/xurl/SKILL.md` in the frontierism repository. Kee
 
 ## Choose the reading method first
 
-- Default to the agent's built-in or in-app browser for individual X/Twitter posts or links, attached images, reply threads, profiles, and ordinary browsing or small searches. In Codex, use `@Browser`; in other agents, use the equivalent available browser tool. Reading the normal X website does not consume the user's X API credits.
+- Use the user's linked built-in or in-app browser for explicit X/Twitter links, individual tweets, and tracing specific reply or quote-post threads, including requests for full context. Thread depth alone is not a reason to switch to the API. Use the browser by default for attached images, profiles, ordinary browsing, and small searches. In Codex, use `@Browser`; in other agents, use the equivalent available browser tool. Reading the normal X website does not consume the user's X API credits.
 - Open the supplied URL directly and inspect the relevant attachments and replies through the browser. Use the existing signed-in session when available. Use an external browser such as Chrome (`@Chrome` in Codex) only when explicitly requested or when the required authenticated session is unavailable in the in-app browser.
-- Do not run xurl, check its authentication, or make a paid API call merely to read an individual link. Use xurl when the user explicitly requests API access or the task calls for bounded bulk retrieval or structured API data.
+- Do not run xurl, check its authentication, or make a paid API call merely to read an individual link or because this skill is named `xurl`. Use xurl when the user explicitly requests API access or when it is a better fit for the specific task, such as bounded bulk retrieval or analysis requiring structured API fields. Explain that concrete reason before using the API, and respect any user-specified budget.
 - If no browser tool is available or the browser cannot read an individual item, explain the limitation. Do not silently switch to paid API reads unless the user has already authorized that fallback or API budget.
 - OAuth changes authentication, not billing. Do not assume direct X MCP access gives free API reads; verify current official pricing before making that claim. The read-only boundary below applies to both browser and API work.
+
+When reporting the reading method, say whether you are using the linked browser or the xurl API. Loading this skill does not mean running the xurl CLI.
 
 ## Existing local setup
 
