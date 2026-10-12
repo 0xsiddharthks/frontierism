@@ -45,6 +45,23 @@ class DraftValidationTests(unittest.TestCase):
     def test_valid_minimal_draft(self):
         self.assertTrue(self.result()['ok'])
 
+    def test_generic_course_identity_and_subject_properties(self):
+        self.source.update(course_id='game-theory')
+        self.notes.update(course_id='game-theory', source_label='#1')
+        self.notes['properties'].pop('Era and region')
+        self.notes['properties']['Kind'] = 'Exam'
+        self.assertTrue(self.result()['ok'])
+        self.notes['course_id'] = 'civilization'
+        self.assertFalse(self.result()['ok'])
+
+    def test_end_label_is_preserved_at_any_course_length(self):
+        self.source.update(lecture_number=12, source_label='END')
+        self.notes['lecture_number'] = 12
+        self.notes['properties']['Lecture'] = 12
+        self.assertFalse(self.result()['ok'])
+        self.notes['title'] = self.notes['properties']['Name'] = '12 · END — Test'
+        self.assertTrue(self.result()['ok'])
+
     def test_link_alone_cannot_claim_an_embed(self):
         notes = copy.deepcopy(self.notes)
         notes['content'] = notes['content'].replace('![Figure]', '[Figure]')

@@ -1,4 +1,4 @@
 interface:
-  display_name: "Civilization Lecture"
-  short_description: "Build linked Notion and Obsidian study libraries"
-  default_prompt: "Use $civilization-lecture to build or update a verified Civilization study library in Notion or Obsidian, with native embeds and useful conceptual connections."
+  display_name: "Civilization (compatibility)"
+  short_description: "Resume an existing Civilization study library"
+  default_prompt: "Use $civilization-lecture to resume my existing Civilization library using the shared Predictive History workflow."

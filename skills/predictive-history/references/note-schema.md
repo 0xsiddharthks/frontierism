@@ -3,10 +3,11 @@
 Store run artifacts outside a public repository. The extraction script produces a course `manifest.json` and one directory per lecture containing `source.json`, `article.md`, `article.txt`, `article.html`, `original.html`, and any downloaded `figures/`. For a new course archive:
 
 ```sh
-python3 scripts/extract_sources.py --output /private/path/civilization-study --download-images
+python3 scripts/extract_sources.py --course /private/library/game-theory/course.json \
+  --output /private/library/game-theory --download-images
 ```
 
-Add `--lecture 12` to select one lecture; repeat it for a subset. Use `--refresh` only when a new source snapshot is wanted. Source #END has library ordinal 60; preserve the source's END label rather than implying that the article itself prints #60.
+Add `--lecture 12` to select one lecture; repeat it for a subset. Use `--refresh` only when a new source snapshot is wanted. Use the complete `inventory.json` to resolve local ordinals. Preserve printed labels such as `END`; never impose Civilization's count or ordering on another course. See [course profiles](courses.md).
 
 ## notes.json
 
@@ -15,6 +16,8 @@ The following is an illustrative shape, not source content. Unknown run-specific
 ```json
 {
   "schema_version": 1,
+  "course_id": "game-theory",
+  "source_label": "#12",
   "lecture_number": 12,
   "title": "12 · Actual lecture title",
   "source_url": "https://predictivehistory.com/actual-article/",
@@ -42,7 +45,7 @@ The following is an illustrative shape, not source content. Unknown run-specific
     {
       "source_id": "figure-001",
       "status": "inspected",
-      "disposition": "linked",
+      "disposition": "embedded",
       "note": "What was actually checked and why this disposition is useful"
     }
   ],
@@ -58,9 +61,11 @@ The following is an illustrative shape, not source content. Unknown run-specific
 }
 ```
 
-Property names and allowed options must match the actual database, not an assumed schema. The validator accepts `Source URL`/`Video URL` as aliases if that is how the destination names them. `Video` can be omitted if not established. Use the source publication date from metadata; never use the retrieval date as publication date. Omit unavailable dates rather than inventing them. `QA` describes production review; `Reading` belongs to the learner.
+The bundled validator uses the illustrated `Name`, `Lecture` (local order), `Kind`, `Topics`, `Reading`, `Source words`, `Figures`, `QA`, and source-URL properties. If an existing destination uses different names, normalize them in a reviewed adapter before validation and preserve the actual fetched values. `Era and region` is optional; choose fields useful for the course. `Kind` may be Lecture, Discussion, Exam, Meeting, Bonus, or Session. Property names and allowed options sent to Notion must match its actual schema. The validator accepts `Source URL`/`Video URL` as aliases if that is how the destination names them. `Video` can be omitted if not established. Use the source publication date from metadata; never use the retrieval date as publication date. Omit unavailable dates rather than inventing them. `QA` describes production review; `Reading` belongs to the learner.
 
 ### Source identity and coverage
+
+- New source and draft records carry matching `course_id` and `source_label`. A null label means the source is unnumbered, not missing extraction work. Legacy Civilization records without course IDs remain supported. The complete inventory and profile establish the course and destination boundary.
 
 - `source_sha256` copies `source.hashes.article_text_sha256`, the SHA-256 of the extracted article text. The on-disk `article.txt` adds one final newline after the hashed text.
 - `coverage.read_source_ids` contains every `source.blocks[*].id` exactly once, recorded after actual reading. These IDs address the private `article.md` anchors. They are not public webpage fragment identifiers unless the page itself supplies them.
@@ -85,9 +90,9 @@ Run from the skill directory, or use an absolute script path:
 
 ```sh
 python3 scripts/validate_notes.py \
-  --source /private/path/civilization-study/12/source.json \
-  --notes /private/path/civilization-study/12/notes.json \
-  --report /private/path/civilization-study/12/validation.json
+  --source /private/library/game-theory/12/source.json \
+  --notes /private/library/game-theory/12/notes.json \
+  --report /private/library/game-theory/12/validation.json
 ```
 
 The command emits JSON and returns nonzero on failure. `--allow-draft` permits `draft_ready:false` during authoring; missing coverage and bad identity remain failures. `--require-published` also requires the separate complete readback record described below. Never satisfy a failing check by merely changing an audit boolean: do the underlying work.

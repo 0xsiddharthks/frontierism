@@ -2,14 +2,12 @@
 """Archive public Ghost lecture articles without credentials or third-party packages.
 
 Usage:
-  python3 extract_sources.py --output /private/path/civilization-study
-  python3 extract_sources.py --output /private/path/civilization-study --refresh
-  python3 extract_sources.py --output /private/path/civilization-study --lecture 1
+  python3 extract_sources.py --course /private/course.json --output /private/archive --inventory-only
+  python3 extract_sources.py --course /private/course.json --output /private/archive --lecture 1
 
-The output includes a manifest and directories 01..60. Raw course material must
-stay outside a public repository. Requests follow the archive's actual rel=next
-links; no private API, login, or access-control bypass is used. The final source
-label is END, not 60: an ordinal of 60 is assigned only after inventory verification.
+Every archive belongs to one explicit course. Counts come from complete pagination,
+not a fixed course size. Source labels and stable library ordinals are distinct.
+Raw material stays private. Public GETs follow actual rel=next links.
 """
 
 from __future__ import annotations
@@ -31,10 +29,12 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin, urlparse
 from urllib.request import Request, urlopen
 
+from course_config import (assert_archive_identity, inventory_entries, inventory_spec,
+                           load_course, url_key, validate_course)
 
-SCHEMA_VERSION = "1.0"
-DEFAULT_INDEX = "https://predictivehistory.com/tag/civilization/"
-USER_AGENT = "Mozilla/5.0 (compatible; CivilizationStudyArchive/1.0)"
+
+SCHEMA_VERSION = "1.1"
+USER_AGENT = "Mozilla/5.0 (compatible; PredictiveHistoryStudyArchive/1.1)"
 VOID = set("area base br col embed hr img input link meta param source track wbr".split())
 SKIP_TEXT = {"script", "style", "noscript", "svg"}
 BLOCK_TYPES = {"p", "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "blockquote", "pre", "figure", "table", "hr", "iframe", "video", "audio"}
@@ -173,10 +173,23 @@ def request(url: str) -> tuple[bytes, dict]:
     raise RuntimeError("Request retries exhausted")
 
 
-def inventory(index_url: str, output: Path, refresh: bool = False) -> dict:
+def source_label(title, prefix):
+    match = re.match(re.escape(prefix) + r"\s*(#?(?:\d+[A-Za-z]?|END))\s*:", title, re.I)
+    return match.group(1) if match else None
+
+
+def inventory(index_url: str, output: Path, refresh: bool = False, *, course: dict) -> dict:
+    validate_course(course)
+    if url_key(index_url) != url_key(course['index_url']):
+        raise ValueError('Requested index does not match course profile')
+    assert_archive_identity(output, course)
     saved = output / "inventory.json"
+    previous = json.loads(saved.read_text()) if saved.exists() else None
     if saved.exists() and not refresh:
-        return json.loads(saved.read_text())
+        inventory_entries(previous)
+        if previous.get('inventory_spec') != inventory_spec(course):
+            raise ValueError('Inventory configuration changed; review and use --refresh')
+        return previous
     index_dir = output / "inventory"
     index_dir.mkdir(parents=True, exist_ok=True)
     pages, lectures, visited = [], {}, set()
@@ -200,37 +213,63 @@ def inventory(index_url: str, output: Path, refresh: bool = False) -> dict:
             if node.tag == "a" and node.has_class("gh-card-link"):
                 heading = next((n for n in node.walk() if n.has_class("gh-card-title")), None)
                 title = heading.clean_text() if heading else node.clean_text()
-                match = re.match(r"Civilization\s+#(\d+|END)\s*:", title, re.I)
-                if not match:
-                    raise ValueError(f"Unrecognized lecture card: {title}")
-                label = match.group(1).upper()
+                label = source_label(title, course['title_prefix'])
                 absolute = urljoin(url, node.attrs["href"])
-                if label in lectures and lectures[label]["url"] != absolute:
-                    raise ValueError(f"Duplicate lecture label: {label}")
-                lectures[label] = {"source_label": f"#{label}", "title": title, "url": absolute}
+                if urlparse(absolute).netloc != urlparse(index_url).netloc:
+                    raise ValueError('Article card points outside the source archive')
+                key = url_key(absolute)
+                item = {"source_label": label, "title": title, "url": absolute}
+                if key in lectures and lectures[key] != item:
+                    raise ValueError('Conflicting duplicate article card: ' + absolute)
+                lectures[key] = item
                 page_items.append(label)
         pages.append({**retrieval, "labels": page_items, "file": f"inventory/page-{len(pages)+1}.html"})
         next_node = next((n for n in doc.root.walk() if n.tag == "link" and "next" in n.attrs.get("rel", "").split()), None)
         url = urljoin(url, next_node.attrs["href"]) if next_node else None
-    expected = {str(number) for number in range(1, 60)} | {"END"}
-    actual = set(lectures)
-    if actual != expected or advertised != 60:
-        raise ValueError(f"Course inventory mismatch: advertised={advertised}; missing={sorted(expected-actual)}; extra={sorted(actual-expected)}")
-    ordered = []
-    for label in [str(number) for number in range(1, 60)] + ["END"]:
-        number = 60 if label == "END" else int(label)
-        ordered.append({"lecture_number": number, **lectures[label], "directory": f"{number:02}"})
+    if not lectures or advertised not in (None, len(lectures)):
+        raise ValueError(f'Course inventory mismatch: advertised={advertised}; discovered={len(lectures)}')
+    if course.get('order'):
+        keys = [url_key(x) for x in course['order']]
+        if set(keys) != set(lectures):
+            raise ValueError('Explicit order must cover every discovered article exactly once; reconcile new, missing, or excluded items')
+        items = [lectures[key] for key in keys]
+    else:
+        labels = {}
+        for item in lectures.values():
+            label = (item['source_label'] or '').lstrip('#').upper()
+            if not label or not (label.isdecimal() or label == 'END'):
+                raise ValueError('Unnumbered or split item requires a reviewed explicit order: ' + item['title'])
+            label = str(int(label)) if label.isdecimal() else label
+            if label in labels:
+                raise ValueError('Duplicate lecture label; review variants and supply explicit order: ' + label)
+            labels[label] = item
+        numeric = sorted(int(x) for x in labels if x.isdecimal())
+        if numeric != list(range(1, len(numeric) + 1)):
+            raise ValueError('Course inventory mismatch: missing numbers; reconcile gaps with an explicit order')
+        items = [labels[str(x)] for x in numeric] + ([labels['END']] if 'END' in labels else [])
+    ordered = [{"course_id": course['course_id'], "lecture_number": number, **item, "directory": f"{number:02}"}
+               for number, item in enumerate(items, 1)]
+    if previous:
+        current = {url_key(x['url']): x for x in ordered}
+        for old in inventory_entries(previous):
+            new = current.get(url_key(old['url']))
+            if not new or (new['lecture_number'], new['directory']) != (old['lecture_number'], old['directory']):
+                raise ValueError('Refresh would renumber or remove an archived source; reconcile identity migration first')
     result = {
         "schema_version": SCHEMA_VERSION,
+        "course_id": course['course_id'],
+        "course_title": course['title'],
+        "inventory_spec": inventory_spec(course),
         "index_url": index_url,
         "retrieved_at": now(),
         "advertised_lecture_count": advertised,
         "lecture_count": len(ordered),
         "pagination_pages": pages,
-        "normalization": {"60": "Source title is #END. Ordinal 60 is a library sorting label, justified by the archive declaring 60 issues and exposing exactly #1 through #59 plus #END. It is not a numeric label printed by the source."},
+        "normalization": {str(x['lecture_number']): {'source_label': x['source_label'], 'basis': 'Explicit reviewed URL order' if course.get('order') else 'Numeric source labels followed by END'} for x in ordered},
         "lectures": ordered,
         "integrity": {"unique_urls": len({x["url"] for x in ordered}), "missing_numbers": [], "pagination_terminated": True},
     }
+    inventory_entries(result)
     write_json(saved, result)
     return result
 
@@ -370,6 +409,7 @@ def extract(source: str, url: str, lecture: dict, retrieval: dict) -> dict:
         warnings.append("article_closing_tag_not_verified")
     return {
         "schema_version":SCHEMA_VERSION,"lecture_number":lecture["lecture_number"],"source_label":lecture["source_label"],"title":title,"source_url":url,"canonical_url":canonical,
+        **({'course_id': lecture['course_id']} if lecture.get('course_id') else {}),
         "published_at":metadata.get("article:published_time"),"modified_at":metadata.get("article:modified_time"),"author":metadata.get("author"),"description":metadata.get("description"),"retrieval":retrieval,
         "hashes":{"original_html_sha256":digest(source),"article_html_sha256":digest(doc.inner(article)),"article_text_sha256":digest(text)},
         "counts":{"words":word_count,"characters":len(text),"blocks":len(blocks),"paragraphs":counters["paragraph"],"headings":len(headings),"figures":len(figures),"tables":len(tables),"math_nodes":len(math)},
@@ -387,6 +427,8 @@ def archive_lecture(lecture: dict, output: Path, refresh: bool = False, download
     if html_path.exists() and retrieval_path.exists() and not refresh:
         raw = html_path.read_bytes()
         retrieval = json.loads(retrieval_path.read_text())
+        if url_key(retrieval.get('requested_url', '')) != url_key(lecture['url']) or retrieval.get('sha256') != digest(raw):
+            raise ValueError('Cached article URL or hash differs; inspect before refreshing')
     else:
         raw, retrieval = request(lecture["url"])
         html_path.write_bytes(raw)
@@ -408,6 +450,8 @@ def archive_lecture(lecture: dict, output: Path, refresh: bool = False, download
             try:
                 if destination.exists() and image_metadata.exists() and not refresh:
                     info = json.loads(image_metadata.read_text())
+                    if info.get('sha256') != digest(destination.read_bytes()) or url_key(info.get('requested_url', '')) != url_key(figure['url']):
+                        raise ValueError('Cached figure URL or hash differs')
                 else:
                     body, info = request(figure["url"])
                     if not info["content_type"] or not info["content_type"].startswith("image/"):
@@ -424,9 +468,10 @@ def archive_lecture(lecture: dict, output: Path, refresh: bool = False, download
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--course", type=Path, required=True, help="Private course.json profile")
     parser.add_argument("--output",type=Path,required=True)
-    parser.add_argument("--index-url",default=DEFAULT_INDEX)
-    parser.add_argument("--lecture",type=int,action="append",help="Select ordinals (repeatable); 60 is source #END")
+    parser.add_argument("--lecture",type=int,action="append",help="Select library ordinals (repeatable), not playlist positions")
+    parser.add_argument("--inventory-only",action="store_true",help="Discover all article URLs without downloading lectures")
     parser.add_argument("--refresh",action="store_true")
     parser.add_argument("--download-images",action="store_true")
     parser.add_argument("--workers",type=int,default=4)
@@ -435,15 +480,32 @@ def main() -> int:
     repo = Path(__file__).resolve().parents[3]
     if output == repo or repo in output.parents:
         parser.error("Raw article output must be outside this public skill repository")
-    if args.lecture and any(number < 1 or number > 60 for number in args.lecture):
-        parser.error("Lecture ordinals must be in 1..60")
     output.mkdir(parents=True,exist_ok=True)
-    index = inventory(args.index_url,output,args.refresh)
+    try:
+        course = load_course(args.course)
+        assert_archive_identity(output, course)
+        index = inventory(course['index_url'],output,args.refresh,course=course)
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        parser.error(str(exc))
+    write_json(output / 'course.json', course)
+    if args.inventory_only:
+        print(json.dumps({'course_id': course['course_id'], 'lecture_count': index['lecture_count'], 'inventory': str(output / 'inventory.json')}))
+        return 0
+    known = {item['lecture_number'] for item in index['lectures']}
+    if args.lecture and not set(args.lecture) <= known:
+        parser.error('Selected ordinals are absent from the verified inventory')
     selected = [item for item in index["lectures"] if not args.lecture or item["lecture_number"] in args.lecture]
     manifest_path = output / "manifest.json"
     existing = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
-    archived = {item["lecture_number"]:item for item in existing.get("lectures",[])}
-    failures = []
+    expected = {item['lecture_number']: item for item in index['lectures']}
+    archived = {}
+    for item in existing.get('lectures', []):
+        match = expected.get(item['lecture_number'])
+        if not match or url_key(match['url']) != url_key(item['url']):
+            parser.error('Existing manifest has a different source identity')
+        archived[item['lecture_number']] = item
+    selected_numbers = {item['lecture_number'] for item in selected}
+    failures = [x for x in existing.get('failures', []) if x['lecture_number'] not in selected_numbers]
     with ThreadPoolExecutor(max_workers=max(1,min(args.workers,8))) as executor:
         pending = {executor.submit(archive_lecture,item,output,args.refresh,args.download_images):item for item in selected}
         for future in as_completed(pending):
@@ -453,9 +515,10 @@ def main() -> int:
                 archived[item["lecture_number"]] = result
                 print(f"{item['lecture_number']:02} {result['counts']['words']} words; {result['counts']['figures']} figures; {result['counts']['tables']} tables; warnings={result['warnings']}",flush=True)
             except Exception as exc:
+                archived.pop(item['lecture_number'], None)
                 failures.append({"lecture_number":item["lecture_number"],"url":item["url"],"error":str(exc)})
                 print(f"ERROR {item['lecture_number']:02}: {exc}",file=sys.stderr,flush=True)
-            manifest = {"schema_version":SCHEMA_VERSION,"generated_at":now(),"index_url":args.index_url,"inventory_file":"inventory.json","normalization":index["normalization"],"expected_count":60,"archived_count":len(archived),"failures":failures,"lectures":[archived[number] for number in sorted(archived)]}
+            manifest = {"schema_version":SCHEMA_VERSION,"course_id":course['course_id'],"generated_at":now(),"index_url":course['index_url'],"inventory_file":"inventory.json","normalization":index["normalization"],"expected_count":index['lecture_count'],"archived_count":len(archived),"failures":failures,"lectures":[archived[number] for number in sorted(archived)]}
             write_json(manifest_path,manifest)
     return 1 if failures else 0
 

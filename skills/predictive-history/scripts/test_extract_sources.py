@@ -81,13 +81,13 @@ class ExtractionTests(unittest.TestCase):
                         for label in [*range(1,60),"END"])
         content = ('<p>A collection of 60 issues</p>' + cards).encode()
         with tempfile.TemporaryDirectory() as temporary, patch.object(extractor,"request",return_value=(content,{"sha256":extractor.digest(content)})):
-            result = extractor.inventory("https://example.test/tag/",Path(temporary))
+            result = extractor.inventory("https://example.test/tag/",Path(temporary),course={'schema_version':1,'course_id':'civilization','title':'Civilization','title_prefix':'Civilization','index_url':'https://example.test/tag/'})
             self.assertEqual(result["lectures"][-1]["lecture_number"],60)
             self.assertEqual(result["lectures"][-1]["source_label"],"#END")
         incomplete = content.replace(b'Civilization #1: Test',b'Civilization #61: Test')
         with tempfile.TemporaryDirectory() as temporary, patch.object(extractor,"request",return_value=(incomplete,{})):
             with self.assertRaisesRegex(ValueError,"inventory mismatch"):
-                extractor.inventory("https://example.test/tag/",Path(temporary))
+                extractor.inventory("https://example.test/tag/",Path(temporary),course={'schema_version':1,'course_id':'civilization','title':'Civilization','title_prefix':'Civilization','index_url':'https://example.test/tag/'})
 
 
 if __name__ == "__main__":

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Predictive History"
+  short_description: "Build separate, linked course study libraries"
+  default_prompt: "Use $predictive-history to build or update this course in its own Notion root and Obsidian folder, with layered notes, native embeds, and reviewed lecture connections."

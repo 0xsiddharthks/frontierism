@@ -1,0 +1,38 @@
+/* Optional, scoped styling. Native callouts/embeds work without this snippet. */
+.markdown-preview-view:is(.predictive-history, .civilization) .markdown-preview-sizer {
+  max-width: 1000px;
+  margin-inline: auto;
+}
+:is(.predictive-history, .civilization) .callout[data-callout="gallery"] {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+:is(.predictive-history, .civilization) .callout[data-callout="gallery"] > .callout-title,
+:is(.predictive-history, .civilization) .callout[data-callout="figure"] > .callout-title {
+  display: none;
+}
+:is(.predictive-history, .civilization) .callout[data-callout="gallery"] > .callout-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 1rem;
+}
+:is(.predictive-history, .civilization) .callout[data-callout="figure"] {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+:is(.predictive-history, .civilization) .image-embed img {
+  height: auto;
+  max-width: 100%;
+  border-radius: 6px;
+}
+:is(.predictive-history, .civilization) .callout[data-callout="figure"] p {
+  margin-block: 0.4rem;
+}
+:is(.predictive-history, .civilization) .callout[data-callout="figure"] em {
+  color: var(--text-muted);
+  font-size: var(--font-small);
+}

@@ -94,6 +94,9 @@ def validate(source, notes, source_path, allow_draft=False, readback=None, requi
     number = source.get("lecture_number")
     audit.require(integer(number), "source.lecture_number must be an integer")
     audit.require(notes.get("lecture_number") == number, "lecture_number does not match source")
+    if source.get('course_id') or notes.get('course_id'):
+        audit.require(bool(source.get('course_id')) and source.get('course_id') == notes.get('course_id'), 'course_id does not match source')
+        audit.require(notes.get('source_label') == source.get('source_label'), 'source_label does not match source')
     title = notes.get("title")
     audit.require(isinstance(title, str) and bool(title.strip()), "notes.title is required")
     source_urls = {normalized_url(source.get("source_url")), normalized_url(source.get("canonical_url"))} - {""}
@@ -183,11 +186,11 @@ def validate(source, notes, source_path, allow_draft=False, readback=None, requi
     if not isinstance(properties, dict):
         audit.errors.append("notes.properties must be an object")
         properties = {}
-    for key in ["Name", "Lecture", "Kind", "Topics", "Era and region", "Reading", "Source words", "Figures", "QA"]:
+    for key in ["Name", "Lecture", "Kind", "Topics", "Reading", "Source words", "Figures", "QA"]:
         audit.require(key in properties, f"missing property: {key}")
     audit.require(properties.get("Name") == title, "properties.Name must equal notes.title")
     audit.require(properties.get("Lecture") == number, "properties.Lecture does not match source")
-    audit.require(properties.get("Kind") == "Lecture", "properties.Kind must be Lecture")
+    audit.require(properties.get("Kind") in {"Lecture", "Discussion", "Exam", "Meeting", "Bonus", "Session"}, "properties.Kind must describe a course item")
     audit.require(normalized_url(properties.get("Source", properties.get("Source URL"))) in source_urls, "Source property does not match source")
     audit.require(properties.get("Source words") == source.get("counts", {}).get("words"), "Source words property does not match source counts")
     audit.require(properties.get("Figures") == len(source_figures), "Figures property does not match extracted inventory")
@@ -198,8 +201,8 @@ def validate(source, notes, source_path, allow_draft=False, readback=None, requi
             audit.require(isinstance(value, str) and bool(re.match(r"^\d{4}-\d{2}-\d{2}(?:T.*)?$", value)), f"invalid date property: {key}")
     if source.get("published_at") and properties.get("date:Published:start"):
         audit.require(properties["date:Published:start"][:10] == source["published_at"][:10], "Published property does not match source publication date")
-    if number == 60 and str(source.get("source_label", "")).upper().strip("# ") == "END":
-        audit.require("END" in str(title).upper(), "ordinal 60 must preserve the source END label in its title")
+    if str(source.get("source_label", "")).upper().strip("# ") == "END":
+        audit.require(bool(re.search(r'\bEND\b', str(title), re.I)), "title must preserve the source END label")
 
     content = notes.get("content")
     audit.require(isinstance(content, str) and bool(content.strip()), "notes.content must contain the complete page body")

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit a private 60-lecture archive, publication records, and navigation.
+"""Audit a private course against its complete inventory and publication records.
 
 This rechecks complete stored fetch responses. It does not contact Notion or
 certify historical truth, visual interpretation, or live external availability.
@@ -12,6 +12,7 @@ from urllib.parse import unquote, urlsplit, urlunsplit
 
 from record_readback import normalize
 from validate_notes import load_object, normalized_url, validate
+from course_config import inventory_entries, load_course, url_key
 
 
 def audit_course(root, published=False, navigation=False):
@@ -19,8 +20,35 @@ def audit_course(root, published=False, navigation=False):
     totals = {'lectures': 0, 'source_words': 0, 'source_blocks': 0,
               'source_figures': 0, 'embedded_figures': 0, 'source_tables': 0,
               'source_fragments': 0, 'attachments': 0, 'note_words': 0}
-    for number in range(1, 61):
-        folder = root / f'{number:02d}'
+    root = Path(root)
+    try:
+        inventory = load_object(root / 'inventory.json')
+        entries = inventory_entries(inventory)
+        course = load_course(root / 'course.json', 'notion' if published else None) if (root / 'course.json').exists() else None
+        if course and inventory.get('course_id', 'civilization') != course['course_id']:
+            raise ValueError('Inventory belongs to a different course')
+        if inventory.get('course_id') and not course:
+            raise ValueError('Course profile is missing')
+        if not course:
+            warnings.append('Legacy archive: no course profile; no configured destination isolation check')
+        if (root / 'manifest.json').exists():
+            manifest = load_object(root / 'manifest.json')
+            archived = manifest.get('lectures', [])
+            if manifest.get('failures'):
+                errors.append('Extraction manifest contains unresolved failures')
+            if manifest.get('expected_count') != len(entries) or manifest.get('archived_count') != len(entries):
+                errors.append('Extraction manifest is incomplete for this course inventory')
+            expected = {(e['lecture_number'], url_key(e['url'])) for e in entries}
+            actual = {(e['lecture_number'], url_key(e['url'])) for e in archived}
+            if len(archived) != len(entries) or actual != expected:
+                errors.append('Extraction manifest source identities differ from the complete inventory')
+            if manifest.get('course_id', 'civilization') != inventory.get('course_id', 'civilization'):
+                errors.append('Extraction manifest belongs to a different course')
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        return {'ok': False, 'counts': totals, 'errors': [str(exc)], 'warnings': warnings}
+    for entry in entries:
+        number = entry['lecture_number']
+        folder = root / entry['directory']
         try:
             source = load_object(folder / 'source.json')
             notes = load_object(folder / 'notes.json')
@@ -30,6 +58,16 @@ def audit_course(root, published=False, navigation=False):
             warnings.extend(f'{number:02d}: {w}' for w in result['warnings'])
             if source.get('lecture_number') != number:
                 errors.append(f'{number:02d}: source stored in wrong directory')
+            if url_key(source['source_url']) != url_key(entry['url']):
+                errors.append(f'{number:02d}: source URL differs from course inventory')
+            if source.get('source_label') != entry.get('source_label'):
+                errors.append(f'{number:02d}: source label differs from course inventory')
+            if course and source.get('course_id', 'civilization') != course['course_id']:
+                errors.append(f'{number:02d}: source belongs to a different course')
+            if course and published:
+                parent = course['destinations']['notion']['lecture_parent_id']
+                if notes.get('publication', {}).get('parent_id', '').replace('-', '') != parent.replace('-', ''):
+                    errors.append(f'{number:02d}: publication is outside this course destination')
             records[number] = (source, notes)
             totals['lectures'] += 1
             for key, source_key in [('source_words', 'words'), ('source_blocks', 'blocks'),
@@ -47,12 +85,15 @@ def audit_course(root, published=False, navigation=False):
         for key in ['source_url', 'canonical_url']:
             if source.get(key):
                 sources[normalized_url(source[key])] = ids
-    page_ids = [n.get('publication', {}).get('page_id') for _, n in records.values()]
-    if published and (None in page_ids or len(page_ids) != len(set(page_ids))):
+    page_ids = [(n.get('publication', {}).get('page_id') or '').replace('-', '').lower() for _, n in records.values()]
+    if published and ('' in page_ids or len(page_ids) != len(set(page_ids))):
         errors.append('Missing or duplicate published page identities')
     source_urls = [normalized_url(s['source_url']) for s, _ in records.values()]
     if len(source_urls) != len(set(source_urls)):
         errors.append('Duplicate lecture source URLs')
+    canonical_urls = [normalized_url(s.get('canonical_url') or s['source_url']) for s, _ in records.values()]
+    if len(canonical_urls) != len(set(canonical_urls)):
+        errors.append('Duplicate canonical source identities; reconcile redirected or variant articles')
     for number, (_, notes) in records.items():
         for url in re.findall(r'https?://[^\s)>"\]]+', notes['content']):
             parts = urlsplit(url)
@@ -64,7 +105,7 @@ def audit_course(root, published=False, navigation=False):
         if navigation:
             expected = {}
             for label, neighbor in [('previous', number - 1), ('next', number + 1)]:
-                if 1 <= neighbor <= 60:
+                if 1 <= neighbor <= len(entries):
                     expected[label] = records.get(neighbor, ({}, {}))[1].get('publication', {}).get('page_id')
             nav = notes.get('navigation', {})
             for label, page_id in expected.items():
@@ -72,9 +113,9 @@ def audit_course(root, published=False, navigation=False):
                     errors.append(f'{number:02d}: incorrect {label} lecture navigation')
                 elif page_id.replace('-', '') not in notes['content'].replace('-', ''):
                     errors.append(f'{number:02d}: {label} target is absent from page body')
-            if (number == 1 and nav.get('previous')) or (number == 60 and nav.get('next')):
+            if (number == 1 and nav.get('previous')) or (number == len(entries) and nav.get('next')):
                 errors.append(f'{number:02d}: navigation points outside the course')
-    return {'ok': not errors, 'counts': totals, 'errors': errors, 'warnings': warnings,
+    return {'ok': not errors, 'course_id': inventory.get('course_id', 'civilization'), 'expected_count': len(entries), 'counts': totals, 'errors': errors, 'warnings': warnings,
             'review_boundary': 'Stored-source and publication consistency; not a comprehensive historical fact-check or a live URL-availability test.'}
 
 

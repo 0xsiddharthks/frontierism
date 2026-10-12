@@ -10,7 +10,8 @@ My agent skills for Claude Code and Codex.
 | `pr-peer-review`                                                 | For colleagues' PRs: keeps only real issues, and posts the review when I say so.                   |
 | `socratic-social-science`                                        | Explicitly invoked Socratic tutoring for politics, economics, and social science; excludes technical instruction. |
 | `xurl`                                                           | Read-only X research: linked browser for posts and threads; xurl when API access fits better.      |
-| `civilization-lecture`                                          | Build and verify Civilization study libraries in Notion and Obsidian, with source inventories, native media embeds, and reviewed conceptual cross-links. |
+| `predictive-history`                                             | Build or update any Predictive History course in its own Notion root and Obsidian folder, with verified sources, embeds, and reviewed connections. |
+| `civilization-lecture`                                          | Compatibility entrypoint and helper paths for existing Civilization libraries. |
 
 ## Install
 
