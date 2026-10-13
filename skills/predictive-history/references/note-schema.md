@@ -63,6 +63,8 @@ The following is an illustrative shape, not source content. Unknown run-specific
 
 The bundled validator uses the illustrated `Name`, `Lecture` (local order), `Kind`, `Topics`, `Reading`, `Source words`, `Figures`, `QA`, and source-URL properties. If an existing destination uses different names, normalize them in a reviewed adapter before validation and preserve the actual fetched values. `Era and region` is optional; choose fields useful for the course. `Kind` may be Lecture, Discussion, Exam, Meeting, Bonus, or Session. Property names and allowed options sent to Notion must match its actual schema. The validator accepts `Source URL`/`Video URL` as aliases if that is how the destination names them. `Video` can be omitted if not established. Use the source publication date from metadata; never use the retrieval date as publication date. Omit unavailable dates rather than inventing them. `QA` describes production review; `Reading` belongs to the learner.
 
+The new-course database schema and reading layout are defined in [publishing.md](publishing.md). Create the optional `Review on` date property in the database but leave its value empty in a new lecture draft. Preserve existing learner-selected dates and Reading values on refresh. Page icons, list views, pinned properties, and details sections are native Notion settings, not body Markdown or fields this draft validator can verify.
+
 ### Source identity and coverage
 
 - New source and draft records carry matching `course_id` and `source_label`. A null label means the source is unnumbered, not missing extraction work. Legacy Civilization records without course IDs remain supported. The complete inventory and profile establish the course and destination boundary.

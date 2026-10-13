@@ -40,6 +40,8 @@ Private layout:
 
 Use separate private archive directories for other courses. Each Notion course has its own root and its own lecture database/data source. Put both guides inside that course root. Record the actual lecture parent separately from the root when they differ. Inspect the hierarchy with the connector before writing. A single lecture in an existing course reuses these bindings and guides.
 
+Apply the [publishing defaults](publishing.md) when creating that course's Notion library: six List views, no page icons, compact visible properties, and grouped page details. These are setup instructions, not automatic effects of `course.json`; the profile checker verifies destination isolation, not remote appearance. Save the fetched setup evidence beside the private ledger rather than adding unimplemented configuration flags to this profile.
+
 Validate all known private course profiles together before publishing:
 
 ```sh
