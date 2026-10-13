@@ -1,4 +1,4 @@
 interface:
   display_name: "Spotify Podcast to Notion"
-  short_description: "Analyze podcasts in a searchable Notion library"
-  default_prompt: "Use $spotify-podcast-to-notion to analyze this Spotify episode and save its summary, chapters, arguments, metadata, and tags in my Notion podcast hub."
+  short_description: "Spotify entrypoint for the shared Research Library"
+  default_prompt: "Use $spotify-podcast-to-notion to analyze this Spotify episode and save it in my shared Notion Research Library using the source-to-notion workflow."

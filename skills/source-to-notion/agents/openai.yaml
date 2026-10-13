@@ -1,0 +1,4 @@
+interface:
+  display_name: "Source to Notion"
+  short_description: "Analyze videos, podcasts, and readings in Notion"
+  default_prompt: "Use $source-to-notion to analyze this podcast, YouTube video, or reading and save its summary, arguments, source notes, metadata, and subject tags in my Notion Research Library."

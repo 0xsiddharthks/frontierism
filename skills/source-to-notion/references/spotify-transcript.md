@@ -1,4 +1,4 @@
-# Transcript access and coverage
+# Spotify transcript access and coverage
 
 ## Source order
 

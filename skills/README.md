@@ -15,7 +15,8 @@ My agent skills for Claude Code and Codex.
 | `notion-analyze-and-link`                                        | Review an existing Notion collection and add meaningful connections or requested synthesis. |
 | `obsidian-analyze-and-link`                                      | Review existing local notes and add connections and sparse inline concept wikilinks. |
 | `civilization-lecture`                                          | Compatibility entrypoint and helper paths for existing Civilization libraries. |
-| `spotify-podcast-to-notion`                                     | Analyze a Spotify episode in a searchable Notion library, with chapters, arguments, source checks, metadata, and tags. |
+| `source-to-notion`                                              | Analyze podcasts, YouTube videos, and long-form readings in a full-page Notion Research Library, with source notes, arguments, metadata, and subject tags. |
+| `spotify-podcast-to-notion`                                     | Compatibility entrypoint for Spotify episodes; uses the shared `source-to-notion` workflow and library. |
 
 ## Install
 
@@ -41,10 +42,11 @@ Invoke `socratic-social-science` with `$socratic-social-science` in Codex or
 runs only when explicitly requested. Re-run the installer after this rename to
 create the new links and remove the obsolete ones.
 
-Use `$spotify-podcast-to-notion` in Codex or `/spotify-podcast-to-notion` in
-Claude Code with an episode link. Its private Notion destination is stored in
-`~/.config/spotify-podcast-to-notion/destination.json` (or under `XDG_CONFIG_HOME`),
-outside this public repository.
+Use `$source-to-notion` in Codex or `/source-to-notion` in Claude Code with a
+podcast, video, or reading link/file. The older `$spotify-podcast-to-notion`
+invocation still works for episodes. The private database destination is stored
+in `~/.config/source-to-notion/destination.json` (or under `XDG_CONFIG_HOME`),
+outside this public repository. The database itself is the hub, with a list view.
 
 The skills are written for my own setup. They refer to each other and to my agent guides, which live in a private repo, by absolute path, because agents load them through symlinks.
 
