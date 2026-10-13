@@ -1,0 +1,4 @@
+interface:
+  display_name: "Analyze and Link Obsidian"
+  short_description: "Add reviewed connections and concept wikilinks"
+  default_prompt: "Use $obsidian-analyze-and-link to review this Obsidian folder and add useful connections and sparse inline concept links."

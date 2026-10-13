@@ -18,10 +18,6 @@ Example for a future Game Theory run; replace destination placeholders from the 
       "root_id": "actual-course-root-id",
       "lecture_parent_id": "actual-course-data-source-id",
       "font": "mono"
-    },
-    "obsidian": {
-      "vault": "/absolute/path/to/the/chosen/vault",
-      "folder": "game-theory"
     }
   }
 }
@@ -38,27 +34,23 @@ Private layout:
   course.json
   inventory.json                 # complete paginated source list, even for a partial run
   manifest.json                  # extracted subset, hashes, failures
-  publication-ledger.json        # exact source -> page -> vault path mapping
+  publication-ledger.json        # exact source -> Notion page mapping
   01/source.json, notes.json, ...
-<vault>/game-theory/
-  00 Start here.md
-  lectures/
-  _assets/
-  _sources/
-  Sources and maintenance.md
 ```
 
-Use sibling folders for other courses; preserve the existing `civilization/` folder. Each Notion course has its own root and its own lecture database/data source. Put both guides inside that course root. Record the actual lecture parent separately from the root when they differ. Inspect the hierarchy with the connector before writing.
+Use separate private archive directories for other courses. Each Notion course has its own root and its own lecture database/data source. Put both guides inside that course root. Record the actual lecture parent separately from the root when they differ. Inspect the hierarchy with the connector before writing. A single lecture in an existing course reuses these bindings and guides.
 
-Validate all known private course profiles together before publishing or exporting:
+Validate all known private course profiles together before publishing:
 
 ```sh
 python3 scripts/course_config.py /private/library/*/course.json
-# To require both destinations for this selected course:
-python3 scripts/course_config.py /private/library/game-theory/course.json --destinations both
+# Require Notion for the selected course:
+python3 scripts/course_config.py /private/library/game-theory/course.json --destinations notion
 ```
 
-The checker rejects duplicate course IDs, shared Notion roots/parents, and overlapping Obsidian folders. It cannot infer remote Notion ancestry; the coordinator verifies that from live reads. Registry scope must include other existing courses, not just the new one. Never use a missing destination as permission to write into a different course. Extraction and drafting can proceed while a required destination is unresolved.
+The checker rejects duplicate course IDs and shared Notion roots/parents. It also retains validation of legacy optional Obsidian bindings and overlapping folders so old profiles remain usable; those fields never initiate an export. New Obsidian mappings belong to the separate notion-to-obsidian export manifest. Do not remove old bindings merely to adopt this workflow: the archive identity check deliberately protects them from silent changes.
+
+The checker cannot infer remote Notion ancestry; the coordinator verifies that from live reads. Registry scope must include other existing courses, not just the new one. Never use a missing destination as permission to write into a different course. Extraction and drafting can proceed while a required destination is unresolved.
 
 ## Discover and extract
 

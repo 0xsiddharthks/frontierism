@@ -2,6 +2,8 @@
 
 ## Course structure
 
+This workflow publishes to Notion. For an individual lecture, reuse an existing course's schema and guides and verify only the requested page plus any navigation actually changed. Course-wide completion checks apply when a course import is requested. An Obsidian export or cross-page analysis is a separate requested workflow.
+
 Bind the selected course to its private profile before any write; read [courses.md](courses.md). Each course has its own Notion root and lecture parent. A root for another course is never a fallback. Run the profile isolation check across all existing courses, then verify the destination hierarchy live.
 
 Fetch the intended destination before writing; a shared Notion link may identify a database rather than a regular page. Preserve existing user content. A database supports a numbered lecture list with sortable properties; useful fields include title, lecture number, source URL, topics, era and region, study status, and source review status. Separate the user's learning progress from the agent's publication status. Use controlled tag names across the course while allowing a genuinely new theme when it helps discovery.
@@ -31,7 +33,7 @@ Record `(course_id, canonical source URL)` as the durable identity; retain reque
 
 Prepare the complete local draft and validate it before writing. On a successful creation, immediately persist the returned page ID in a private per-lecture record. On an error, timeout, or unknown response, inspect the destination for the same identity before retrying. Do not blindly retry a creation that may have succeeded.
 
-For an update, fetch the page first. Replace only the agent-managed region or the known content that the user authorized updating. Preserve personal annotations, study progress, comments, and unrelated blocks. If new user edits conflict with a proposed rewrite, finish the independent work and surface the concrete conflict instead of deleting their work.
+For an update, fetch the page first. Replace only the agent-managed region or the known content that the user authorized updating. Preserve personal annotations, study progress, comments, reviewed Connections sections, inline links, and unrelated blocks. Reconcile against the last saved readback instead of blindly republishing an older draft. If source changes undermine an existing connection, record it for a targeted review; do not silently drop the section. If new user edits conflict with a proposed rewrite, finish the independent work and surface the concrete conflict instead of deleting their work.
 
 Use bounded, backoff retries for transient reads or idempotent updates. Respect service retry hints. After repeated unchanged failures, retain the validated draft and exact checkpoint; do not create alternate duplicate pages as a workaround.
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Analyze and Link Notion"
+  short_description: "Review and connect an existing Notion collection"
+  default_prompt: "Use $notion-analyze-and-link to review this Notion hub and add meaningful connections between its pages."

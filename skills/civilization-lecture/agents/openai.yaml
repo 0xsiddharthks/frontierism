@@ -1,4 +1,4 @@
 interface:
   display_name: "Civilization (compatibility)"
-  short_description: "Resume an existing Civilization study library"
-  default_prompt: "Use $civilization-lecture to resume my existing Civilization library using the shared Predictive History workflow."
+  short_description: "Resume existing Civilization notes in Notion"
+  default_prompt: "Use $civilization-lecture to update my existing Civilization Notion pages using the shared Predictive History workflow."

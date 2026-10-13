@@ -1,0 +1,4 @@
+interface:
+  display_name: "Notion to Obsidian"
+  short_description: "Export Notion pages and hubs into Obsidian"
+  default_prompt: "Use $notion-to-obsidian to export this Notion page or hub into my Obsidian vault with local embeds and preserved links."
