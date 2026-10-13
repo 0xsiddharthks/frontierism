@@ -12,6 +12,7 @@ My agent skills for Claude Code and Codex.
 | `xurl`                                                           | Read-only X research: linked browser for posts and threads; xurl when API access fits better.      |
 | `predictive-history`                                             | Build or update any Predictive History course in its own Notion root and Obsidian folder, with verified sources, embeds, and reviewed connections. |
 | `civilization-lecture`                                          | Compatibility entrypoint and helper paths for existing Civilization libraries. |
+| `spotify-podcast-to-notion`                                     | Analyze a Spotify episode in a searchable Notion library, with chapters, arguments, source checks, metadata, and tags. |
 
 ## Install
 
@@ -28,6 +29,11 @@ Invoke `socratic-social-science` with `$socratic-social-science` in Codex or
 `/socratic-social-science` in Claude Code. It replaces `socratic-learning` and
 runs only when explicitly requested. Re-run the installer after this rename to
 create the new links and remove the obsolete ones.
+
+Use `$spotify-podcast-to-notion` in Codex or `/spotify-podcast-to-notion` in
+Claude Code with an episode link. Its private Notion destination is stored in
+`~/.config/spotify-podcast-to-notion/destination.json` (or under `XDG_CONFIG_HOME`),
+outside this public repository.
 
 The skills are written for my own setup. They refer to each other and to my agent guides, which live in a private repo, by absolute path, because agents load them through symlinks.
 
