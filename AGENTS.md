@@ -6,6 +6,12 @@
 
 - If you are Codex (or ChatGPT Work): prefer ChatGPT's built-in `@Browser`. Use `@Chrome` only when I ask for it or when the needed authenticated session isn't available in the built-in browser.
 
+# Notion notes
+
+- Notion is the primary reading and editing workspace. Use Obsidian only when a task specifically calls for it.
+- Use list views for Notion hubs and collections of nested pages. Do not use table views unless I explicitly request one. Keep only a few useful properties beside each title; organize fuller metadata within the page's details.
+- Omit page icons from study pages and guides to keep their headers compact.
+
 # Attribution
 
 - Sessions started in this repo may sign their work: end commit messages with your own co-author trailer (for Codex, `Co-authored-by: Codex <noreply@openai.com>`), and add your usual generated-with line to pull request descriptions. Sessions started in another repo follow that repo's rule instead.
