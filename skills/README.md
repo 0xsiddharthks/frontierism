@@ -16,6 +16,7 @@ My agent skills for Claude Code and Codex.
 | `obsidian-analyze-and-link`                                      | Review existing local notes and add connections and sparse inline concept wikilinks. |
 | `civilization-lecture`                                          | Compatibility entrypoint and helper paths for existing Civilization libraries. |
 | `source-to-notion`                                              | Analyze podcasts, YouTube videos, and long-form readings in a full-page Notion Research Library, with source notes, arguments, metadata, and subject tags. |
+| `close-reading-to-notion`                                       | Closely read social, political, and economic texts into Notion study pages with first-principles explanations, argument maps, cruxes, and objections. |
 | `spotify-podcast-to-notion`                                     | Compatibility entrypoint for Spotify episodes; uses the shared `source-to-notion` workflow and library. |
 
 ## Install
@@ -47,6 +48,14 @@ podcast, video, or reading link/file. The older `$spotify-podcast-to-notion`
 invocation still works for episodes. The private database destination is stored
 in `~/.config/source-to-notion/destination.json` (or under `XDG_CONFIG_HOME`),
 outside this public repository. The database itself is the hub, with a list view.
+
+Use `$close-reading-to-notion` in Codex or `/close-reading-to-notion` in Claude
+Code for a close study of a webpage or a requested corpus such as the Federalist
+papers. It adds institutional and conceptual analysis to the source-reading
+workflow. A requested new collection gets its own database; private source
+snapshots and destination records stay outside this repository. It tries the
+in-app browser first for interactive inspection and appearance settings, and
+includes a tested `ntn` CLI workflow for complete exports and targeted edits.
 
 The skills are written for my own setup. They refer to each other and to my agent guides, which live in a private repo, by absolute path, because agents load them through symlinks.
 
