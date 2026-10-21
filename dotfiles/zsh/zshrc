@@ -89,6 +89,9 @@ plugins=(git fzf hermes herdr codex rust gcloud)
 # Must precede oh-my-zsh: plugins skip loading if their command isn't on PATH yet.
 export PATH="/Users/siddharthks/.local/bin:$PATH"
 
+# Rex's generated completion must be visible before Oh My Zsh runs compinit.
+fpath=("${XDG_DATA_HOME:-$HOME/.local/share}/zsh/site-functions" $fpath)
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -152,4 +155,9 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/siddharthks/.lmstudio/bin"
 # End of LM Studio CLI section
+
+# Prefer the CLI belonging to this Rex server after the other PATH changes.
+if [[ -n "${REX_BIN_DIR:-}" ]]; then
+  export PATH="$REX_BIN_DIR:$PATH"
+fi
 

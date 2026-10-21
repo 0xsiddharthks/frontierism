@@ -1,0 +1,10 @@
+{
+  "Workspace.playsProgramActivitySounds": false,
+  "Workspace.tabStyle": "vertical",
+  "Workspace.terminalCellHeightPercent": 8.0,
+  "Workspace.terminalCopyOnSelect": false,
+  "Workspace.terminalFontName": "JetBrainsMono Nerd Font Mono",
+  "Workspace.terminalFontPointSize": 18.0,
+  "Workspace.terminalOptionKeyBehavior": "leftActsAsAlt",
+  "rex.client.remoteControl": true
+}

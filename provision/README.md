@@ -50,7 +50,19 @@ From a Mac with nothing on it to one that has everything here:
 
    Every line should start with `ok`.
 
-7. Carry on with the [dotfiles](../dotfiles/README.md#new-machine), which copy my config into place, install the VS Code extensions and link the skills and mods.
+7. Install [Rex Beta from its DMG](https://blob.superlogical.com/download/rex-app/preview/latest.dmg)
+   by dragging `Rex Beta.app` into `/Applications`. This stays manual during the
+   beta; neither this installer nor the Brewfile downloads it.
+
+8. Carry on with the [dotfiles](../dotfiles/README.md), which copy my config into place and install the VS Code extensions. They also configure the installed Rex app for Claude Code and Codex automatically. Then run `./install.sh` to link the skills and mods.
+
+   ```sh
+   ./dotfiles/install.sh
+   ./install.sh
+   ```
+
+   Open a fresh terminal afterwards. Rex's [workflow guide](../dotfiles/rex/README.md)
+   describes its shortcuts and the one-time Codex hook approval.
 
 Still to install by hand: apps from the App Store, apps that aren't in Homebrew, other tools that have their own installers, such as uv, and whatever was installed with `cargo`, `go`, `uv` or `npm`.
 

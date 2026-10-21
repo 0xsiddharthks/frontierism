@@ -9,6 +9,9 @@ My terminal, shell, editor and agent config for macOS.
 | `claude/statusline-command.sh` | `~/.claude/statusline-command.sh`                            |
 | `ghostty/config`               | `~/Library/Application Support/com.mitchellh.ghostty/config` |
 | `herdr/config.toml`            | `~/.config/herdr/config.toml`                                |
+| `rex/rex`                     | `~/.local/bin/rex`                                          |
+| `rex/init.lua`                | `~/.config/rex/init.lua`                                    |
+| `rex/preferences.json`        | selected Rex Mac settings, applied with `defaults`          |
 | `vscode/settings.json`         | `~/Library/Application Support/Code/User/settings.json`      |
 | `vscode/extensions.txt`        | installed with `code --install-extension`                    |
 | `zsh/zprofile`                 | `~/.zprofile`                                                |
@@ -34,6 +37,19 @@ git pull --rebase
 ```
 
 This repo is public, so `--pull` refuses a file that looks like it holds a credential.
+
+## Rex
+
+Install [Rex Beta](https://blob.superlogical.com/download/rex-app/preview/latest.dmg)
+manually into `/Applications` first. The installer sets up its CLI, Zsh
+completion, terminal support, Claude Code and Codex skills and hooks, and the
+[configuration and workflow](rex/README.md). Rex is deliberately absent from the
+Brewfile until there is a supported cask.
+
+`--check` checks the generated pieces too. `--push` backs up and applies the
+selected Mac preferences; `--pull` reads only those preferences, never
+the app's full preferences or its list of hosts. Rex's generated skill stays
+managed by the installed app rather than being copied into `skills/`.
 
 ## cw
 
@@ -76,4 +92,4 @@ Tokens and work details go in `~/.zshrc.private`, which `~/.zshrc` reads if it i
 4. Run `herdr integration install claude` and `herdr integration install codex`. herdr manages its own hook scripts, so they aren't kept here.
 5. Run the installer in my private guides repo for the other hook the Claude settings name.
 
-Not kept here: git config, `~/.zshenv`, which rustup's installer writes, anything that holds credentials, and Codex's `config.toml`, which is mostly per-machine state. The Claude settings name their hook and status line scripts by absolute path under `/Users/siddharthks`, and so do a few `PATH` lines in the zsh files.
+Not kept here: git config, `~/.zshenv`, which rustup's installer writes, anything that holds credentials, and Codex's `config.toml`, which is mostly per-machine state. Rex generates its Codex hook in `~/.codex/hooks.json` without copying that file here. The Claude settings name their hook and status line scripts by absolute path under `/Users/siddharthks`, and so do a few `PATH` lines in the zsh files.

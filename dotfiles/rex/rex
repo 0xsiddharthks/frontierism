@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Use the CLI bundled with Rex, so app updates also update the CLI.
+set -euo pipefail
+
+if [[ -n "${REX_BIN_DIR:-}" && -x "$REX_BIN_DIR/rex" && ! "$REX_BIN_DIR/rex" -ef "$0" ]]; then
+    exec "$REX_BIN_DIR/rex" "$@"
+fi
+
+apps=(
+    "/Applications/Rex Beta.app"
+    "/Applications/Rex.app"
+    "$HOME/Applications/Rex Beta.app"
+    "$HOME/Applications/Rex.app"
+)
+if [[ -n "${FRONTIERISM_REX_APP:-}" ]]; then
+    apps=("$FRONTIERISM_REX_APP")
+fi
+for app in "${apps[@]}"; do
+    cli="$app/Contents/Helpers/Rex Server.rex/Contents/MacOS/rex"
+    if [[ -x "$cli" ]]; then
+        exec "$cli" "$@"
+    fi
+done
+
+echo 'Rex is not installed. Drag Rex Beta.app from the DMG into /Applications, then run the dotfile installer again.' >&2
+echo 'https://blob.superlogical.com/download/rex-app/preview/latest.dmg' >&2
+exit 127

@@ -22,6 +22,8 @@ files=(
     "claude/statusline-command.sh|$HOME/.claude/statusline-command.sh"
     "ghostty/config|$support/com.mitchellh.ghostty/config"
     "herdr/config.toml|$HOME/.config/herdr/config.toml"
+    "rex/rex|$HOME/.local/bin/rex"
+    "rex/init.lua|${XDG_CONFIG_HOME:-$HOME/.config}/rex/init.lua"
     "vscode/settings.json|$support/Code/User/settings.json"
     "zsh/zprofile|$HOME/.zprofile"
     "zsh/zshrc|$HOME/.zshrc"
@@ -72,6 +74,8 @@ for entry in "${files[@]}"; do
         failed=1
     fi
 done
+
+"$root/rex/setup.sh" "$mode" || failed=1
 
 list="$root/vscode/extensions.txt"
 if ! command -v code >/dev/null; then
