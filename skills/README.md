@@ -15,8 +15,8 @@ My agent skills for Claude Code and Codex.
 | `notion-analyze-and-link`                                        | Review an existing Notion collection and add meaningful connections or requested synthesis. |
 | `obsidian-analyze-and-link`                                      | Review existing local notes and add connections and sparse inline concept wikilinks. |
 | `civilization-lecture`                                          | Compatibility entrypoint and helper paths for existing Civilization libraries. |
-| `source-to-notion`                                              | Analyze podcasts, YouTube videos, and long-form readings in a full-page Notion Research Library, with source notes, arguments, metadata, and subject tags. |
-| `close-reading-to-notion`                                       | Closely read social, political, and economic texts into Notion study pages with first-principles explanations, argument maps, cruxes, and objections. |
+| `source-to-notion`                                              | Read one source deeply, explain its ideas from first principles, assess reasoning/evidence, and publish in Notion or return a private collection draft. |
+| `source-collection-to-notion`                                   | Coordinate a bounded collection using the same source analyzer, with optional parallel drafts, cross-source review, shared views/guides, and verified publication. |
 | `spotify-podcast-to-notion`                                     | Compatibility entrypoint for Spotify episodes; uses the shared `source-to-notion` workflow and library. |
 
 ## Install
@@ -44,18 +44,28 @@ runs only when explicitly requested. Re-run the installer after this rename to
 create the new links and remove the obsolete ones.
 
 Use `$source-to-notion` in Codex or `/source-to-notion` in Claude Code with a
-podcast, video, or reading link/file. The older `$spotify-podcast-to-notion`
-invocation still works for episodes. The private database destination is stored
-in `~/.config/source-to-notion/destination.json` (or under `XDG_CONFIG_HOME`),
-outside this public repository. The database itself is the hub, with a list view.
+podcast, video, or reading link/file. It adapts acquisition and evidence standards
+to the material while retaining first-principles explanation, argument
+reconstruction, cruxes, and serious objections or limitations. Its scripts handle
+HTML extraction and complete Notion exports; interactive inspection and native
+appearance settings use the in-app browser first, with a tested `ntn` CLI path
+for supported structured work. The private default Research Library destination
+stays in `~/.config/source-to-notion/destination.json` (or under `XDG_CONFIG_HOME`).
+An explicitly supplied destination takes precedence.
 
-Use `$close-reading-to-notion` in Codex or `/close-reading-to-notion` in Claude
-Code for a close study of a webpage or a requested corpus such as the Federalist
-papers. It adds institutional and conceptual analysis to the source-reading
-workflow. A requested new collection gets its own database; private source
-snapshots and destination records stay outside this repository. It tries the
-in-app browser first for interactive inspection and appearance settings, and
-includes a tested `ntn` CLI workflow for complete exports and targeted edits.
+Use `$source-collection-to-notion` or `/source-collection-to-notion` for a bounded
+collection or coordinated batch. It owns inventory, dependencies, shared schema,
+guides, navigation, cross-source review, and publication. When useful, separate
+agents use the same `source-to-notion` skill in draft-only mode for disjoint
+sources; one coordinator manages shared mutations and any read-all-before-publish
+barrier. A batch does not automatically create a new database. Private snapshots,
+drafts, and destination records remain outside this repository.
+
+The former `close-reading-to-notion` analytical workflow is now part of
+`source-to-notion`; use that canonical entrypoint. The older
+`spotify-podcast-to-notion` entrypoint still forwards episode requests to it.
+`predictive-history` retains its course-specific acquisition and teaching
+conventions, and `notion-analyze-and-link` handles a later review of existing notes.
 
 The skills are written for my own setup. They refer to each other and to my agent guides, which live in a private repo, by absolute path, because agents load them through symlinks.
 

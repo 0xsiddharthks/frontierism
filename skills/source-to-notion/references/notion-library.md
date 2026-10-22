@@ -1,5 +1,7 @@
 # Research Library conventions
 
+These conventions cover direct source records and ordinary batches in the mixed library. A collection coordinator can supply a different verified destination and schema. Do not load or migrate this default library during draft-only source work.
+
 ## Destination and full-page database
 
 Read `${XDG_CONFIG_HOME:-$HOME/.config}/source-to-notion/destination.json`. Version 2 uses `schema_version`, `hub_kind` (`database`), `hub_url`, `database_id`, `data_source_id`, and `default_view_id`. These private destination IDs stay outside the public repository; they are not credentials.

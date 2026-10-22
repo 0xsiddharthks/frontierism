@@ -1,4 +1,0 @@
-interface:
-  display_name: "Close reading to Notion"
-  short_description: "Understand social and political texts from first principles"
-  default_prompt: "Use $close-reading-to-notion to read this text closely and create a Notion study page explaining its core question, concepts, argument, crux, and strongest objections."

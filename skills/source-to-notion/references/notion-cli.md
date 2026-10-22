@@ -42,10 +42,10 @@ Compare every exported body with its intended content, allowing only understood 
 
 ```sh
 ntn datasources query "$reading_data_source_id" \
-  --limit 100 --sort 'Number asc' --json > /private/run/rows.json
+  --limit 100 --json > /private/run/rows.json
 ```
 
-Confirm these options with current help. Do not rely on the default page size or assume `--limit` returns the whole collection. Inspect `has_more` and `next_cursor`, follow the installed command's pagination interface when necessary, and verify the exact expected ordinals, unique source URLs, unique page IDs, and guide count. Keep production QA separate from the learner's Reading and Review on fields.
+Confirm these options with current help. Do not rely on the default page size or assume `--limit` returns the whole collection. Inspect `has_more` and `next_cursor`, follow the installed command's pagination interface when necessary, and verify the expected source identities and unique page mappings. For an ordered collection with a Number field, an optional `--sort 'Number asc'` can aid inspection; only the collection coordinator checks its ordinals and guide membership. Do not assume the mixed Research Library has a Number property. Keep production QA separate from the learner's Reading and Review on fields.
 
 ## Targeted edits
 

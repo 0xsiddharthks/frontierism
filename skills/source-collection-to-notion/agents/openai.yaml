@@ -1,0 +1,4 @@
+interface:
+  display_name: "Source Collection to Notion"
+  short_description: "Coordinate deep analysis across a source collection"
+  default_prompt: "Use $source-collection-to-notion to coordinate this collection, apply the shared source analysis skill to each item, review the results, and publish the requested Notion library."

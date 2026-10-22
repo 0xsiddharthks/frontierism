@@ -24,6 +24,21 @@ Build the source map around the argument's progression rather than forcing times
 
 For a reading without chapters, leave Chapter count empty; its section map can live in the body. Keep Duration (min) empty unless the source actually has audiovisual runtime. Use Text source to identify Article text, PDF text, OCR, Publisher, or User supplied as appropriate. Full text coverage requires reading the full requested scope, including consequential qualifications and notes.
 
+## HTML snapshots and analyst locators
+
+For a public page or legitimately acquired HTML, the dependency-free helper preserves text blocks, source links, image references, hashes, and analyst locators:
+
+```sh
+python3 scripts/extract_webpage.py --url 'https://example.org/essay' \
+  --container-id essay --output /private/archive/essay
+```
+
+Run from the skill directory. Use `--html /private/page.html` with the original `--url` for an acquired snapshot. The container ID must be observed in the actual source. Without it, the helper selects a unique article/main or the body and records that boundary. Compare the extracted title, start, end, headings, and consequential footnotes with the original. Remove navigation and duplicated mobile text without losing qualifications; isolate actual source containers on multi-work pages.
+
+The helper handles HTML text, not JavaScript execution, OCR, authentication, or visual interpretation. Use the linked browser and suitable document tools when needed. Images/tables require separate inspection. Its extraction status starts **not_read**; record actual reading coverage separately as it happens.
+
+`B001` and similar IDs are analyst block locators in the exact hashed snapshot, not publisher paragraph numbers or web anchors. Use short opening phrases to help a reader find cited passages. Re-extraction can change these labels, requiring renewed claim-to-source checks. Keep snapshots in a new or empty private directory outside the public repository.
+
 ## Common boundaries
 
 Source accessibility is not permission to republish a full transcript, article, or book. Publish original paraphrases, concise necessary quotations within applicable limits, locators, and links. Keep temporary extracts outside public repositories. Do not bypass a paywall or authentication boundary; work with legitimately available material and disclose any gaps.
