@@ -64,6 +64,16 @@ From a Mac with nothing on it to one that has everything here:
    Open a fresh terminal afterwards. Rex's [workflow guide](../dotfiles/rex/README.md)
    describes its shortcuts and the one-time Codex hook approval.
 
+9. Apply the [app preferences](../preferences/README.md), which make Zed the default
+   for code/text files, opening files and repositories from Codex, and Git editing:
+
+   ```sh
+   ./preferences/install.sh
+   ./preferences/install.sh --check
+   ```
+
+   Reopen Codex after applying its editor preference.
+
 Still to install by hand: apps from the App Store, apps that aren't in Homebrew, other tools that have their own installers, such as uv, and whatever was installed with `cargo`, `go`, `uv` or `npm`.
 
 ## Use

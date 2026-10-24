@@ -1,0 +1,28 @@
+{
+  "bundle_id": "dev.zed.Zed",
+  "codex_target": "zed",
+  "git_editor": "zed --wait",
+  "content_types": [
+    "public.plain-text",
+    "public.utf8-plain-text",
+    "public.source-code",
+    "public.script",
+    "public.shell-script"
+  ],
+  "extensions": [
+    "txt", "text", "md", "markdown", "mdx", "rst", "adoc", "log",
+    "rs", "toml", "lock", "move", "sol",
+    "c", "cc", "cpp", "cxx", "c++", "h", "hh", "hpp", "hxx", "h++",
+    "m", "mm", "cu", "cuh", "asm", "s",
+    "go", "py", "pyi", "pyw", "rb", "erb", "php", "pl", "lua", "r",
+    "java", "kt", "kts", "scala", "swift", "cs", "fs", "fsx",
+    "js", "jsx", "mjs", "cjs", "ts", "tsx", "vue", "svelte", "elm",
+    "css", "scss", "sass", "less",
+    "json", "jsonc", "json5", "yaml", "yml", "xml", "ini", "cfg", "conf",
+    "sh", "bash", "zsh", "fish", "ps1", "command",
+    "env", "editorconfig", "gitignore", "gitattributes", "gitmodules", "gitconfig",
+    "sql", "graphql", "gql", "proto", "cmake", "mk", "dockerfile",
+    "ex", "exs", "erl", "hrl", "clj", "cljs", "scm", "rkt", "el", "zig",
+    "diff", "patch"
+  ]
+}

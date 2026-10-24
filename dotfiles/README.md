@@ -41,8 +41,8 @@ This repo is public, so `--pull` refuses a file that looks like it holds a crede
 
 ## Editors and Rust
 
-Zed is the shell's preferred editor (`zed --wait`). Both editors use JetBrains Mono
-at 16 px and follow the system appearance with VS Code's Light 2026 and Dark 2026
+Zed is the shell's preferred editor (`EDITOR` and `VISUAL` use `zed --wait`). Both
+editors use JetBrains Mono at 16 px and follow the system appearance with VS Code's Light 2026 and Dark 2026
 themes. Zed uses the [VS Code 2026 theme extension](https://github.com/eugenebokhan/zed-vs-code-2026-theme),
 including its recommended Rust semantic highlighting. Line spacing follows each
 editor's defaults: Zed's `comfortable` setting and VS Code's automatic line height.
@@ -127,5 +127,6 @@ Tokens and work details go in `~/.zshrc.private`, which `~/.zshrc` reads if it i
 3. Run `../install.sh` to link the skills and mods.
 4. Run `herdr integration install claude` and `herdr integration install codex`. herdr manages its own hook scripts, so they aren't kept here.
 5. Run the installer in my private guides repo for the other hook the Claude settings name.
+6. Run `../preferences/install.sh` to make Zed the default for code/text files in macOS, Codex's file/repository opening and Git. See [preferences](../preferences/README.md) for checking and backups.
 
 Not kept here: git config, `~/.zshenv`, which rustup's installer writes, anything that holds credentials, and Codex's `config.toml`, which is mostly per-machine state. Rex generates its Codex hook in `~/.codex/hooks.json` without copying that file here. The Claude settings name their hook and status line scripts by absolute path under `/Users/siddharthks`, and so do a few `PATH` lines in the zsh files.
