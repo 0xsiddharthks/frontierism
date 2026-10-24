@@ -1,0 +1,85 @@
+// Keep Zed's language, formatter, debugger and UI defaults unless overridden here.
+{
+  "base_keymap": "VSCode",
+  "buffer_font_family": "JetBrains Mono",
+  "buffer_font_size": 16,
+  // Zed's default reading-friendly line height (1.618). The terminal inherits the font.
+  "buffer_line_height": "comfortable",
+  "theme": {
+    "mode": "system",
+    "light": "VS Code Light 2026",
+    "dark": "VS Code Dark 2026",
+  },
+  // Rust, rust-analyzer, rustfmt and CodeLLDB are built in. TOML covers Cargo files;
+  // Tombi adds their language server. Only the requested theme needs another extension.
+  "auto_install_extensions": {
+    "html": false,
+    "toml": true,
+    "tombi": true,
+    "vscode-2026-theme": true,
+  },
+  // Zed installs and updates the Codex adapter from its ACP Registry.
+  // Authentication stays in Codex's local configuration, outside these dotfiles.
+  "agent_servers": {
+    "codex-acp": {
+      "type": "registry",
+    },
+  },
+  // Extend Zed's defaults rather than replacing its VCS and system-file exclusions.
+  // Any worktrees/ or .worktrees/ directory (including .claude/worktrees/) is a
+  // separate checkout: open it directly instead of scanning it from the parent.
+  "file_scan_exclusions": [
+    "...",
+    "**/worktrees",
+    "**/.worktrees",
+    "**/target",
+  ],
+  // Use the theme author's Rust highlighting recommendations.
+  "colorize_brackets": true,
+  "languages": {
+    "Rust": {
+      "semantic_tokens": "combined",
+    },
+  },
+  "global_lsp_settings": {
+    "semantic_token_rules": [
+      {
+        "token_type": "keyword",
+        "token_modifiers": ["controlFlow"],
+        "style": ["keyword.control"],
+      },
+      { "token_type": "attributeBracket" },
+      {
+        "token_type": "namespace",
+        "token_modifiers": ["attribute"],
+        "style": ["attribute.derive"],
+      },
+      {
+        "token_type": "attribute",
+        "token_modifiers": ["attribute"],
+        "style": ["attribute.derive"],
+      },
+      {
+        "token_type": "generic",
+        "token_modifiers": ["attribute"],
+        "style": ["attribute.type"],
+      },
+      { "token_type": "namespace", "style": ["namespace"] },
+      { "token_type": "selfKeyword", "style": ["keyword"] },
+      { "token_type": "selfTypeKeyword", "style": ["keyword"] },
+      { "token_type": "field", "style": ["primary"] },
+      { "token_type": "property", "style": ["primary"] },
+      {
+        "token_type": "enumMember",
+        "token_modifiers": ["declaration"],
+        "style": ["variant"],
+      },
+      { "token_type": "enumMember", "style": ["variant"] },
+    ],
+  },
+  "show_edit_predictions": false,
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+  },
+}

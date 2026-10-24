@@ -54,7 +54,7 @@ From a Mac with nothing on it to one that has everything here:
    by dragging `Rex Beta.app` into `/Applications`. This stays manual during the
    beta; neither this installer nor the Brewfile downloads it.
 
-8. Carry on with the [dotfiles](../dotfiles/README.md), which copy my config into place and install the VS Code extensions. They also configure the installed Rex app for Claude Code and Codex automatically. Then run `./install.sh` to link the skills and mods.
+8. Carry on with the [dotfiles](../dotfiles/README.md), which copy my config into place and install the VS Code extensions, including Codex. Zed installs its configured TOML/Cargo and theme extensions and Codex ACP agent when it starts; Rust support is built in. The dotfiles also configure the installed Rex app for Claude Code and Codex automatically. Then run `./install.sh` to link the skills and mods.
 
    ```sh
    ./dotfiles/install.sh
@@ -93,6 +93,9 @@ The installer installs from both files, and `--pull` leaves those entries out of
 ## Tools
 
 These have their own installers and update themselves, so they aren't taken from Homebrew. Each is installed only if it isn't there yet.
+
+The installer also ensures rustup has `rust-src`, `rustfmt` and `clippy` for editor
+analysis, formatting and linting, including on Macs where Rust is already installed.
 
 | Tool        | Installer                                                                   |
 | ----------- | --------------------------------------------------------------------------- |

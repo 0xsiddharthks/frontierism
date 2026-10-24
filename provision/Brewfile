@@ -152,3 +152,5 @@ cask "whatsapp"
 cask "xdevplatform/tap/xurl", trusted: true
 # Full-featured companion app to the YubiKey
 cask "yubico-authenticator"
+# High-performance code editor
+cask "zed"

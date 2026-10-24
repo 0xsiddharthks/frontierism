@@ -14,6 +14,7 @@ My terminal, shell, editor and agent config for macOS.
 | `rex/preferences.json`        | selected Rex Mac settings, applied with `defaults`          |
 | `vscode/settings.json`         | `~/Library/Application Support/Code/User/settings.json`      |
 | `vscode/extensions.txt`        | installed with `code --install-extension`                    |
+| `zed/settings.json`            | `~/.config/zed/settings.json`                                |
 | `zsh/zprofile`                 | `~/.zprofile`                                                |
 | `zsh/zshrc`                    | `~/.zshrc`                                                   |
 
@@ -37,6 +38,41 @@ git pull --rebase
 ```
 
 This repo is public, so `--pull` refuses a file that looks like it holds a credential.
+
+## Editors and Rust
+
+Zed is the shell's preferred editor (`zed --wait`). Both editors use JetBrains Mono
+at 16 px and follow the system appearance with VS Code's Light 2026 and Dark 2026
+themes. Zed uses the [VS Code 2026 theme extension](https://github.com/eugenebokhan/zed-vs-code-2026-theme),
+including its recommended Rust semantic highlighting. Line spacing follows each
+editor's defaults: Zed's `comfortable` setting and VS Code's automatic line height.
+The font and Zed are installed by [provision](../provision/README.md).
+
+[Rust support is built into Zed](https://zed.dev/docs/languages/rust): rust-analyzer,
+rustfmt, Cargo run/test tasks and CodeLLDB debugging need no Rust extension. Its
+settings automatically install TOML syntax and the Tombi language server for Cargo
+manifests, plus the theme, when Zed starts. Other language settings, format-on-save,
+Cargo checks and debugger behavior retain Zed's defaults. The VS Code extension
+list includes rust-analyzer, Even Better TOML and CodeLLDB.
+
+Both editors exclude directories named `worktrees` or `.worktrees` at any depth,
+including `.claude/worktrees/` and `.codex/worktrees/`, so opening a parent repo
+doesn't scan the nested checkouts. Open a particular worktree as its own project
+when working in it. VS Code excludes these folders from its explorer, recursive
+watcher and Git repository discovery; searches inherit the explorer exclusions.
+Zed's [`file_scan_exclusions`](https://zed.dev/docs/reference/all-settings#file-scan-exclusions)
+cover its project tree, scans and searches; `"..."` retains the built-in exclusions.
+Both also exclude Cargo's `target` build output from scanning/watching. If adding
+another worktree container name, update both editor settings here. Project settings
+that override these lists should keep these patterns; in Zed use `"..."` to extend
+the inherited exclusions.
+
+Codex is included in both editors. VS Code installs OpenAI's `openai.chatgpt`
+extension; run **Codex: Open Codex Sidebar** from its command palette. Zed's
+`agent_servers` settings install Codex from the
+[ACP Registry](https://zed.dev/docs/ai/external-agents#codex); choose **Codex** from
+the Agent Panel's new-thread menu. Use the integration's sign-in flow if prompted.
+Authentication stays local, outside these dotfiles.
 
 ## Rex
 

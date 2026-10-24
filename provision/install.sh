@@ -132,6 +132,30 @@ tool "Oh My Zsh" "$HOME/.oh-my-zsh/oh-my-zsh.sh" \
     https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh \
     sh -s -- --unattended --keep-zshrc
 
+# rust-analyzer needs the standard library sources; formatting and linting use
+# rustfmt and Clippy. Check existing installations too, not just new rustup installs.
+rustup_bin="$HOME/.cargo/bin/rustup"
+if [[ -x "$rustup_bin" ]]; then
+    if components="$("$rustup_bin" component list --installed)"; then
+        for component in rust-src rustfmt clippy; do
+            if grep -Eq "^${component}(-|$)" <<<"$components"; then
+                echo "ok       Rust component $component"
+            elif [[ -n "$mode" ]]; then
+                echo "missing  Rust component $component"
+                failed=1
+            elif "$rustup_bin" component add "$component"; then
+                echo "added    Rust component $component"
+            else
+                echo "FAILED   Rust component $component"
+                failed=1
+            fi
+        done
+    else
+        echo "FAILED   Rust components: couldn't list the installed ones"
+        failed=1
+    fi
+fi
+
 if [[ -z "$mode" && "$stale" == 1 ]]; then
     echo "note     open a new terminal, so that what was installed is on PATH"
 fi

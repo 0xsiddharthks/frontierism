@@ -25,6 +25,7 @@ files=(
     "rex/rex|$HOME/.local/bin/rex"
     "rex/init.lua|${XDG_CONFIG_HOME:-$HOME/.config}/rex/init.lua"
     "vscode/settings.json|$support/Code/User/settings.json"
+    "zed/settings.json|$HOME/.config/zed/settings.json"
     "zsh/zprofile|$HOME/.zprofile"
     "zsh/zshrc|$HOME/.zshrc"
 )
