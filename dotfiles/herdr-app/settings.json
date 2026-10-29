@@ -1,6 +1,10 @@
 {
-  "theme": "tokyo-night",
-  "appearance": "dark",
+  "theme": {
+    "light": "tokyo-night-day",
+    "dark": "tokyo-night"
+  },
+  "font": "JetBrains Mono",
+  "font_size": 16,
   "sounds": {
     "enabled": false
   }

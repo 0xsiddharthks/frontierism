@@ -14,7 +14,7 @@ import tempfile
 import time
 
 ROOT = Path(__file__).resolve().parent
-MODS = ("frontier-agents", "frontier-tabs")
+MODS = ("frontier-agents", "frontier-tabs", "frontier-workbench")
 LAYOUT = "frontierism"
 CREDENTIAL = re.compile(
     r"(^|[^A-Za-z0-9_-])(sk-(ant-)?[A-Za-z0-9_-]{20}|gh[pousr]_[A-Za-z0-9]{30}"

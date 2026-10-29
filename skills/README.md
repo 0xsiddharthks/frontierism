@@ -10,6 +10,9 @@ My agent skills for Claude Code and Codex.
 | `pr-peer-review`                                                 | For colleagues' PRs: keeps only real issues, and posts the review when I say so.                   |
 | `socratic-social-science`                                        | Explicitly invoked Socratic tutoring for politics, economics, and social science; excludes technical instruction. |
 | `xurl`                                                           | Read-only X research: linked browser for posts and threads; xurl when API access fits better.      |
+| `herdr-app`                                                     | Desktop layouts, keys, appearance and mods; reads `herdr-app --skill` from the installed binary. |
+| `herdr-core`                                                    | Persistent terminals and program operations; reads the installed `hc --skill`. |
+| `herdr-cli`                                                     | The legacy TUI and its configuration; reads the installed `herdr --skill`. |
 | `predictive-history`                                             | Create or update Predictive History lecture pages in Notion, with layered notes, verified sources, and native embeds. |
 | `notion-to-obsidian`                                             | Export a Notion page or bounded hub into Obsidian, preserving local edits and rendering media once. |
 | `notion-analyze-and-link`                                        | Review an existing Notion collection and add meaningful connections or requested synthesis. |
@@ -37,6 +40,14 @@ local copy, and `obsidian-analyze-and-link` for a local analysis task. The latte
 three skills work with other note collections too. They compose when requested;
 none automatically exports, synchronizes, or launches the next skill. Invoke a
 skill as `$skill-name` in Codex or `/skill-name` in Claude Code.
+
+The three Herdr skills are thin entrypoints, with separate names for the desktop
+window, core terminals and legacy TUI. They read the relevant binary's guide each
+time instead of storing a manual or API snapshot in this repository. Herdr app
+also generates its customization guide and types locally. Updating Herdr therefore
+updates the operational instructions without needing a matching commit here.
+The normal installer links these wrappers into both agents' skill directories;
+[Codex follows symlinked skill folders](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills).
 
 Invoke `socratic-social-science` with `$socratic-social-science` in Codex or
 `/socratic-social-science` in Claude Code. It replaces `socratic-learning` and

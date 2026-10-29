@@ -39,35 +39,15 @@
     "cmd-+": "app.zoom_in",
     "cmd--": "app.zoom_out",
     "cmd-0": "app.zoom_reset",
-    "ctrl-b ?": "app.help",
-    "ctrl-b s": "app.settings",
-    "ctrl-b w": "mod.open:picker",
-    "ctrl-b shift-n": "space.new",
-    "ctrl-b shift-w": "space.rename",
-    "ctrl-b shift-d": "space.close",
-    "ctrl-b c": "tab.new",
-    "ctrl-b shift-t": "tab.rename",
-    "ctrl-b p": "tab.prev",
-    "ctrl-b n": "tab.next",
-    "ctrl-b shift-x": "tab.close",
-    "ctrl-b h": "pane.go:left",
-    "ctrl-b j": "pane.go:down",
-    "ctrl-b k": "pane.go:up",
-    "ctrl-b l": "pane.go:right",
-    "ctrl-b v": "pane.split:right",
-    "ctrl-b -": "pane.split:down",
-    "ctrl-b x": "pane.close",
-    "ctrl-b z": "pane.zoom",
-    "ctrl-b b": "layout.toggle:sidebar",
-    "ctrl-b 1": "space.select:1",
-    "ctrl-b 2": "space.select:2",
-    "ctrl-b 3": "space.select:3",
-    "ctrl-b 4": "space.select:4",
-    "ctrl-b 5": "space.select:5",
-    "ctrl-b 6": "space.select:6",
-    "ctrl-b 7": "space.select:7",
-    "ctrl-b 8": "space.select:8",
-    "ctrl-b 9": "space.select:9"
+    "cmd-1": "space.select:1",
+    "cmd-2": "space.select:2",
+    "cmd-3": "space.select:3",
+    "cmd-4": "space.select:4",
+    "cmd-5": "space.select:5",
+    "cmd-6": "space.select:6",
+    "cmd-7": "space.select:7",
+    "cmd-8": "space.select:8",
+    "cmd-9": "space.select:9"
   },
   "terminal": {
     "cmd-c": "terminal.copy",
@@ -78,7 +58,11 @@
     "alt-backspace": "send:\u0017",
     "cmd-left": "send:\u0001",
     "cmd-right": "send:\u0005",
-    "cmd-backspace": "send:\u0015",
-    "ctrl-b ctrl-b": "send:\u0002"
+    "cmd-backspace": "send:\u0015"
+  },
+  "layout:frontierism": {
+    "cmd-shift-e": "frontier-workbench.files",
+    "cmd-shift-g": "frontier-workbench.changes",
+    "cmd-shift-o": "frontier-workbench.editor"
   }
 }

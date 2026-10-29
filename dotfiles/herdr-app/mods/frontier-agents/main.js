@@ -174,7 +174,7 @@ export default class Agents extends View {
         .when(Boolean(l), el => el.border_l(1.5).border_color(t.input))
         .when(l === "└" || l === "├", el => el.border_b(1.5).rounded_bl(6))))
       .when(Boolean(pic), el => el.child(div().mr(8).child(pic)))
-      .child(div().flex_1().truncate().text_color(on ? t.foreground : t.muted).child(k.name || k.template || k.program?.name || k.address))
+      .child(div().flex_1().truncate().text_color(on ? t.foreground : t.muted).child(clean(k.title) || k.name || k.template || k.program?.name || k.address))
       .child(this.status(t, { status: st }, compact));
   }
 
@@ -244,10 +244,11 @@ export default class Agents extends View {
     // A row reads "space \u00b7 detail": the detail is a tab someone named or the
     // agent's own title, never an automatic tab number unless two rows would
     // otherwise read the same.
+    const allPanes = panes();
     const tabs = spaces().flatMap(s => s.tabs);
     const label = (a) => {
       const tab = tabs.find(tab => tab.id === a.tab);
-      return tab ? title(tab, lead(tab)) : a.title || a.program?.name || "";
+      return tab ? title(tab, lead(tab, allPanes)) : a.title || a.program?.name || "";
     };
     const detail = new Map(list.map(a => [a.address, /^\d+$/.test(label(a)) ? null : label(a)]));
     const seen = {};
@@ -297,6 +298,8 @@ export default class Agents extends View {
       // Without a space header above (priority, pinned) the row names its space.
       const full = byPriority || isPinned;
       const name = full ? a.space_name || label(a) : more ?? (/^\d+$/.test(label(a)) ? a.program?.name || label(a) : label(a));
+      const pane = allPanes.find(p => p.pane === a.pane);
+      const context = [...new Set([a.program?.name || a.app || "Agent", a.space_name, pane?.branch].filter(Boolean))].join(" · ");
       return h_flex()
         .id(`ag-${a.address}`)
         .px(8)
@@ -307,6 +310,7 @@ export default class Agents extends View {
         .gap(9)
         .when(a.focused, (el) => el.bg(t.selected))
         .cursor_pointer()
+        .tooltip([clean(a.title) || name, context, pane?.cwd].filter(Boolean).join("\n"))
         .hover((s) => s.bg(t.hover))
         .on_hover((on, cx) => {
           if (on) this.hovered = a.address;
@@ -320,7 +324,7 @@ export default class Agents extends View {
             .child(div().flex_1().min_w(0).truncate().text_color(idle ? t.muted : t.foreground)
               .child(clean(a.title) || more || a.program?.name || name)))
           .child(div().pl(21).truncate().text_size(11).text_color(t.dim)
-            .child(a.program?.name || a.app || "Agent")))
+            .child(context)))
         .when(Boolean(machine), el => el.child(div().text_size(10).text_color(t.dim).child(machine)))
         .when(subs.length > 0, el => el.child(fold(a, subs)))
         .when(this.hovered === a.address, el => el.child(pin))

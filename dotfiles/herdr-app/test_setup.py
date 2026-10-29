@@ -68,7 +68,7 @@ class InstallTests(unittest.TestCase):
         self.assertEqual(state["layout"], "frontierism")
         self.assertEqual(state["frame.welcomed"], "skipped")
         self.assertEqual(state["agents.sort"], "priority")
-        self.assertEqual(len([c for c in self.calls if c[0] == "check"]), 2)
+        self.assertEqual(len([c for c in self.calls if c[0] == "check"]), len(setup.MODS))
         before = self.snapshot()
         self.assertEqual(self.run_setup(), 0)
         self.assertEqual(before, self.snapshot())

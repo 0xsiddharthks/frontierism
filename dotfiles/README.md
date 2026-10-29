@@ -43,9 +43,13 @@ This repo is public, so `--pull` refuses a file that looks like it holds a crede
 ## Herdr
 
 The [desktop app configuration](herdr-app/README.md) migrates the TUI preferences:
-`Ctrl+B`, then `1`–`9` selects spaces; numeric tab switching is disabled; Tokyo Night
-stays dark; sounds are off; agents show two lines in priority order; the tab strip
-hides at one tab. Personal layout and mod copies survive app updates.
+`Cmd+1`–`Cmd+9` selects spaces; numeric tab switching is disabled; Tokyo Night
+follows macOS light/dark appearance; sounds are off; agents show two lines in priority order; the tab strip
+hides at one tab. A persistent header keeps the current task, folder and branch,
+Files, Changes, Zed and the new-terminal/agent menu accessible. Terminal text uses
+JetBrains Mono at 16 px. Personal layout and mod copies survive app updates.
+The older TUI keeps its prefix bindings and follows its host terminal's appearance;
+its light/dark theme pair is enabled too.
 
 The installer checks and selects the personal layout while Herdr is running, or
 saves the selection for its first launch on a new machine. `--check` verifies the

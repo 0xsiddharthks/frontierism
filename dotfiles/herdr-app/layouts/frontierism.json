@@ -1,6 +1,9 @@
 {
   "id": "root",
-  "theme": "tokyo-night",
+  "theme": {
+    "light": "tokyo-night-day",
+    "dark": "tokyo-night"
+  },
   "cloned_from": {
     "name": "main",
     "version": "0.1.7"
@@ -33,7 +36,7 @@
                 "mod": "spaces"
               },
               "size": {
-                "weight": 1
+                "weight": 2
               },
               "min": 90
             },
@@ -44,7 +47,7 @@
                 "mod": "frontier-agents"
               },
               "size": {
-                "weight": 1
+                "weight": 3
               },
               "min": 90
             }
@@ -65,7 +68,7 @@
         }
       ],
       "size": {
-        "px": 268
+        "px": 288
       },
       "min": 44,
       "max": 480,
@@ -77,13 +80,24 @@
       "type": "column",
       "children": [
         {
+          "id": "workbench",
+          "type": "block",
+          "size": {
+            "px": 40
+          },
+          "window_drag": true,
+          "content": {
+            "mod": "frontier-workbench"
+          }
+        },
+        {
           "id": "tabs",
           "type": "block",
           "content": {
             "mod": "frontier-tabs"
           },
           "size": {
-            "px": 42
+            "px": 34
           },
           "window_drag": true
         },
@@ -102,7 +116,7 @@
                       "mod": "pane"
                     },
                     "reveal": "always",
-                    "height": 30,
+                    "height": 28,
                     "position": "top"
                   },
                   "background": "background",
@@ -114,9 +128,9 @@
                     "width": 1,
                     "color": "accent"
                   },
-                  "radius": 10,
-                  "gap": 8,
-                  "lone": true
+                  "radius": 6,
+                  "gap": 6,
+                  "lone": false
                 }
               }
             },
@@ -154,8 +168,8 @@
               "hidden": true
             }
           ],
-          "padding": 8,
-          "gap": 8
+          "padding": 6,
+          "gap": 6
         },
         {
           "id": "status",
@@ -173,8 +187,8 @@
   ],
   "background": "canvas",
   "terminal_padding": [
-    14,
-    12
+    8,
+    10
   ],
   "divider": {
     "width": 1,
