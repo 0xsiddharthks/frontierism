@@ -127,6 +127,25 @@ tool rustup "$HOME/.cargo/bin/rustup" https://sh.rustup.rs sh -s -- -y
 tool "Claude Code" "$HOME/.local/bin/claude" https://claude.ai/install.sh bash
 tool Codex "$HOME/.local/bin/codex" https://chatgpt.com/codex/install.sh sh
 tool herdr "$HOME/.local/bin/herdr" https://herdr.dev/install.sh sh
+# The desktop app is separate from the TUI above. Its installer also installs
+# the core, but reports a core download failure without failing the app install.
+# Check the core separately so a new machine cannot silently miss it.
+tool "Herdr app" "$HOME/.local/bin/herdr-app" https://releases.herdr.dev/app/install.sh sh
+tool herdr-core "$HOME/.local/bin/herdr-core" https://releases.herdr.dev/core/install.sh sh
+if [[ -x "$HOME/.local/bin/herdr-core" ]]; then
+    if [[ "$HOME/.local/bin/hc" -ef "$HOME/.local/bin/herdr-core" ]]; then
+        echo "ok       hc -> herdr-core"
+    elif [[ -e "$HOME/.local/bin/hc" || -L "$HOME/.local/bin/hc" ]]; then
+        echo "conflict ~/.local/bin/hc belongs to another program; leaving it alone (use herdr-core)"
+        failed=1
+    elif [[ -n "$mode" ]]; then
+        echo "missing  ~/.local/bin/hc (herdr-core's short name)"
+        failed=1
+    else
+        ln -s herdr-core "$HOME/.local/bin/hc"
+        echo "added    hc -> herdr-core"
+    fi
+fi
 # Its installer also writes a ~/.zshrc, unless one is there: --keep-zshrc leaves that one alone.
 tool "Oh My Zsh" "$HOME/.oh-my-zsh/oh-my-zsh.sh" \
     https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh \

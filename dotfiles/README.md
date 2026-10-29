@@ -9,6 +9,7 @@ My terminal, shell, editor and agent config for macOS.
 | `claude/statusline-command.sh` | `~/.claude/statusline-command.sh`                            |
 | `ghostty/config`               | `~/Library/Application Support/com.mitchellh.ghostty/config` |
 | `herdr/config.toml`            | `~/.config/herdr/config.toml`                                |
+| `herdr-app/`                  | personal settings, keys, themes, layout and mods in `~/.config/herdr-app/` |
 | `rex/rex`                     | `~/.local/bin/rex`                                          |
 | `rex/init.lua`                | `~/.config/rex/init.lua`                                    |
 | `rex/preferences.json`        | selected Rex Mac settings, applied with `defaults`          |
@@ -38,6 +39,19 @@ git pull --rebase
 ```
 
 This repo is public, so `--pull` refuses a file that looks like it holds a credential.
+
+## Herdr
+
+The [desktop app configuration](herdr-app/README.md) migrates the TUI preferences:
+`Ctrl+B`, then `1`–`9` selects spaces; numeric tab switching is disabled; Tokyo Night
+stays dark; sounds are off; agents show two lines in priority order; the tab strip
+hides at one tab. Personal layout and mod copies survive app updates.
+
+The installer checks and selects the personal layout while Herdr is running, or
+saves the selection for its first launch on a new machine. `--check` verifies the
+managed files and selection without opening Herdr. To apply only Herdr, run
+`./herdr-app/setup.py --push` here. Its [migration notes](herdr-app/README.md#migrated-preferences)
+record the old options that have no direct desktop equivalent.
 
 ## Editors and Rust
 
@@ -125,7 +139,10 @@ Tokens and work details go in `~/.zshrc.private`, which `~/.zshrc` reads if it i
 1. Install the apps and tools with [`../provision/install.sh`](../provision/README.md#new-machine), then run `./install.sh --push` here. It is `--push` because some installers have already written a config of their own by then, such as the `~/.zshrc` that Oh My Zsh starts with.
 2. Bring `~/.zshrc.private` over from the old Mac, and open a new terminal.
 3. Run `../install.sh` to link the skills and mods.
-4. Run `herdr integration install claude` and `herdr integration install codex`. herdr manages its own hook scripts, so they aren't kept here.
+4. If using the older Herdr TUI, run `herdr integration install claude` and
+   `herdr integration install codex`. It manages its own hook scripts, so they
+   aren't kept here. The desktop app uses herdr-core and the agents' OSC 7501
+   status reports; these TUI integrations do not configure the desktop app.
 5. Run the installer in my private guides repo for the other hook the Claude settings name.
 6. Run `../preferences/install.sh` to make Zed the default for code/text files in macOS, Codex's file/repository opening and Git. See [preferences](../preferences/README.md) for checking and backups.
 

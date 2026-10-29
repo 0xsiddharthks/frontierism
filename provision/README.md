@@ -37,7 +37,7 @@ From a Mac with nothing on it to one that has everything here:
    It installs three things, in this order:
    - Homebrew. Its installer says what it will do, waits for Return, and asks for the password.
    - Everything in the `Brewfile`. This is the long part, and some casks ask for the password again.
-   - rustup, Claude Code, Codex, herdr and Oh My Zsh.
+   - rustup, Claude Code, Codex, the Herdr TUI, Herdr desktop app, herdr-core and Oh My Zsh.
 
    If something fails to install, run it again. It skips what is already there.
 
@@ -54,10 +54,11 @@ From a Mac with nothing on it to one that has everything here:
    by dragging `Rex Beta.app` into `/Applications`. This stays manual during the
    beta; neither this installer nor the Brewfile downloads it.
 
-8. Carry on with the [dotfiles](../dotfiles/README.md), which copy my config into place and install the VS Code extensions, including Codex. Zed installs its configured TOML/Cargo and theme extensions and Codex ACP agent when it starts; Rust support is built in. The dotfiles also configure the installed Rex app for Claude Code and Codex automatically. Then run `./install.sh` to link the skills and mods.
+8. Carry on with the [dotfiles](../dotfiles/README.md), which copy my config into place and install the VS Code extensions, including Codex. Zed installs its configured TOML/Cargo and theme extensions and Codex ACP agent when it starts; Rust support is built in. The dotfiles also configure Herdr's personal layout, themes and keybindings, and the installed Rex app for Claude Code and Codex automatically. `--push` replaces starter configs written by app installers, keeping backups. Then run `./install.sh` to link the skills and mods.
 
    ```sh
-   ./dotfiles/install.sh
+   ./dotfiles/install.sh --push
+   ./dotfiles/install.sh --check
    ./install.sh
    ```
 
@@ -113,6 +114,14 @@ analysis, formatting and linting, including on Macs where Rust is already instal
 | Claude Code | `https://claude.ai/install.sh`                                              |
 | Codex       | `https://chatgpt.com/codex/install.sh`                                      |
 | herdr       | `https://herdr.dev/install.sh`                                              |
+| Herdr app   | `https://releases.herdr.dev/app/install.sh`                                 |
+| herdr-core  | `https://releases.herdr.dev/core/install.sh`                                |
 | Oh My Zsh   | `https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh` |
 
 Oh My Zsh's installer writes a starter `~/.zshrc` when there isn't one, and leaves one that is there alone. The [dotfiles](../dotfiles/README.md#zsh) put mine in its place.
+
+Herdr app installs to `~/Applications/Herdr.app` with its `herdr-app` CLI in
+`~/.local/bin`. The app installer also installs a missing core; this provisioner
+checks `~/.local/bin/herdr-core` separately and ensures its `hc` shortcut exists.
+The app and core update themselves. The [personal Herdr files](../dotfiles/herdr-app/README.md)
+are applied by the dotfile installer, including before the app's first launch.

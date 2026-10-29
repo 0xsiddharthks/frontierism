@@ -1,0 +1,7 @@
+# Herdr's checker writes these beside each mod. The installed app owns them.
+mods/*/gpui-kit.d.ts
+mods/*/herdr.d.ts
+mods/*/jsconfig.json
+mods/*/node_modules/
+__pycache__/
+*.bak-*

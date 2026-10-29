@@ -76,6 +76,7 @@ for entry in "${files[@]}"; do
     fi
 done
 
+python3 "$root/herdr-app/setup.py" "$mode" || failed=1
 "$root/rex/setup.sh" "$mode" || failed=1
 
 list="$root/vscode/extensions.txt"
