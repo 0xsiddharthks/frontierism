@@ -1,5 +1,4 @@
 tap "bufbuild/buf"
-tap "namespacelabs/namespace"
 tap "pulumi/tap"
 tap "xdevplatform/tap"
 # Static analysis and lint tool, for (ba)sh scripts
@@ -16,8 +15,6 @@ brew "zig"
 brew "cargo-zigbuild"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
-# Tool for interacting with remote images and registries
-brew "crane"
 # Select default apps for documents and URL schemes on macOS
 brew "duti"
 # Simple, fast and user-friendly alternative to find
@@ -34,18 +31,12 @@ brew "git-crypt"
 brew "gnupg"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
-# Gorgeous metric visualizations and dashboards for timeseries databases
-brew "grafana"
 # Like cURL, but for gRPC
 brew "grpcurl"
 # Simple terminal UI for git commands
 brew "lazygit"
 # Postgres C API library
 brew "libpq"
-# Run LogQL queries against a Loki server
-brew "logcli"
-# CLI for interacting with Grafana Mimir
-brew "mimirtool"
 # Open-source, cross-platform JavaScript runtime environment
 brew "node"
 # Fast, disk space efficient package manager
@@ -78,8 +69,6 @@ brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 # The best way of working with Protocol Buffers.
 brew "bufbuild/buf/buf", trusted: true
-# Container-optimized cloud infrastructure that just works.
-brew "namespacelabs/namespace/nsc", trusted: true
 # Pulumi - Modern Infrastructure as Code. Any cloud, any language 
 brew "pulumi/tap/pulumi", trusted: true
 # Password manager that keeps all passwords secure behind one password
@@ -96,8 +85,6 @@ cask "claude"
 cask "cursor"
 # Voice and text chat software
 cask "discord"
-# App to build and share containerised applications and microservices
-cask "docker-desktop"
 cask "font-jetbrains-mono"
 cask "font-jetbrains-mono-nerd-font"
 # Set of tools to manage resources and applications hosted on Google Cloud
