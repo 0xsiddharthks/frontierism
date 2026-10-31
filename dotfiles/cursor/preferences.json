@@ -1,0 +1,182 @@
+{
+  "applicationUser": {
+    "cppEnabled": false,
+    "systemNotificationsEnabled": true,
+    "shouldOnlyImportOnAccept": true,
+    "cppInCmdF": true,
+    "cppTriggerInComments": true,
+    "cppShowWhitespaceOnlyChanges": false,
+    "indexRepository": true,
+    "shouldAutoParseCmdKLinks": false,
+    "autoCreateNewChatAfterTimeout": true,
+    "isFileSyncClientEnabled": true,
+    "explicitlyEnableSemanticSearch": false,
+    "eligibleForSnippetLearning": false,
+    "noStorageMode": true,
+    "privacyModeVersionToggle": true,
+    "cppAutoImportEnabled": true,
+    "useModelParameters": true,
+    "systemTrayEnabled": false,
+    "cppAutoImportDecorationStyle": "squiggle",
+    "composerState": {
+      "alwaysKeepComposerInBound": true,
+      "autoApplyFilesOutsideContext": true,
+      "useYoloMode": false,
+      "yoloMcpToolsDisabled": false,
+      "yoloDeleteFileDisabled": false,
+      "yoloDotFilesDisabled": true,
+      "yoloOutsideWorkspaceDisabled": true,
+      "yoloEnableRunEverything": false,
+      "isWebSearchToolEnabled": true,
+      "isWebSearchToolEnabled2": false,
+      "autoAcceptWebSearchTool": true,
+      "areSearchToolsEnabledForAskMode": true,
+      "useLegacyTerminalTool": false,
+      "playwrightProtection": false,
+      "smartAllowlistEnabled": false,
+      "autoAcceptGenerateImageTool": false,
+      "autoApproveModeTransitions": false,
+      "enableSmartAuto": false,
+      "mcpAuthBlocking": true,
+      "maxOpenTabsMode": "custom",
+      "location2": "pane",
+      "defaultMode2": "agent",
+      "codeBlockDisplayPreference": "collapsed",
+      "thinkingLevel": "none",
+      "agentBackendPreference": "cursor-agent",
+      "maxOpenTabsCustomValue": 5
+    },
+    "aiSettings": {
+      "modelConfig": {
+        "cmd-k": {
+          "modelName": "default",
+          "maxMode": false,
+          "selectedModels": [
+            {
+              "modelId": "default",
+              "parameters": []
+            }
+          ]
+        },
+        "composer": {
+          "modelName": "grok-4.7",
+          "maxMode": true,
+          "selectedModels": [
+            {
+              "modelId": "grok-4.7",
+              "parameters": [
+                {
+                  "id": "context",
+                  "value": "256k"
+                },
+                {
+                  "id": "reasoning_effort",
+                  "value": "xhigh"
+                },
+                {
+                  "id": "fast",
+                  "value": "false"
+                }
+              ]
+            }
+          ]
+        },
+        "background-composer": {
+          "modelName": "default",
+          "maxMode": true,
+          "selectedModels": [
+            {
+              "modelId": "default",
+              "parameters": []
+            }
+          ]
+        },
+        "plan-execution": {
+          "modelName": "default",
+          "maxMode": true,
+          "selectedModels": [
+            {
+              "modelId": "default",
+              "parameters": []
+            }
+          ]
+        },
+        "spec": {
+          "modelName": "default",
+          "maxMode": false,
+          "selectedModels": [
+            {
+              "modelId": "default",
+              "parameters": []
+            }
+          ]
+        },
+        "deep-search": {
+          "modelName": "default",
+          "maxMode": false,
+          "selectedModels": [
+            {
+              "modelId": "default",
+              "parameters": []
+            }
+          ]
+        },
+        "quick-agent": {
+          "modelName": "default",
+          "maxMode": false,
+          "selectedModels": [
+            {
+              "modelId": "default",
+              "parameters": []
+            }
+          ]
+        },
+        "composer-ensemble": {
+          "modelName": "default",
+          "maxMode": false,
+          "selectedModels": [
+            {
+              "modelId": "default",
+              "parameters": []
+            }
+          ]
+        }
+      },
+      "modelDefaultSwitchOnNewChat": false,
+      "modelSettingToMaxMode": {
+        "background-composer": true
+      },
+      "modelOverrideEnabled": [
+        "claude-opus-4-6",
+        "grok-4.7"
+      ],
+      "modelOverrideDisabled": [
+        "claude-opus-4-6",
+        "gpt-5.2",
+        "claude-sonnet-4-5",
+        "claude-sonnet-4-6",
+        "gpt-5.3-codex",
+        "gpt-5.5",
+        "composer-2.5",
+        "muse-spark-1.3",
+        "claude-sonnet-5-5",
+        "gemini-3.8-flash",
+        "claude-fable-5-1",
+        "claude-opus-5",
+        "grok-4.6",
+        "muse-wonder-1.0"
+      ]
+    }
+  },
+  "globalStorage": {
+    "workbench.sideBar.size": 365,
+    "workbench.auxiliaryBar.size": 546,
+    "workbench.panel.size": 203,
+    "workbench.unifiedSidebar.size": 250,
+    "extensionsIdentifiers/disabled": [
+      {
+        "id": "github.copilot-chat"
+      }
+    ]
+  }
+}

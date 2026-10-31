@@ -21,14 +21,12 @@
         "editor.insertSpaces": true,
         "editor.tabSize": 4,
     },
-
     "[typescript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.formatOnType": true,
         "prettier.semi": false,
         "editor.tabSize": 2,
     },
-
     "explorer.confirmDragAndDrop": false,
     "git.enableSmartCommit": true,
     "[solidity]": {
@@ -60,7 +58,6 @@
     "markdown.preview.breaks": true,
     "editor.fontFamily": "'JetBrains Mono', 'Google Sans Code', Menlo, Monaco, 'Courier New', monospace",
     "editor.fontSize": 16,
-    // Let VS Code choose its recommended line height for this font size.
     "editor.lineHeight": 0,
     "github.copilot.enable": {
         "*": false,
@@ -82,33 +79,14 @@
     "[github-actions-workflow]": {
         "editor.defaultFormatter": "redhat.vscode-yaml",
     },
-
     "window.commandCenter": true,
     "update.releaseTrack": "prerelease",
     "explorer.confirmDelete": false,
-    // "terminal.integrated.suggest.enabled": true,
-    // "terminal.integrated.cursorBlinking": true,
-    // "terminal.integrated.cursorStyle": "line",
-    // "terminal.integrated.cursorStyleInactive": "line",
     "terminal.integrated.sendKeybindingsToShell": true,
     "editor.formatOnSave": true,
     "editor.formatOnType": false,
     "editor.wordWrap": "on",
     "window.autoDetectColorScheme": true,
-    "workbench.preferredLightColorTheme": "Light 2026",
-    "workbench.preferredDarkColorTheme": "Dark 2026",
-    // Nested agent checkouts are separate projects, including .claude/worktrees/.
-    // Open a worktree directly when needed; do not scan it from its parent repo.
-    "files.watcherExclude": {
-        "**/worktrees/**": true,
-        "**/.worktrees/**": true,
-        "**/target/**": true,
-    },
-    "files.exclude": {
-        "**/worktrees": true,
-        "**/.worktrees": true,
-    },
-    "git.repositoryScanIgnoredFolders": ["node_modules", "worktrees", ".worktrees"],
     "git.confirmSync": false,
     "git.autofetch": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -120,14 +98,10 @@
     },
     "gitlens.ai.gitkraken.model": "gemini:gemini-2.0-flash",
     "gitlens.launchpad.indicator.enabled": false,
-    "cursor.cpp.disabledLanguages": [],
+    "cursor.cpp.disabledLanguages": ["plaintext", "markdown", "scminput"],
     "claudeCode.selectedModel": "default",
     "claudeCode.preferredLocation": "panel",
     "claudeCode.useCtrlEnterToSend": true,
-    // "rust-analyzer.checkOnSave": false,
-    // "rust-analyzer.cargo.buildScripts.rebuildOnSave": false,
-    // "rust-analyzer.procMacro.enable": true,
-    // "rust-analyzer.procMacro.attributes.enable": true,
     "makefile.configureOnOpen": true,
     "diffEditor.ignoreTrimWhitespace": false,
     "diffEditor.hideUnchangedRegions.enabled": true,
@@ -146,6 +120,20 @@
         "**/.forgejo/workflows/*.yaml",
     ],
     "js/ts.experimental.useTsgo": true,
-    "workbench.activityBar.location": "top",
-    // "gitlens.launchpad.indicator.enabled": false
+    "workbench.preferredLightColorTheme": "Default Light Modern",
+    "workbench.preferredDarkColorTheme": "Default Dark Modern",
+    "files.watcherExclude": {
+        "**/worktrees/**": true,
+        "**/.worktrees/**": true,
+        "**/target/**": true,
+    },
+    "files.exclude": {
+        "**/worktrees": true,
+        "**/.worktrees": true,
+    },
+    "git.repositoryScanIgnoredFolders": [
+        "node_modules",
+        "worktrees",
+        ".worktrees",
+    ],
 }

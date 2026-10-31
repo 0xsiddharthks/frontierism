@@ -20,6 +20,8 @@ files=(
     "claude/cw|$HOME/.local/bin/cw"
     "claude/settings.json|$HOME/.claude/settings.json"
     "claude/statusline-command.sh|$HOME/.claude/statusline-command.sh"
+    "cursor/settings.json|$support/Cursor/User/settings.json"
+    "cursor/keybindings.json|$support/Cursor/User/keybindings.json"
     "ghostty/config|$support/com.mitchellh.ghostty/config"
     "herdr/config.toml|$HOME/.config/herdr/config.toml"
     "rex/rex|$HOME/.local/bin/rex"
@@ -28,11 +30,6 @@ files=(
     "zsh/zprofile|$HOME/.zprofile"
     "zsh/zshrc|$HOME/.zshrc"
 )
-
-# VS Code is optional; apply its saved settings only when it is installed.
-if command -v code >/dev/null; then
-    files+=("vscode/settings.json|$support/Code/User/settings.json")
-fi
 
 # Replaces $2 with a copy of $1, keeping the mode of the file it replaces.
 copy() {
@@ -83,16 +80,22 @@ done
 python3 "$root/herdr-app/setup.py" "$mode" || failed=1
 "$root/rex/setup.sh" "$mode" || failed=1
 
-list="$root/vscode/extensions.txt"
-if ! command -v code >/dev/null; then
-    echo "skipped  VS Code extensions: the code command isn't on PATH"
-elif ! installed="$(code --list-extensions)"; then
-    echo "FAILED   VS Code extensions: couldn't list the installed ones"
+list="$root/cursor/extensions.txt"
+cursor_cli="$(command -v cursor || true)"
+# The bundled CLI also works before Cursor has installed its shell command.
+if [[ -z "$cursor_cli" && -x /Applications/Cursor.app/Contents/Resources/app/bin/cursor ]]; then
+    cursor_cli=/Applications/Cursor.app/Contents/Resources/app/bin/cursor
+fi
+if [[ -z "$cursor_cli" ]]; then
+    echo "missing  Cursor: run ./provision/install.sh first"
+    failed=1
+elif ! installed="$("$cursor_cli" --list-extensions)"; then
+    echo "FAILED   Cursor extensions: couldn't list the installed ones"
     failed=1
 elif [[ "$mode" == --pull ]]; then
     sort -f <<<"$installed" >"$list.tmp.$$"
     mv "$list.tmp.$$" "$list"
-    echo "pulled   VS Code extensions"
+    echo "pulled   Cursor extensions"
 else
     installed="$(tr '[:upper:]' '[:lower:]' <<<"$installed")"
     missing=0
@@ -103,18 +106,20 @@ else
         fi
         missing=1
         if [[ "$mode" == --check ]]; then
-            echo "missing  VS Code extension $extension"
+            echo "missing  Cursor extension $extension"
             failed=1
-        elif code --install-extension "$extension" >/dev/null; then
-            echo "added    VS Code extension $extension"
+        elif "$cursor_cli" --install-extension "$extension" >/dev/null; then
+            echo "added    Cursor extension $extension"
         else
-            echo "FAILED   VS Code extension $extension"
+            echo "FAILED   Cursor extension $extension"
             failed=1
         fi
     done <"$list"
     if [[ "$missing" == 0 ]]; then
-        echo "ok       VS Code extensions"
+        echo "ok       Cursor extensions"
     fi
 fi
+
+python3 "$root/cursor/preferences.py" "$mode" || failed=1
 
 exit "$failed"

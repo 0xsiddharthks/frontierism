@@ -54,7 +54,7 @@ From a Mac with nothing on it to one that has everything here:
    by dragging `Rex Beta.app` into `/Applications`. This stays manual during the
    beta; neither this installer nor the Brewfile downloads it.
 
-8. Carry on with the [dotfiles](../dotfiles/README.md), which copy my config into place. If VS Code is installed separately and its `code` command is on `PATH`, they also apply its settings and extensions, including Codex. Zed installs its configured TOML/Cargo and theme extensions and Codex ACP agent when it starts; Rust support is built in. The dotfiles also configure Herdr's personal layout, themes and keybindings, and the installed Rex app for Claude Code and Codex automatically. `--push` replaces starter configs written by app installers, keeping backups. Then run `./install.sh` to link the skills and mods.
+8. Carry on with the [dotfiles](../dotfiles/README.md), which copy my config into place and set up Cursor and Zed. Cursor gets its saved settings, keyboard shortcuts, extensions and selected app preferences; close Cursor first so those app preferences can be applied. Zed installs its configured TOML/Cargo and theme extensions and Codex ACP agent when it starts; Rust support is built in. The dotfiles also configure Herdr's personal layout, themes and keybindings, and the installed Rex app for Claude Code and Codex automatically. `--push` replaces starter configs written by app installers, keeping backups. Then run `./install.sh` to link the skills and mods.
 
    ```sh
    ./dotfiles/install.sh --push

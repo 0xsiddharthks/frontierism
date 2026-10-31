@@ -7,14 +7,16 @@ My terminal, shell, editor and agent config for macOS.
 | `claude/cw`                    | `~/.local/bin/cw`                                            |
 | `claude/settings.json`         | `~/.claude/settings.json`                                    |
 | `claude/statusline-command.sh` | `~/.claude/statusline-command.sh`                            |
+| `cursor/settings.json`        | `~/Library/Application Support/Cursor/User/settings.json`   |
+| `cursor/keybindings.json`     | `~/Library/Application Support/Cursor/User/keybindings.json` |
+| `cursor/extensions.txt`       | installed with `cursor --install-extension`                 |
+| `cursor/preferences.json`    | selected Cursor app preferences, merged into its local storage |
 | `ghostty/config`               | `~/Library/Application Support/com.mitchellh.ghostty/config` |
 | `herdr/config.toml`            | `~/.config/herdr/config.toml`                                |
 | `herdr-app/`                  | personal settings, keys, themes, layout and mods in `~/.config/herdr-app/` |
 | `rex/rex`                     | `~/.local/bin/rex`                                          |
 | `rex/init.lua`                | `~/.config/rex/init.lua`                                    |
 | `rex/preferences.json`        | selected Rex Mac settings, applied with `defaults`          |
-| `vscode/settings.json`         | `~/Library/Application Support/Code/User/settings.json`      |
-| `vscode/extensions.txt`        | installed with `code --install-extension`                    |
 | `zed/settings.json`            | `~/.config/zed/settings.json`                                |
 | `zsh/zprofile`                 | `~/.zprofile`                                                |
 | `zsh/zshrc`                    | `~/.zshrc`                                                   |
@@ -59,28 +61,43 @@ record the old options that have no direct desktop equivalent.
 
 ## Editors and Rust
 
-VS Code is optional and isn't installed by [provision](../provision/README.md).
-Its saved settings and extensions are applied only when its `code` command is on
-`PATH`; otherwise they are skipped without failing the installer.
+Cursor and Zed are installed by [provision](../provision/README.md) and configured
+here. Zed is the shell's preferred editor (`EDITOR` and `VISUAL` use `zed --wait`)
+and remains the default in macOS, Codex and Git after applying [preferences](../preferences/README.md).
+Both editors use JetBrains Mono at 16 px and follow the system appearance.
+Cursor uses its built-in Default Light Modern and Default Dark Modern themes;
+Zed uses the [VS Code 2026 theme extension](https://github.com/eugenebokhan/zed-vs-code-2026-theme),
+including its recommended Rust semantic highlighting. Line spacing follows
+each editor's defaults: Zed's `comfortable` setting and Cursor's automatic line height.
 
-Zed is the shell's preferred editor (`EDITOR` and `VISUAL` use `zed --wait`). Both
-editors use JetBrains Mono at 16 px and follow the system appearance with VS Code's Light 2026 and Dark 2026
-themes. Zed uses the [VS Code 2026 theme extension](https://github.com/eugenebokhan/zed-vs-code-2026-theme),
-including its recommended Rust semantic highlighting. Line spacing follows each
-editor's defaults: Zed's `comfortable` setting and VS Code's automatic line height.
-The font and Zed are installed by [provision](../provision/README.md).
+The Cursor files capture the current editor settings, keyboard shortcuts and
+installed extension IDs. Extensions use Cursor's installer, including
+its Anysphere Python and remote-development extensions. No VS Code setup is run.
+The current Cursor profile has no custom snippets, tasks or named profiles.
+
+`cursor/preferences.json` also captures a selected set of app preferences:
+Cursor Tab is disabled, and the current privacy, agent, model, notification and
+sidebar-size preferences and disabled-extension list are saved.
+The helper reads and merges only explicitly named fields; it never exports the
+whole database, sign-ins, team/account identifiers, chat history, MCP connections
+or crash-reporting identifiers. Close Cursor before applying changed app
+preferences; `--pull` and `--check` work while it is open. Existing local state is
+backed up beside its database before a change. Cursor's storage format is internal,
+so app upgrades may require updating this helper. Model availability still follows
+the signed-in account. To sync just these preferences, run
+`python3 dotfiles/cursor/preferences.py --pull`, `--push` or `--check` from the repo root.
 
 [Rust support is built into Zed](https://zed.dev/docs/languages/rust): rust-analyzer,
 rustfmt, Cargo run/test tasks and CodeLLDB debugging need no Rust extension. Its
 settings automatically install TOML syntax and the Tombi language server for Cargo
 manifests, plus the theme, when Zed starts. Other language settings, format-on-save,
-Cargo checks and debugger behavior retain Zed's defaults. The VS Code extension
-list includes rust-analyzer, Even Better TOML and CodeLLDB.
+Cargo checks and debugger behavior retain Zed's defaults. The Cursor extension
+list includes rust-analyzer and Even Better TOML.
 
 Both editors exclude directories named `worktrees` or `.worktrees` at any depth,
 including `.claude/worktrees/` and `.codex/worktrees/`, so opening a parent repo
 doesn't scan the nested checkouts. Open a particular worktree as its own project
-when working in it. VS Code excludes these folders from its explorer, recursive
+when working in it. Cursor excludes these folders from its explorer, recursive
 watcher and Git repository discovery; searches inherit the explorer exclusions.
 Zed's [`file_scan_exclusions`](https://zed.dev/docs/reference/all-settings#file-scan-exclusions)
 cover its project tree, scans and searches; `"..."` retains the built-in exclusions.
@@ -89,8 +106,7 @@ another worktree container name, update both editor settings here. Project setti
 that override these lists should keep these patterns; in Zed use `"..."` to extend
 the inherited exclusions.
 
-Codex is included in both editors. VS Code installs OpenAI's `openai.chatgpt`
-extension; run **Codex: Open Codex Sidebar** from its command palette. Zed's
+Cursor retains its existing AI integrations and extension list. Zed's
 `agent_servers` settings install Codex from the
 [ACP Registry](https://zed.dev/docs/ai/external-agents#codex); choose **Codex** from
 the Agent Panel's new-thread menu. Use the integration's sign-in flow if prompted.
