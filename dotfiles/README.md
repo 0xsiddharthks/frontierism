@@ -49,7 +49,9 @@ The [desktop app configuration](herdr-app/README.md) migrates the TUI preference
 follows macOS light/dark appearance; sounds are off; agents show two lines in priority order; the tab strip
 hides at one tab. A persistent header keeps the current task, folder and branch,
 Files, Changes, Zed and the new-terminal/agent menu accessible. Terminal text uses
-JetBrains Mono at 16 px. Personal layout and mod copies survive app updates.
+JetBrains Mono at a base 16 px with 120% app zoom; telemetry is off. Personal layout
+and mod copies survive app updates. The [preferences step](../preferences/README.md)
+enables macOS's automatic day/night appearance on new machines.
 The older TUI keeps its prefix bindings and follows its host terminal's appearance;
 its light/dark theme pair is enabled too.
 
@@ -168,6 +170,6 @@ Tokens and work details go in `~/.zshrc.private`, which `~/.zshrc` reads if it i
    aren't kept here. The desktop app uses herdr-core and the agents' OSC 7501
    status reports; these TUI integrations do not configure the desktop app.
 5. Run the installer in my private guides repo for the other hook the Claude settings name.
-6. Run `../preferences/install.sh` to make Zed the default for code/text files in macOS, Codex's file/repository opening and Git. See [preferences](../preferences/README.md) for checking and backups.
+6. Run `../preferences/install.sh` to enable macOS's automatic day/night appearance and make Zed the default for code/text files in macOS, Codex's file/repository opening and Git. See [preferences](../preferences/README.md) for checking and backups.
 
 Not kept here: git config, `~/.zshenv`, which rustup's installer writes, anything that holds credentials, and Codex's `config.toml`, which is mostly per-machine state. Rex generates its Codex hook in `~/.codex/hooks.json` without copying that file here. The Claude settings name their hook and status line scripts by absolute path under `/Users/siddharthks`, and so do a few `PATH` lines in the zsh files.

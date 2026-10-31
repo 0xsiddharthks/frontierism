@@ -1,6 +1,6 @@
 # Preferences
 
-App defaults to apply after [provision](../provision/README.md) installs the apps
+macOS and app defaults to apply after [provision](../provision/README.md) installs the apps
 and [dotfiles](../dotfiles/README.md) copies their configuration. This step changes
 app preferences and macOS file associations rather than copying entire settings
 stores into this public repo.
@@ -15,6 +15,14 @@ with nothing to change creates no backup. Reopen Codex after changing its prefer
 editor, and open a new terminal to pick up the shell's `EDITOR` and `VISUAL` values.
 macOS may ask whether to keep the previous app or **Use Zed** for a group of file
 types. Choose **Use Zed**; the script waits for confirmation and verifies the result.
+
+## Automatic appearance
+
+The installer sets macOS Appearance to **Auto** so system-following apps use light
+mode during the day and dark mode at night. It checks the saved
+`AppleInterfaceStyleSwitchesAutomatically` preference and changes only that key.
+Herdr app, the Herdr TUI through Ghostty, Cursor and Zed already follow system
+appearance in their dotfiles. `--check` reports if Auto has been turned off.
 
 ## Editor defaults
 
@@ -44,8 +52,10 @@ helper into a local cache on its first use. Using the current macOS API also cov
 uncommon extensions with dynamic content types that older association tools reject.
 
 Before making changes it saves only the previous file handlers, Codex editor
-choice and Git editor to `~/.local/state/frontierism/preferences/` (or under
+choice, Git editor and automatic appearance setting to
+`~/.local/state/frontierism/preferences/` (or under
 `XDG_STATE_HOME`). Backups are private local files and never enter the repo.
 They record the previous handlers for restoring an association through Finder's
 **Get Info → Open with → Change All**; `null` means no previous default could be
-resolved. No other app preferences or Codex state are exported.
+resolved. The appearance value is `true`, `false` or `null` for an unset key.
+No other app preferences or Codex state are exported.

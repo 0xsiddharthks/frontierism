@@ -19,6 +19,8 @@ On a new Mac, from the repository root:
 ./provision/install.sh
 ./dotfiles/install.sh --push
 ./dotfiles/install.sh --check
+./preferences/install.sh
+./install.sh
 ```
 
 `--push` is necessary when the app has already created default settings or keys.
@@ -49,12 +51,13 @@ stored only in `layouts/.state`; make persistent layout changes in the JSON here
 
 The workspace keeps the task visible and its controls reachable:
 
-macOS's **Auto** appearance setting controls the day/night schedule. Herdr app
-follows the system directly; the TUI follows its host terminal's appearance. The
-tracked Ghostty config already switches between light and dark with macOS.
+The [preferences installer](../../preferences/README.md) enables macOS's **Auto**
+appearance setting for the day/night schedule. Herdr app follows the system
+directly; the TUI follows its host terminal's appearance. The tracked Ghostty
+config already switches between light and dark with macOS.
 
-- JetBrains Mono at 16 px, automatic light/dark Tokyo Night, muted sounds and compact terminal
-  padding. The UI keeps its normal size; the extra space goes to terminal text.
+- JetBrains Mono at a base 16 px and 120% app zoom (19.2 px terminal text), automatic
+  light/dark Tokyo Night, muted sounds and compact terminal padding. Telemetry is off.
 - A persistent header shows the focused terminal's title, program, folder,
   branch and status. Single terminals have no duplicate pane header; split panes
   keep their own labels and focus borders.

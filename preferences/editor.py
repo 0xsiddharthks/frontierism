@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Apply only the editor defaults listed in editor.json, keeping local backups."""
+"""Apply automatic macOS appearance and the defaults in editor.json, with backups."""
 
 import argparse
 import datetime
@@ -18,6 +18,7 @@ import time
 
 
 CODEX_KEY = "open-in-target-preferences"
+AUTO_APPEARANCE_KEY = "AppleInterfaceStyleSwitchesAutomatically"
 
 
 class CodexConfig:
@@ -151,6 +152,19 @@ def git_editor():
     return result.stdout.strip() if result.returncode == 0 else None
 
 
+def auto_appearance():
+    result = subprocess.run(
+        ["defaults", "read", "-g", AUTO_APPEARANCE_KEY],
+        capture_output=True, text=True,
+    )
+    if result.returncode == 0 and result.stdout.strip() in ("0", "1"):
+        return result.stdout.strip() == "1"
+    # defaults exits 1 when a fresh account has no value (or domain) yet.
+    if result.returncode == 1:
+        return None
+    raise RuntimeError("Cannot read macOS's automatic appearance preference")
+
+
 def save_backup(snapshot):
     state_root = Path(os.environ.get("XDG_STATE_HOME", Path.home() / ".local/state"))
     directory = state_root / "frontierism/preferences"
@@ -170,7 +184,7 @@ def main():
     args = parser.parse_args()
     if sys.platform != "darwin":
         raise RuntimeError("These app defaults are for macOS")
-    for command in ("xcrun", "codex", "git"):
+    for command in ("xcrun", "codex", "git", "defaults"):
         if shutil.which(command) is None:
             raise RuntimeError(f"Missing {command}; run provision/install.sh first")
     wanted = json.loads(Path(__file__).with_name("editor.json").read_text())
@@ -188,6 +202,8 @@ def main():
     previous = macos.request("read", selectors)
     changed = [selector for selector, old in previous.items() if old != wanted["bundle_id"]]
     old_git = git_editor()
+    old_appearance = auto_appearance()
+    appearance_changed = old_appearance is not True
     desired_codex = {"global": wanted["codex_target"]}
     with CodexConfig() as codex:
         old_codex = codex.read_editor()
@@ -198,18 +214,23 @@ def main():
                   else f"ok       macOS file handlers ({len(selectors)} types)")
             print("drift    Codex preferred editor" if codex_changed else "ok       Codex preferred editor")
             print("drift    Git editor" if git_changed else "ok       Git editor")
-            return int(bool(changed or codex_changed or git_changed))
-        if changed or codex_changed or git_changed:
+            print("drift    macOS automatic appearance" if appearance_changed
+                  else "ok       macOS automatic appearance")
+            return int(bool(changed or codex_changed or git_changed or appearance_changed))
+        if changed or codex_changed or git_changed or appearance_changed:
             backup = save_backup({
                 "macos_handlers": previous,
                 "codex_editor": old_codex,
                 "git_core_editor": old_git,
+                "macos_auto_appearance": old_appearance,
             })
             print(f"backup   {backup}", flush=True)
         if codex_changed:
             codex.write_editor(desired_codex)
         if git_changed:
             run("git", "config", "--global", "core.editor", wanted["git_editor"])
+        if appearance_changed:
+            run("defaults", "write", "-g", AUTO_APPEARANCE_KEY, "-bool", "true")
         if changed:
             print("note     choose Use Zed in macOS's file-default confirmations; waiting for completion", flush=True)
             macos.request("apply", changed)
@@ -219,9 +240,12 @@ def main():
             raise RuntimeError("File handler verification failed: " + ", ".join(incorrect))
         if codex.read_editor() != desired_codex or git_editor() != wanted["git_editor"]:
             raise RuntimeError("Editor preference verification failed")
+        if auto_appearance() is not True:
+            raise RuntimeError("Automatic appearance preference verification failed")
     print(f"ok       Zed is the macOS default for {len(selectors)} code/text file types")
     print("ok       Zed is Codex's preferred editor (per-project overrides cleared)")
     print("ok       Git uses zed --wait")
+    print("ok       macOS appearance switches automatically between light and dark")
     if codex_changed:
         print("note     reopen Codex to load its new preferred editor")
     return 0
