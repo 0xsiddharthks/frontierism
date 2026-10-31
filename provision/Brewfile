@@ -104,8 +104,6 @@ cask "cursor"
 cask "discord"
 # App to build and share containerised applications and microservices
 cask "docker-desktop"
-# Collaborative team software
-cask "figma"
 cask "font-google-sans-code"
 cask "font-jetbrains-mono"
 cask "font-jetbrains-mono-nerd-font"
@@ -122,8 +120,6 @@ cask "google-chrome"
 cask "grok-bot"
 # App to manage software development and track bugs
 cask "linear"
-# Discover, download, and run local LLMs
-cask "lm-studio"
 # App to write, plan, collaborate, and get organised
 cask "notion"
 # Command-line interface for Notion
@@ -136,8 +132,6 @@ cask "signal"
 cask "slack"
 # Music streaming service
 cask "spotify"
-# Video game digital distribution service
-cask "steam"
 # All-in-one live streaming software
 cask "streamlabs"
 # Messaging app with a focus on speed and security
