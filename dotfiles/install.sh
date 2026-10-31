@@ -24,11 +24,15 @@ files=(
     "herdr/config.toml|$HOME/.config/herdr/config.toml"
     "rex/rex|$HOME/.local/bin/rex"
     "rex/init.lua|${XDG_CONFIG_HOME:-$HOME/.config}/rex/init.lua"
-    "vscode/settings.json|$support/Code/User/settings.json"
     "zed/settings.json|$HOME/.config/zed/settings.json"
     "zsh/zprofile|$HOME/.zprofile"
     "zsh/zshrc|$HOME/.zshrc"
 )
+
+# VS Code is optional; apply its saved settings only when it is installed.
+if command -v code >/dev/null; then
+    files+=("vscode/settings.json|$support/Code/User/settings.json")
+fi
 
 # Replaces $2 with a copy of $1, keeping the mode of the file it replaces.
 copy() {
@@ -82,7 +86,6 @@ python3 "$root/herdr-app/setup.py" "$mode" || failed=1
 list="$root/vscode/extensions.txt"
 if ! command -v code >/dev/null; then
     echo "skipped  VS Code extensions: the code command isn't on PATH"
-    failed=1
 elif ! installed="$(code --list-extensions)"; then
     echo "FAILED   VS Code extensions: couldn't list the installed ones"
     failed=1

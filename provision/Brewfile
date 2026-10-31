@@ -38,8 +38,6 @@ brew "go"
 brew "grafana"
 # Like cURL, but for gRPC
 brew "grpcurl"
-# Post-modern modal text editor
-brew "helix"
 # Simple terminal UI for git commands
 brew "lazygit"
 # Postgres C API library
@@ -48,8 +46,6 @@ brew "libpq"
 brew "logcli"
 # CLI for interacting with Grafana Mimir
 brew "mimirtool"
-# Ambitious Vim-fork focused on extensibility and agility
-brew "neovim"
 # Open-source, cross-platform JavaScript runtime environment
 brew "node"
 # Fast, disk space efficient package manager
@@ -96,18 +92,14 @@ cask "brainfm"
 cask "chatgpt"
 # Anthropic's official Claude AI desktop app
 cask "claude"
-# Ghostty-based terminal with vertical tabs and notifications for AI coding agents
-cask "cmux"
 # Write, edit, and chat about your code with AI
 cask "cursor"
 # Voice and text chat software
 cask "discord"
 # App to build and share containerised applications and microservices
 cask "docker-desktop"
-cask "font-google-sans-code"
 cask "font-jetbrains-mono"
 cask "font-jetbrains-mono-nerd-font"
-cask "font-roboto-mono"
 # Set of tools to manage resources and applications hosted on Google Cloud
 cask "gcloud-cli"
 # Terminal emulator that uses platform-native UI and GPU acceleration
@@ -136,15 +128,9 @@ cask "spotify"
 cask "streamlabs"
 # Messaging app with a focus on speed and security
 cask "telegram"
-# Open-source code editor
-cask "visual-studio-code"
-# Multimedia player
-cask "vlc"
 # Native desktop client for WhatsApp
 cask "whatsapp"
 # Auth-enabled curl-like CLI for the X API
 cask "xdevplatform/tap/xurl", trusted: true
-# Full-featured companion app to the YubiKey
-cask "yubico-authenticator"
 # High-performance code editor
 cask "zed"

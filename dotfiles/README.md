@@ -59,6 +59,10 @@ record the old options that have no direct desktop equivalent.
 
 ## Editors and Rust
 
+VS Code is optional and isn't installed by [provision](../provision/README.md).
+Its saved settings and extensions are applied only when its `code` command is on
+`PATH`; otherwise they are skipped without failing the installer.
+
 Zed is the shell's preferred editor (`EDITOR` and `VISUAL` use `zed --wait`). Both
 editors use JetBrains Mono at 16 px and follow the system appearance with VS Code's Light 2026 and Dark 2026
 themes. Zed uses the [VS Code 2026 theme extension](https://github.com/eugenebokhan/zed-vs-code-2026-theme),
