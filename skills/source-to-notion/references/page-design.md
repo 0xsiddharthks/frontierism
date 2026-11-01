@@ -20,6 +20,19 @@ For long or segmented material, include a source map and detailed located notes 
 
 Use verified source locations and short passage-opening phrases. Analyst block IDs depend on an exact extracted snapshot; identify that convention and never invent publisher fragments from them. Do not transfer timestamps or page numbers between editions. An original title, the analysis title, and a collection ordinal are different attributes.
 
+## Source artwork as the page cover
+
+For a new analysis page, use suitable original source artwork as the native Notion **cover** when available:
+
+- YouTube or another video: the exact upload's thumbnail from platform metadata.
+- Spotify: the episode's artwork; use show artwork only when episode-specific artwork is unavailable, recording that fallback privately.
+- Articles and newsletters: the publisher's representative image, such as the post's `og:image` or lead image.
+- Books: the cover of the edition being analyzed, when available.
+
+Prefer a usable high-resolution image actually supplied by the source. Inspect its identity and quality; avoid placeholder thumbnails, unrelated recommendations, advertisements, or guessed image-URL variants. Save the image URL, source page/API, and any fallback in the private source record. If no suitable artwork is available, leave the cover empty rather than generating or substituting unrelated art. Source artwork is presentation metadata, not evidence that the source's visual content was reviewed.
+
+Preserve an existing user-chosen cover unless the user requests its replacement. Set the dedicated cover field during page creation or a supported property update; a body image does not set the page cover. Inspect the rendered cover and crop in Notion. Keep page icons omitted and the executive summary at the start of the body.
+
 ## Attribution and learner content
 
 Keep source claims, independently established context, your explanatory model, and your assessment distinguishable through explicit local attribution. Consequential quotations and factual checks need nearby source locations. Publish original explanation and brief necessary quotations within applicable limits rather than reconstructing protected material through exhaustive paraphrase.

@@ -58,8 +58,10 @@ Use `$source-to-notion` in Codex or `/source-to-notion` in Claude Code with a
 podcast, video, or reading link/file, including YouTube videos, Spotify episodes,
 and Substack posts. It adapts acquisition to the material while retaining an
 executive summary, first-principles explanation, relevant philosophical context,
-argument reconstruction, cruxes, and serious objections or limitations. Its scripts handle
-HTML extraction and complete Notion exports; interactive inspection and native
+argument reconstruction, cruxes, and serious objections or limitations. It captures
+source metadata and uses available original thumbnails or artwork as Notion page
+covers. Its scripts handle HTML extraction and complete Notion exports;
+interactive inspection and native
 appearance settings use the in-app browser first, with a tested `ntn` CLI path
 for supported structured work. The private default Research Library destination
 stays in `~/.config/source-to-notion/destination.json` (or under `XDG_CONFIG_HOME`).

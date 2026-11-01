@@ -12,6 +12,8 @@ Try the built-in in-app browser first when available for interactive inspection 
 
 Use native **List** views for hubs and collections, with few useful properties beside each title. New analysis pages and guides omit page icons. Keep detailed metadata in page details and the summary at the start of the body. Follow the chosen destination profile for visible properties and grouping; do not force corpus ordinals or audiovisual fields onto unrelated sources. Preserve existing user customizations during refreshes.
 
+Apply available source artwork through the page's native cover field as described in [page-design.md](page-design.md#source-artwork-as-the-page-cover), including when publishing an accepted collection draft. For a cover-only change, use the supported cover/property operation without replacing the body or changing the substantive Reviewed date. Verify that the correct image loads and its crop remains useful; a stored URL alone does not establish that the cover renders.
+
 Verify native row-icon visibility, full-page opening, and the chosen font when these are part of the requested setup. Wait for the destination title and identity before using appearance controls: the old page's Actions button can remain visible during navigation. If bare-ID navigation aborts, use an observed native link or full URL. Inspect state after a failed action and retry only after resolving its cause. A repaired in-app browser should be retried rather than permanently replaced by a fallback.
 
 ## Safe refreshes
