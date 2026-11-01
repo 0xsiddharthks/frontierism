@@ -1,4 +1,4 @@
 interface:
   display_name: "Source to Notion"
   short_description: "Read sources deeply and explain their ideas in Notion"
-  default_prompt: "Use $source-to-notion to read this source, explain its core ideas from first principles, examine its reasoning and evidence, and save a source-backed analysis in Notion."
+  default_prompt: "Use $source-to-notion to read this source and save an executive summary, core ideas explained from first principles, relevant philosophical context, and evidence-based assessment in Notion."

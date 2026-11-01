@@ -8,6 +8,8 @@ The built-in browser may expose `tab.content.exportYouTubeTranscript()` for an H
 
 If needed, use the video's visible **Show transcript** interface. Inspect the language/track and whether captions are automatic or creator-supplied. Read through the end; scrolling, virtualization, or export truncation can leave gaps. Preserve timestamps, speaker uncertainty, ads, and version differences. Use official description chapters when available; label analyst-created chapters separately.
 
+Automatic captions can corrupt names, amounts, currencies, and technical terms while leaving plausible sentences. Preserve the raw export privately. Verify consequential corrections against the audio, visible source material, or primary references; distinguish a transcription correction from a factual correction to the creator's argument. If the export and player controls disagree about caption availability, inspect the actual transcript before declaring it unavailable. Unresolved wording or numbers should remain qualified rather than silently repaired.
+
 Captions do not capture every chart, demonstration, slide, or on-screen statement. Inspect consequential visual material when the tools support it, or explicitly scope the analysis to the transcript. Do not claim to have watched the whole video from captions. Keep captions tied to the upload whose timing they describe.
 
 If captions/transcript are inaccessible, try the relevant official publisher transcript or user-supplied text. Do not substitute the video description for its arguments. Record partial coverage or Needs transcript when appropriate; do not promise unsupported audio transcription.
@@ -15,6 +17,8 @@ If captions/transcript are inaccessible, try the relevant official publisher tra
 ## Articles, essays, papers, and book excerpts
 
 Read the actual requested text, not just a search snippet, abstract, landing page, or review. For web articles use the canonical publisher page and retain headings and footnotes relevant to the argument. For PDFs, use suitable document tools and check whether the file is digital text or OCR; inspect important figures/tables visually when text extraction omits them. Use an applicable PDF/document skill when that work benefits from it.
+
+For Substack and other newsletters, resolve the individual post and author/publication rather than summarizing the publication homepage. Distinguish the article from recommendations, comments, and subscription prompts. Use an available authenticated session for legitimately accessible subscriber text; an excerpt or paywall preview establishes only partial coverage.
 
 Record title, author(s), publication/publisher, publication date, edition/revision, DOI or canonical URL, language, and requested scope where available. For a chapter/excerpt, distinguish the chapter title and pages from the parent book's title and edition. Do not fabricate a date, author, page count, DOI, or reading duration.
 

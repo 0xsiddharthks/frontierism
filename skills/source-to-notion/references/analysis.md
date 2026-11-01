@@ -16,6 +16,12 @@ Use a concrete example or thought experiment when it makes the mechanism easier 
 
 For technical exposition, trace the relevant inputs, state, transformations, and failure conditions. For narrative or history, distinguish the sequence described from the explanation of why it occurred. Do not invent a formal argument or an opposing speaker merely to fill a template.
 
+## Context without invented intellectual lineage
+
+When philosophical or disciplinary context helps, explain the underlying question: what counts as knowledge, welfare, freedom, justice, legitimate authority, or a good explanation? Show which assumptions or values do work in this source and how a different priority could change its conclusion. Connect a named tradition or thinker to a specific idea, rather than listing schools of thought.
+
+Distinguish an influence the source actually acknowledges from a comparison introduced by the analyst. Read and cite relevant original or scholarly material before attributing a position to a thinker. Label an added lens or analogy locally; resemblance does not establish that the creator has read, follows, or belongs to that tradition. Context should clarify the argument, not turn a short source into an unrelated literature review.
+
 ## Match claims to evidence
 
 For empirical research, explain the question, study design/data, population, measures, comparison, result, and scope. Preserve units, denominators, dates, uncertainty, and estimate-versus-observation status. Distinguish correlation, identified causal effects, and a proposed mechanism. Assess selection, measurement, alternative explanations, external validity, and whether wider conclusions exceed the result when those issues matter.
@@ -25,6 +31,8 @@ For interviews and debates, reconstruct each consequential speaker's position, s
 For philosophical and interpretive arguments, examine definitions, premises, logical steps, examples, counterexamples, historical context, and normative commitments. For historical narratives, identify the evidence behind consequential causal claims and the limits of analogy. A sequence of failures does not isolate a single cause without comparing alternatives.
 
 Throughout, distinguish the source's claims, independently established context, your explanatory model/analogy, and your assessment. Locate consequential attributed claims in the actual source. Verify decisive factual hinges against primary or scholarly sources where feasible; state the scope of any independent checks. Treat predictions as predictions even if the proposed institution or intervention was later adopted.
+
+Check internal consistency before repeating a number: units, dates, denominator, stock versus flow, nominal versus real, and which index or population is being compared. If passages conflict, retain their locations and resolve them against the recording or primary evidence where practical. Otherwise mark the discrepancy unresolved and leave the disputed precision out of the summary. Separate an allegation, an investigation, a finding, and a conviction; a vivid anecdote does not establish a systemic causal claim.
 
 ## Find the crux and strongest challenge
 

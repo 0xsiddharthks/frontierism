@@ -55,14 +55,19 @@ runs only when explicitly requested. Re-run the installer after this rename to
 create the new links and remove the obsolete ones.
 
 Use `$source-to-notion` in Codex or `/source-to-notion` in Claude Code with a
-podcast, video, or reading link/file. It adapts acquisition and evidence standards
-to the material while retaining first-principles explanation, argument
-reconstruction, cruxes, and serious objections or limitations. Its scripts handle
+podcast, video, or reading link/file, including YouTube videos, Spotify episodes,
+and Substack posts. It adapts acquisition to the material while retaining an
+executive summary, first-principles explanation, relevant philosophical context,
+argument reconstruction, cruxes, and serious objections or limitations. Its scripts handle
 HTML extraction and complete Notion exports; interactive inspection and native
 appearance settings use the in-app browser first, with a tested `ntn` CLI path
 for supported structured work. The private default Research Library destination
 stays in `~/.config/source-to-notion/destination.json` (or under `XDG_CONFIG_HOME`).
 An explicitly supplied destination takes precedence.
+
+For example: `$source-to-notion <source URL> — explain the core ideas and
+philosophical context, and save the analysis in <Notion destination URL>`.
+The source and destination can also be supplied in ordinary conversation.
 
 Use `$source-collection-to-notion` or `/source-collection-to-notion` for a bounded
 collection or coordinated batch. It owns inventory, dependencies, shared schema,

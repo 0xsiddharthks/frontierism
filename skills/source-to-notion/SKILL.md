@@ -5,7 +5,9 @@ description: Read a supplied article, essay, paper, book excerpt, podcast, or vi
 
 # Source to Notion
 
-Help the reader understand the source's central question, necessary concepts, reasoning, evidence, and decisive assumptions. First-principles explanation is part of every substantive analysis; adapt it to the material and the user's purpose. Give a direct explanation. Recall questions can support learning; an interactive Socratic session starts only when explicitly requested by name.
+Turn the source into a durable reading companion: an executive summary, core ideas explained from first principles, relevant philosophical or disciplinary context, and an assessment of the reasoning, evidence, and decisive assumptions. Use the same analytical method across platforms; a YouTube upload, Spotify episode, or Substack post changes how the material is acquired, not the standard of understanding.
+
+Adapt the depth to the material and the user's purpose. Explain directly; do not force a philosophical framework onto a source that does not need one. Recall questions can support learning; an interactive Socratic session starts only when explicitly requested by name.
 
 ## Execution context, scope, and destination
 
@@ -19,7 +21,7 @@ For direct publication or an explicitly assigned publication phase, normalize so
 
 ## Acquire and read the source
 
-Always try ChatGPT's built-in **@Browser** first when available for interactive webpage and Notion inspection, including native UI changes. Reuse the user's tab when practical, or use a separate background tab if they are actively reading there. Supported connectors and an authenticated CLI can supply structured metadata, complete exports, and batch operations. Use another browser only after an observed loading/capability failure or missing authenticated session, following the user's preferences. Retry the in-app browser when the user reports it has been repaired. In clients without it, use the available linked browser.
+Prefer supported connectors for the structured reads and writes they cover. For browser work, use ChatGPT's built-in **@Browser** first when available, including interactive webpage inspection and native Notion settings. Reuse the user's tab when practical, or use a separate background tab if they are actively reading there. An authenticated CLI can supply complete exports and supported batch operations. Use another browser only after an observed loading/capability failure or missing authenticated session, following the user's preferences. Retry the in-app browser when the user reports it has been repaired. In clients without it, use the available linked browser.
 
 Read only the acquisition reference relevant to the source:
 
