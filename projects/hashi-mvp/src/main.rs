@@ -53,17 +53,22 @@ impl Node {
     }
 }
 
-fn main() -> anyhow::Result<()> {
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
     let args = Args::parse();
 
     match args.command {
-        Commands::Server { config } => run_server(config),
+        Commands::Server { config } => run_server(config).await,
     }
 }
 
-fn run_server(config_path: PathBuf) -> anyhow::Result<()> {
+async fn run_server(config_path: PathBuf) -> anyhow::Result<()> {
     let config: Config = Config::load(&config_path)?;
     let node: Node = Node::new(config);
     node.start();
+
+    tokio::signal::ctrl_c().await?;
+    println!("Shutting down");
+
     Ok(())
 }
