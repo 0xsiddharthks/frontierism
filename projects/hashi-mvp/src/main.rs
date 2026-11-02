@@ -1,5 +1,22 @@
+use clap::Parser;
+use clap::Subcommand;
 use serde::Deserialize;
 use std::path::Path;
+use std::path::PathBuf;
+
+#[derive(Parser)]
+struct Args {
+    #[command(subcommand)]
+    command: Commands,
+}
+
+#[derive(Subcommand)]
+enum Commands {
+    Server {
+        #[arg(long)]
+        config: PathBuf,
+    },
+}
 
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -37,7 +54,15 @@ impl Node {
 }
 
 fn main() -> anyhow::Result<()> {
-    let config: Config = Config::load(Path::new("node.toml"))?;
+    let args = Args::parse();
+
+    match args.command {
+        Commands::Server { config } => run_server(config),
+    }
+}
+
+fn run_server(config_path: PathBuf) -> anyhow::Result<()> {
+    let config: Config = Config::load(&config_path)?;
     let node: Node = Node::new(config);
     node.start();
     Ok(())
