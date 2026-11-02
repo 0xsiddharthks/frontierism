@@ -9,6 +9,8 @@ Turn the source into a durable reading companion: an executive summary, core ide
 
 Adapt the depth to the material and the user's purpose. Explain directly; do not force a philosophical framework onto a source that does not need one. Recall questions can support learning; an interactive Socratic session starts only when explicitly requested by name.
 
+When the user's main request is a serious fact-check, use [source-factcheck](../source-factcheck/SKILL.md) for the claim ledger, independent evidence, calibrated verdicts, and framing/theory assessment. Reuse this skill's acquisition and publishing guidance without forcing the ordinary study-page structure onto the fact-check.
+
 ## Execution context, scope, and destination
 
 For a direct source-to-Notion request, resolve the actual source, edition/version, requested scope, analysis focus, and destination. A video is not its channel, an episode is not its show, and an excerpt is not a whole book. A supplied destination takes precedence; otherwise read [references/notion-library.md](references/notion-library.md) for the existing Research Library and duplicate handling. Inspect an example for its reading experience without reusing it as the destination by assumption.

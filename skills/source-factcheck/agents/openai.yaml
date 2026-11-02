@@ -1,0 +1,4 @@
+interface:
+  display_name: "Source Fact-check"
+  short_description: "Check source claims, evidence, theories, and framing"
+  default_prompt: "Use $source-factcheck to neutrally verify this source's consequential claims, distinguish facts from interpretations, and explain the evidence, corrections, and remaining uncertainty."

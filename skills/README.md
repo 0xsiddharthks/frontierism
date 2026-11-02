@@ -19,6 +19,7 @@ My agent skills for Claude Code and Codex.
 | `obsidian-analyze-and-link`                                      | Review existing local notes and add connections and sparse inline concept wikilinks. |
 | `civilization-lecture`                                          | Compatibility entrypoint and helper paths for existing Civilization libraries. |
 | `source-to-notion`                                              | Read one source deeply, explain its ideas from first principles, assess reasoning/evidence, and publish in Notion or return a private collection draft. |
+| `source-factcheck`                                              | Verify a source's consequential claims, separate facts from interpretations, examine theories and framing, and publish in Notion when requested. |
 | `source-collection-to-notion`                                   | Coordinate a bounded collection using the same source analyzer, with optional parallel drafts, cross-source review, shared views/guides, and verified publication. |
 | `spotify-podcast-to-notion`                                     | Compatibility entrypoint for Spotify episodes; uses the shared `source-to-notion` workflow and library. |
 
@@ -70,6 +71,14 @@ An explicitly supplied destination takes precedence.
 For example: `$source-to-notion <source URL> — explain the core ideas and
 philosophical context, and save the analysis in <Notion destination URL>`.
 The source and destination can also be supplied in ordinary conversation.
+
+Use `$source-factcheck` or `/source-factcheck` when verification is the main task.
+It checks located claims against original evidence, distinguishes a policy's
+existence from its effectiveness, and assesses theories without treating their
+popularity as proof. It also separates production provenance from factual
+accuracy. For example: `$source-factcheck <source URL> — check this neutrally and
+save the findings in <Notion destination URL>`. It reuses source acquisition and
+Notion publication from `source-to-notion`, with a fact-check reading structure.
 
 Use `$source-collection-to-notion` or `/source-collection-to-notion` for a bounded
 collection or coordinated batch. It owns inventory, dependencies, shared schema,
