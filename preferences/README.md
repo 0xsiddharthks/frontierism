@@ -34,10 +34,13 @@ appearance in their dotfiles. `--check` reports if Auto has been turned off.
 - Files and repositories opened from Codex. Existing per-project editor overrides
   are cleared so they inherit Zed. This uses Codex's configuration API to update
   only `desktop.open-in-target-preferences` in its local `config.toml`.
-- Git's global `core.editor`, using `zed --wait` so Git waits for editing to finish.
 
-The dotfiles also set `EDITOR` and `VISUAL` to `zed --wait`. macOS folder handlers,
-web links, images, PDFs, office documents and spreadsheet associations are outside
+Git's global `core.editor` uses `vim` for commit messages, amend and interactive
+rebase. The dotfiles also set `EDITOR` and `VISUAL` to `vim` for terminal editing.
+Vim is included with macOS and checked by provision; no Homebrew package is needed.
+
+macOS folder handlers, web links, images, PDFs, office documents and spreadsheet
+associations are outside
 this file-type list. HTML also keeps its browser handler: macOS treats changing
 the HTML default through this API as changing the default web browser.
 Extensionless files use the content type macOS recognizes.

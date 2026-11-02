@@ -184,7 +184,7 @@ def main():
     args = parser.parse_args()
     if sys.platform != "darwin":
         raise RuntimeError("These app defaults are for macOS")
-    for command in ("xcrun", "codex", "git", "defaults"):
+    for command in ("xcrun", "codex", "git", "vim", "defaults"):
         if shutil.which(command) is None:
             raise RuntimeError(f"Missing {command}; run provision/install.sh first")
     wanted = json.loads(Path(__file__).with_name("editor.json").read_text())
@@ -244,7 +244,7 @@ def main():
             raise RuntimeError("Automatic appearance preference verification failed")
     print(f"ok       Zed is the macOS default for {len(selectors)} code/text file types")
     print("ok       Zed is Codex's preferred editor (per-project overrides cleared)")
-    print("ok       Git uses zed --wait")
+    print(f"ok       Git uses {wanted['git_editor']}")
     print("ok       macOS appearance switches automatically between light and dark")
     if codex_changed:
         print("note     reopen Codex to load its new preferred editor")

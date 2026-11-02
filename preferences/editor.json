@@ -1,7 +1,7 @@
 {
   "bundle_id": "dev.zed.Zed",
   "codex_target": "zed",
-  "git_editor": "zed --wait",
+  "git_editor": "vim",
   "content_types": [
     "public.plain-text",
     "public.utf8-plain-text",

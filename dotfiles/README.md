@@ -64,9 +64,12 @@ record the old options that have no direct desktop equivalent.
 ## Editors and Rust
 
 Cursor and Zed are installed by [provision](../provision/README.md) and configured
-here. Zed is the shell's preferred editor (`EDITOR` and `VISUAL` use `zed --wait`)
-and remains the default in macOS, Codex and Git after applying [preferences](../preferences/README.md).
-Both editors use JetBrains Mono at 16 px and follow the system appearance.
+here. Vim is the shell's preferred editor (`EDITOR` and `VISUAL` use `vim`).
+The [preferences installer](../preferences/README.md) sets Git's global
+`core.editor` to `vim` for commit messages, amend and interactive rebase.
+Vim comes with macOS, so no extra package is needed. Zed is the default for
+code/text files in macOS and for opening files and repositories from Codex.
+Cursor and Zed use JetBrains Mono at 16 px and follow the system appearance.
 Cursor uses its built-in Default Light Modern and Default Dark Modern themes;
 Zed uses the [VS Code 2026 theme extension](https://github.com/eugenebokhan/zed-vs-code-2026-theme),
 including its recommended Rust semantic highlighting. Line spacing follows
@@ -170,6 +173,6 @@ Tokens and work details go in `~/.zshrc.private`, which `~/.zshrc` reads if it i
    aren't kept here. The desktop app uses herdr-core and the agents' OSC 7501
    status reports; these TUI integrations do not configure the desktop app.
 5. Run the installer in my private guides repo for the other hook the Claude settings name.
-6. Run `../preferences/install.sh` to enable macOS's automatic day/night appearance and make Zed the default for code/text files in macOS, Codex's file/repository opening and Git. See [preferences](../preferences/README.md) for checking and backups.
+6. Run `../preferences/install.sh` to enable macOS's automatic day/night appearance, make Zed the default for code/text files in macOS and Codex's file/repository opening, and select Vim for Git editing. See [preferences](../preferences/README.md) for checking and backups.
 
 Not kept here: git config, `~/.zshenv`, which rustup's installer writes, anything that holds credentials, and Codex's `config.toml`, which is mostly per-machine state. Rex generates its Codex hook in `~/.codex/hooks.json` without copying that file here. The Claude settings name their hook and status line scripts by absolute path under `/Users/siddharthks`, and so do a few `PATH` lines in the zsh files.

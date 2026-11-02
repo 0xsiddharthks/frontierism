@@ -19,6 +19,14 @@ private="$HOME/.Brewfile.private"
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
 
+# macOS includes Vim for terminal editing; no Homebrew package is needed.
+if command -v vim >/dev/null 2>&1; then
+    echo "ok       Vim"
+else
+    echo "missing  Vim (expected with macOS)"
+    failed=1
+fi
+
 # A shell that was open before Homebrew was installed doesn't have it on PATH.
 brew="$(command -v brew || echo /opt/homebrew/bin/brew)"
 command -v brew >/dev/null || stale=1

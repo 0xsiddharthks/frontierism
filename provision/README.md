@@ -40,6 +40,7 @@ From a Mac with nothing on it to one that has everything here:
    - rustup, Claude Code, Codex, the Herdr TUI, Herdr desktop app, herdr-core and Oh My Zsh.
 
    If something fails to install, run it again. It skips what is already there.
+   It also checks that Vim, included with macOS, is available for terminal editing.
 
 6. Open a new terminal, so that what was installed is on `PATH`, and check that nothing is missing:
 
@@ -66,8 +67,9 @@ From a Mac with nothing on it to one that has everything here:
    describes its shortcuts and the one-time Codex hook approval.
 
 9. Apply the [macOS and app preferences](../preferences/README.md), which enable
-   automatic day/night appearance and make Zed the default for code/text files,
-   opening files and repositories from Codex, and Git editing:
+   automatic day/night appearance and make Zed the default for code/text files
+   and opening files and repositories from Codex. Git editing uses Vim, matching
+   the dotfiles' `EDITOR` and `VISUAL` settings:
 
    ```sh
    ./preferences/install.sh
