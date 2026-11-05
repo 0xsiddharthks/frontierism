@@ -1,11 +1,15 @@
+use axum::Json;
 use axum::Router;
+use axum::extract::State;
 use axum::routing::get;
 use clap::Parser;
 use clap::Subcommand;
 use serde::Deserialize;
+use serde::Serialize;
 use std::net::SocketAddr;
 use std::path::Path;
 use std::path::PathBuf;
+use std::sync::Arc;
 use tokio::net::TcpListener;
 
 #[derive(Parser)]
@@ -53,14 +57,18 @@ impl Node {
         Node { config }
     }
 
-    async fn start(&self) -> anyhow::Result<()> {
-        let app = Router::new().route("/health", get(health));
+    async fn start(self: Arc<Self>) -> anyhow::Result<()> {
+        let app = Router::new()
+            .route("/health", get(health))
+            .route("/info", get(info))
+            .with_state(Arc::clone(&self));
 
         let listener = TcpListener::bind(self.config.listen_addr).await?;
 
         println!(
             "{} listening on http://{}",
-            self.config.node_name, self.config.listen_addr
+            self.config.node_name,
+            listener.local_addr()?
         );
 
         axum::serve(listener, app)
@@ -69,6 +77,11 @@ impl Node {
 
         Ok(())
     }
+}
+
+#[derive(Serialize)]
+struct NodeInfo {
+    node_name: String,
 }
 
 #[tokio::main]
@@ -82,12 +95,18 @@ async fn main() -> anyhow::Result<()> {
 
 async fn run_server(config_path: PathBuf) -> anyhow::Result<()> {
     let config: Config = Config::load(&config_path)?;
-    let node: Node = Node::new(config);
+    let node = Arc::new(Node::new(config));
     node.start().await
 }
 
 async fn health() -> &'static str {
     "ok\n"
+}
+
+async fn info(State(node): State<Arc<Node>>) -> Json<NodeInfo> {
+    Json(NodeInfo {
+        node_name: node.config.node_name.clone(),
+    })
 }
 
 async fn shutdown_signal() {
