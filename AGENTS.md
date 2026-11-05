@@ -1,6 +1,11 @@
 # Public repo
 
-- This repo is public. Never put credentials in it, or Mysten-internal details such as internal hostnames, account or resource IDs, and incident details. That covers skills, dotfiles and commit messages.
+- Treat everything committed to this repo as publicly readable. This applies to code, skills, dotfiles, examples, generated files, logs, screenshots, commit messages, and pull request descriptions.
+- Never commit secrets: API keys, access tokens, passwords, private keys, wallet seed phrases, recovery codes, session cookies, authorization headers, or credential files. Use environment variables or local, ignored files; keep examples to clearly fake placeholders.
+- Never commit personal or private information, such as home addresses, private contact details, financial or medical records, private correspondence, or nonpublic documents. Public profile information and intentionally public project details are fine; access to a connected app or local file does not make its contents public.
+- Never commit Mysten-internal or other confidential work details, including internal hostnames, account or resource IDs, and incident details. Generalize examples and remove private identifiers before including them.
+- Before committing or pushing, review the exact staged changes for secrets and private information, including new files and generated output. Check commit author/committer emails and file metadata too; use intentionally public identity details or the user's GitHub noreply address. Stage only intended files; `.gitignore` does not protect files already tracked by Git.
+- If you find sensitive material, do not repeat its value in chat, logs, or commit messages. Report its file and location with the value redacted, remove it from the proposed changes, and tell the user if it may already be in Git history. Exposed credentials need revocation or rotation; deleting the current file does not remove earlier commits. Do not rewrite published history without explicit authorization.
 
 # Codex and ChatGPT Work
 

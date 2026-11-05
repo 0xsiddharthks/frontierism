@@ -31,3 +31,23 @@ rustc-ice-*.txt
 
 # macOS
 .DS_Store
+
+# Local secrets and private files; examples must contain only fake placeholders
+.env
+.env.*
+!.env.example
+!.env.*.example
+!.env.sample
+!.env.*.sample
+.secrets/
+.private/
+*.private
+*.private.*
+credentials.json
+service-account*.json
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa
+id_ed25519
