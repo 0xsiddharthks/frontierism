@@ -7,8 +7,8 @@ set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 mode="${1:-}"
-case "$mode" in
-    "" | --check | --pull) ;;
+case "$#:$mode" in
+    0: | 1: | 1:--check | 1:--pull) ;;
     *) echo "usage: $0 [--check | --pull]" >&2; exit 2 ;;
 esac
 failed=0

@@ -55,8 +55,6 @@ brew "sequoia-sq"
 brew "tmux"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
-# Command-line interface for Vercel
-brew "vercel"
 # Executes a program periodically, showing output fullscreen
 brew "watch"
 # Tool for managing your YubiKey configuration
@@ -115,6 +113,8 @@ cask "spotify"
 cask "streamlabs"
 # Messaging app with a focus on speed and security
 cask "telegram"
+# Command-line interface for Vercel
+cask "vercel"
 # Native desktop client for WhatsApp
 cask "whatsapp"
 # Auth-enabled curl-like CLI for the X API

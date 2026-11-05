@@ -82,15 +82,17 @@ Still to install by hand: apps from the App Store, apps that aren't in Homebrew,
 
 ## Use
 
+From the repo root:
+
 ```sh
-./install.sh          # install Homebrew, the tools, and what is missing from the Brewfile
-./install.sh --check  # only report
-./install.sh --pull   # rewrite the Brewfile from what is installed here, to review and commit
+./provision/install.sh          # install Homebrew, tools, and what is missing from the Brewfile
+./provision/install.sh --check  # only report
+./provision/install.sh --pull   # rewrite the Brewfile from what is installed here, to review and commit
 ```
 
 An entry in the `Brewfile` that isn't installed here is `missing`, and one that is installed here but isn't in the `Brewfile` is `unlisted`. Nothing is uninstalled, and nothing already installed is upgraded unless a new install needs it.
 
-After installing or removing something with `brew`, run `--pull` and commit. After adding a line here, run `./install.sh`. `--pull` replaces the whole file, so run it on the Mac that has everything; comments and ordering of your own don't survive it.
+After installing or removing something with `brew`, run `./provision/install.sh --pull` and commit. After adding a line here, run `./provision/install.sh`. `--pull` replaces the whole file, so run it on the Mac that has everything; comments and ordering of your own don't survive it.
 
 Homebrew only loads a formula or cask from a third-party tap once it has been told to trust it. The `Brewfile` carries that as `trusted: true`, so a new Mac trusts the same ones. Something that is installed but not trusted is left out by `brew bundle dump`, and reported here as `skipped`.
 

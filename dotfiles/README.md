@@ -23,11 +23,13 @@ My terminal, shell, editor and agent config for macOS.
 
 ## Use
 
+From the repo root:
+
 ```sh
-./install.sh          # add what is missing; report files that differ, without overwriting
-./install.sh --check  # only report
-./install.sh --pull   # copy home's versions here, to review and commit
-./install.sh --push   # overwrite home's copies from here, keeping a .bak-<time> of each
+./dotfiles/install.sh          # add what is missing; report files that differ, without overwriting
+./dotfiles/install.sh --check  # only report
+./dotfiles/install.sh --pull   # copy home's versions here, to review and commit
+./dotfiles/install.sh --push   # overwrite home's copies from here, keeping a .bak-<time> of each
 ```
 
 The files are copied, not linked, because the apps rewrite their config, and installers add lines to the zsh files. After changing a setting in an app, run `--pull` and commit. After editing a file here, run `--push`.
@@ -35,9 +37,9 @@ The files are copied, not linked, because the apps rewrite their config, and ins
 To bring another laptop up to date, pull what it changed first, so git can merge the two:
 
 ```sh
-./install.sh --pull   # copies this laptop's changes here; review and commit them
+./dotfiles/install.sh --pull   # copies this laptop's changes here; review and commit them
 git pull --rebase
-./install.sh --push
+./dotfiles/install.sh --push
 ```
 
 This repo is public, so `--pull` refuses a file that looks like it holds a credential.
@@ -58,7 +60,7 @@ its light/dark theme pair is enabled too.
 The installer checks and selects the personal layout while Herdr is running, or
 saves the selection for its first launch on a new machine. `--check` verifies the
 managed files and selection without opening Herdr. To apply only Herdr, run
-`./herdr-app/setup.py --push` here. Its [migration notes](herdr-app/README.md#migrated-preferences)
+`./dotfiles/herdr-app/setup.py --push` from the repo root. Its [migration notes](herdr-app/README.md#migrated-preferences)
 record the old options that have no direct desktop equivalent.
 
 ## Editors and Rust
@@ -165,14 +167,16 @@ Tokens and work details go in `~/.zshrc.private`, which `~/.zshrc` reads if it i
 
 ## New machine
 
-1. Install the apps and tools with [`../provision/install.sh`](../provision/README.md#new-machine), then run `./install.sh --push` here. It is `--push` because some installers have already written a config of their own by then, such as the `~/.zshrc` that Oh My Zsh starts with.
+Run these steps from the repo root:
+
+1. Install the apps and tools with [`./provision/install.sh`](../provision/README.md#new-machine), then run `./dotfiles/install.sh --push`. It is `--push` because some installers have already written a config of their own by then, such as the `~/.zshrc` that Oh My Zsh starts with.
 2. Bring `~/.zshrc.private` over from the old Mac, and open a new terminal.
-3. Run `../install.sh` to link the skills and mods.
+3. Run `./install.sh` to link the skills and mods.
 4. If using the older Herdr TUI, run `herdr integration install claude` and
    `herdr integration install codex`. It manages its own hook scripts, so they
    aren't kept here. The desktop app uses herdr-core and the agents' OSC 7501
    status reports; these TUI integrations do not configure the desktop app.
 5. Run the installer in my private guides repo for the other hook the Claude settings name.
-6. Run `../preferences/install.sh` to enable macOS's automatic day/night appearance, make Zed the default for code/text files in macOS and Codex's file/repository opening, and select Vim for Git editing. See [preferences](../preferences/README.md) for checking and backups.
+6. Run `./preferences/install.sh` to enable macOS's automatic day/night appearance, make Zed the default for code/text files in macOS and Codex's file/repository opening, and select Vim for Git editing. See [preferences](../preferences/README.md) for checking and backups.
 
 Not kept here: git config, `~/.zshenv`, which rustup's installer writes, anything that holds credentials, and Codex's `config.toml`, which is mostly per-machine state. Rex generates its Codex hook in `~/.codex/hooks.json` without copying that file here. The Claude settings name their hook and status line scripts by absolute path under `/Users/siddharthks`, and so do a few `PATH` lines in the zsh files.

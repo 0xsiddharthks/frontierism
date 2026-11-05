@@ -25,14 +25,18 @@ My agent skills for Claude Code and Codex.
 
 ## Install
 
-Run `install.sh` from the repo root:
+From the repo root:
 
 ```sh
-./install.sh          # link every skill into ~/.claude/skills and ~/.agents/skills
-./install.sh --check  # only report
+./skills/install.sh          # link skills into ~/.claude/skills and ~/.agents/skills
+./skills/install.sh --check  # only report
 ```
 
-Re-run it after adding a skill or moving this repo. `~/.agents/skills` is Codex's user skills directory.
+Re-run it after adding a skill or moving this repo. Only folders containing
+`SKILL.md` are linked. It removes broken links belonging to this checkout's
+skills, preserves real files and unrelated broken links, and reports skill/mod
+name conflicts. `~/.agents/skills` is Codex's user skills directory.
+The root `./install.sh` runs both this installer and the mods installer.
 
 Notion is the maintained source for the study libraries. Use `predictive-history`
 to publish the requested lecture or course there; run `notion-analyze-and-link`
@@ -98,6 +102,6 @@ The skills are written for my own setup. They refer to each other and to my agen
 
 ## Adding one
 
-Create `<name>/SKILL.md` in this folder, then run `./install.sh`. For a skill that should run only when invoked, set `disable-model-invocation: true` for Claude and add `agents/openai.yaml` with `policy: allow_implicit_invocation: false` for Codex. Codex doesn't substitute `$ARGUMENTS`, so say where to find the arguments when it's left as is.
+Create `<name>/SKILL.md` in this folder, then run `./skills/install.sh` from the repo root. For a skill that should run only when invoked, set `disable-model-invocation: true` for Claude and add `agents/openai.yaml` with `policy: allow_implicit_invocation: false` for Codex. Codex doesn't substitute `$ARGUMENTS`, so say where to find the arguments when it's left as is.
 
 A plugin whose code runs inside Claude Code, such as `/prs`, is a mod and goes in [`../mods/`](../mods/README.md).
