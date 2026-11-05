@@ -1,0 +1,7 @@
+{
+  "name": "files",
+  "version": "0.1.0",
+  "author": { "name": "Siddharth Sharma" },
+  "description": "/files opens a searchable file tree with Git changes, session activity, previews, and file selection for your draft prompt.",
+  "types": "./types/index.d.ts"
+}

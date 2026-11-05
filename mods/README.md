@@ -5,8 +5,10 @@ My Claude Code mods. A mod is a plugin whose code runs inside Claude Code, so it
 | Mod        | What it does                                                                                                       |
 | ---------- | ------------------------------------------------------------------------------------------------------------------ |
 | `pr-stack` | `/prs`: a pane of my open PRs in the current repo as stacks, with CI and review state, refreshed while it is open. |
+| [`files`](files/README.md) | `/files`: a searchable file tree with All files, Git changes, and This session views, content/diff previews, and selected paths added to the draft prompt. |
 
 `/prs` reads the PRs with `gh`, so `gh` has to be signed in.
+`/files` needs Git and Python 3.9 or later, and runs in a Git working tree.
 
 ## Install
 
@@ -15,7 +17,7 @@ Run `install.sh` from the repo root:
 ```sh
 ./install.sh          # link every mod into ~/.claude/skills
 ./install.sh --check  # only report
-claude plugin list    # pr-stack@skills-dir should be enabled
+claude plugin list    # pr-stack@skills-dir and files@skills-dir should be enabled
 ```
 
 Claude Code loads a plugin folder it finds in `~/.claude/skills` as `<name>@skills-dir`. It needs Claude Code 2.1.287 or later, and Codex can't run a mod. A session that is already open picks up a change after `/reload-plugins`.
