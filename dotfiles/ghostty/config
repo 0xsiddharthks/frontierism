@@ -45,7 +45,7 @@ cursor-click-to-move = true
 
 macos-option-as-alt = left
 
-# Match Cursor, VS Code, and normal macOS behavior: selecting highlights text;
+# Match Cursor and normal macOS behavior: selecting highlights text;
 
 # Command + C copies it. This avoids silently replacing the clipboard.
 

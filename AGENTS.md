@@ -11,6 +11,12 @@
 
 - If you are Codex (or ChatGPT Work): prefer ChatGPT's built-in `@Browser`. Use `@Chrome` only when I ask for it or when the needed authenticated session isn't available in the built-in browser.
 
+# Editors
+
+- Use Cursor for GUI editing and app integrations, including ChatGPT/Codex, Claude, GitHub Desktop and Herdr. Do not add VS Code or Zed to provisioning or dotfiles.
+- Keep terminal editing in Vim: `EDITOR`, `VISUAL` and Git's `core.editor` should use `vim`.
+- Keep Codex's `project_root_markers = [".codex-root"]` in the portable setup; the root marker is committed in this repo.
+
 # Notion notes
 
 - Notion is the primary reading and editing workspace. Use Obsidian only when a task specifically calls for it.
@@ -23,5 +29,6 @@
 
 # Pushing
 
+- After completing repository changes, commit and push them yourself unless I explicitly ask you to leave them uncommitted or unpushed.
 - Only I work in this repo, so don't push a branch or open a pull request for your work. Fast-forward `origin/main` to it whenever possible, including from a worktree branch (`git push origin HEAD:main`).
 - Every time you do, pull any upstream changes first (`git pull --rebase origin main`), so that the push fast-forwards.

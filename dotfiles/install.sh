@@ -26,7 +26,6 @@ files=(
     "herdr/config.toml|$HOME/.config/herdr/config.toml"
     "rex/rex|$HOME/.local/bin/rex"
     "rex/init.lua|${XDG_CONFIG_HOME:-$HOME/.config}/rex/init.lua"
-    "zed/settings.json|$HOME/.config/zed/settings.json"
     "zsh/zprofile|$HOME/.zprofile"
     "zsh/zshrc|$HOME/.zshrc"
 )

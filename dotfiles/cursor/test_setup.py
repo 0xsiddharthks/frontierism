@@ -175,7 +175,8 @@ class InstallerTests(unittest.TestCase):
                         PATH=f"{self.bin}:/usr/bin:/bin:/usr/sbin:/sbin", PYTHONDONTWRITEBYTECODE="1")
         self.script("python3", f'#!/bin/sh\ncase "$1" in */cursor/preferences.py) exec "{sys.executable}" "$@";; *) exit 0;; esac\n')
         self.script("pgrep", "#!/bin/sh\nexit 1\n")
-        self.script("code", f'#!/bin/sh\necho unexpected-code-call >> "{self.log}"\nexit 1\n')
+        for editor in ("code", "zed"):
+            self.script(editor, f'#!/bin/sh\necho unexpected-{editor}-call >> "{self.log}"\nexit 1\n')
         self.script("cursor", f'''#!{sys.executable}
 from pathlib import Path
 import sys
@@ -204,13 +205,15 @@ else:
         self.assertEqual(result.returncode, expected, result.stdout + result.stderr)
         return result.stdout
 
-    def test_new_mac_installs_cursor_profile_and_extensions_without_using_vscode(self):
+    def test_new_mac_installs_cursor_profile_and_extensions_without_using_other_editors(self):
         self.run_installer("--push")
         for name in ("settings.json", "keybindings.json"):
             self.assertEqual((self.user / name).read_bytes(), (ROOT / name).read_bytes())
         self.assertEqual(self.installed.read_text(), (ROOT / "extensions.txt").read_text())
         self.assertNotIn("unexpected-code-call", self.log.read_text())
+        self.assertNotIn("unexpected-zed-call", self.log.read_text())
         self.assertFalse((self.home / "Library/Application Support/Code").exists())
+        self.assertFalse((self.home / ".config/zed").exists())
         self.assertIn("ok       Cursor extensions", self.run_installer("--check"))
         self.installed.write_text("")
         self.assertIn("missing  Cursor extension", self.run_installer("--check", expected=1))
@@ -234,6 +237,7 @@ else:
         self.assertTrue(json.loads(saved)["applicationUser"]["cppEnabled"])
         self.assertNotIn("accountOnly", saved)
         self.assertNotIn("unexpected-code-call", self.log.read_text())
+        self.assertNotIn("unexpected-zed-call", self.log.read_text())
 
 
 if __name__ == "__main__":

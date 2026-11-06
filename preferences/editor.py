@@ -17,8 +17,8 @@ import threading
 import time
 
 
-CODEX_KEY = "open-in-target-preferences"
 AUTO_APPEARANCE_KEY = "AppleInterfaceStyleSwitchesAutomatically"
+CLAUDE_EDITOR_KEY = "claude-code-preferred-editor"
 
 
 class CodexConfig:
@@ -78,17 +78,24 @@ class CodexConfig:
                     raise RuntimeError(f"Codex {method} failed (error {code}): {message}")
                 return reply["result"]
 
-    def read_editor(self):
+    def read_preferences(self, keys):
         result = self.request("config/read", {"includeLayers": False})
-        return result["config"].get("desktop", {}).get(CODEX_KEY)
+        selected = {}
+        for key in keys:
+            value = result["config"]
+            for part in key.split("."):
+                value = value.get(part) if isinstance(value, dict) else None
+            selected[key] = value
+        return selected
 
-    def write_editor(self, value):
-        # Replace this one preference, including old per-project editor overrides.
-        self.request("config/value/write", {
-            "keyPath": "desktop." + CODEX_KEY,
-            "value": value,
-            "mergeStrategy": "replace",
-        })
+    def write_preferences(self, values):
+        for key, value in values.items():
+            # Replace only selected keys, including old per-project editor overrides.
+            self.request("config/value/write", {
+                "keyPath": key,
+                "value": value,
+                "mergeStrategy": "replace",
+            })
 
     def __exit__(self, *_):
         self.process.stdin.close()
@@ -165,6 +172,46 @@ def auto_appearance():
     raise RuntimeError("Cannot read macOS's automatic appearance preference")
 
 
+class ClaudePreferences:
+    """Merge the editor choice without exporting accounts, MCP servers or other state."""
+
+    def __init__(self):
+        self.path = Path.home() / "Library/Application Support/Claude/claude_desktop_config.json"
+
+    def read(self):
+        config = json.loads(self.path.read_text()) if self.path.exists() else {}
+        if not isinstance(config, dict):
+            raise ValueError("Claude's configuration is not a JSON object")
+        preferences = config.get("preferences", {})
+        if not isinstance(preferences, dict):
+            raise ValueError("Claude's preferences are not a JSON object")
+        epitaxy = preferences.get("epitaxyPrefs", {})
+        if not isinstance(epitaxy, dict):
+            raise ValueError("Claude's editor preferences are not a JSON object")
+        return config, epitaxy.get(CLAUDE_EDITOR_KEY)
+
+    def ensure_closed(self):
+        result = subprocess.run(["pgrep", "-x", "Claude"], capture_output=True)
+        if result.returncode == 0:
+            raise RuntimeError("Quit Claude before applying its saved editor preference, then run the installer again")
+        if result.returncode != 1:
+            raise RuntimeError("Couldn't check whether Claude is running")
+
+    def write_editor(self, value):
+        self.ensure_closed()
+        config, _ = self.read()
+        config.setdefault("preferences", {}).setdefault("epitaxyPrefs", {})[CLAUDE_EDITOR_KEY] = value
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        descriptor, temporary = tempfile.mkstemp(prefix=".editor-", dir=self.path.parent)
+        try:
+            with os.fdopen(descriptor, "w") as output:
+                json.dump(config, output, indent=2)
+                output.write("\n")
+            os.replace(temporary, self.path)
+        finally:
+            Path(temporary).unlink(missing_ok=True)
+
+
 def save_backup(snapshot):
     state_root = Path(os.environ.get("XDG_STATE_HOME", Path.home() / ".local/state"))
     directory = state_root / "frontierism/preferences"
@@ -184,18 +231,20 @@ def main():
     args = parser.parse_args()
     if sys.platform != "darwin":
         raise RuntimeError("These app defaults are for macOS")
-    for command in ("xcrun", "codex", "git", "vim", "defaults"):
+    for command in ("xcrun", "codex", "git", "vim", "defaults", "pgrep"):
         if shutil.which(command) is None:
             raise RuntimeError(f"Missing {command}; run provision/install.sh first")
     wanted = json.loads(Path(__file__).with_name("editor.json").read_text())
+    if not (Path(__file__).resolve().parents[1] / ".codex-root").is_file():
+        raise RuntimeError("Missing repository .codex-root marker; restore it from Git")
     app = next((p for p in (
-        Path("/Applications/Zed.app"), Path.home() / "Applications/Zed.app",
+        Path("/Applications/Cursor.app"), Path.home() / "Applications/Cursor.app",
     ) if p.exists()), None)
     if app is None:
-        raise RuntimeError("Missing Zed; run provision/install.sh first")
+        raise RuntimeError("Missing Cursor; run provision/install.sh first")
     info = plistlib.loads((app / "Contents/Info.plist").read_bytes())
     if info["CFBundleIdentifier"] != wanted["bundle_id"]:
-        raise RuntimeError("Zed's bundle identifier differs from editor.json")
+        raise RuntimeError("Cursor's bundle identifier differs from editor.json")
 
     selectors = wanted["content_types"] + ["." + ext for ext in wanted["extensions"]]
     macos = MacFileHandlers(app)
@@ -204,50 +253,64 @@ def main():
     old_git = git_editor()
     old_appearance = auto_appearance()
     appearance_changed = old_appearance is not True
-    desired_codex = {"global": wanted["codex_target"]}
+    desired_codex = wanted["codex"]
+    claude = ClaudePreferences()
+    _, old_claude = claude.read()
+    claude_changed = old_claude != wanted["claude_editor"]
     with CodexConfig() as codex:
-        old_codex = codex.read_editor()
-        codex_changed = old_codex != desired_codex
+        old_codex = codex.read_preferences(desired_codex)
+        codex_changes = {key: value for key, value in desired_codex.items() if old_codex[key] != value}
         git_changed = old_git != wanted["git_editor"]
         if args.check:
             print("drift    macOS file handlers: " + ", ".join(changed) if changed
                   else f"ok       macOS file handlers ({len(selectors)} types)")
-            print("drift    Codex preferred editor" if codex_changed else "ok       Codex preferred editor")
+            for key in desired_codex:
+                print(("drift    " if key in codex_changes else "ok       ") + "Codex " + key)
+            print("drift    Claude preferred editor" if claude_changed else "ok       Claude preferred editor")
             print("drift    Git editor" if git_changed else "ok       Git editor")
             print("drift    macOS automatic appearance" if appearance_changed
                   else "ok       macOS automatic appearance")
-            return int(bool(changed or codex_changed or git_changed or appearance_changed))
-        if changed or codex_changed or git_changed or appearance_changed:
+            return int(bool(changed or codex_changes or claude_changed or git_changed or appearance_changed))
+        if claude_changed:
+            claude.ensure_closed()
+        if changed or codex_changes or claude_changed or git_changed or appearance_changed:
             backup = save_backup({
                 "macos_handlers": previous,
-                "codex_editor": old_codex,
+                "codex_preferences": old_codex,
+                "claude_editor": old_claude,
                 "git_core_editor": old_git,
                 "macos_auto_appearance": old_appearance,
             })
             print(f"backup   {backup}", flush=True)
-        if codex_changed:
-            codex.write_editor(desired_codex)
+        codex.write_preferences(codex_changes)
+        if claude_changed:
+            claude.write_editor(wanted["claude_editor"])
         if git_changed:
             run("git", "config", "--global", "core.editor", wanted["git_editor"])
         if appearance_changed:
             run("defaults", "write", "-g", AUTO_APPEARANCE_KEY, "-bool", "true")
         if changed:
-            print("note     choose Use Zed in macOS's file-default confirmations; waiting for completion", flush=True)
+            print("note     choose Use Cursor in macOS's file-default confirmations; waiting for completion", flush=True)
             macos.request("apply", changed)
         actual = macos.request("read", selectors)
         incorrect = [selector for selector in selectors if actual[selector] != wanted["bundle_id"]]
         if incorrect:
             raise RuntimeError("File handler verification failed: " + ", ".join(incorrect))
-        if codex.read_editor() != desired_codex or git_editor() != wanted["git_editor"]:
+        if codex.read_preferences(desired_codex) != desired_codex or git_editor() != wanted["git_editor"]:
             raise RuntimeError("Editor preference verification failed")
+        if claude.read()[1] != wanted["claude_editor"]:
+            raise RuntimeError("Claude editor preference verification failed")
         if auto_appearance() is not True:
             raise RuntimeError("Automatic appearance preference verification failed")
-    print(f"ok       Zed is the macOS default for {len(selectors)} code/text file types")
-    print("ok       Zed is Codex's preferred editor (per-project overrides cleared)")
+    print(f"ok       Cursor is the macOS default for {len(selectors)} code/text file types")
+    print("ok       Cursor is Codex's preferred editor (per-project overrides cleared)")
+    print("ok       Codex file links use Cursor; project roots use .codex-root with a 64 KiB instruction limit")
+    print("ok       Cursor is Claude's preferred editor")
+    print("note     GitHub Desktop selects Cursor on a new Mac as the only installed GUI code editor")
     print(f"ok       Git uses {wanted['git_editor']}")
     print("ok       macOS appearance switches automatically between light and dark")
-    if codex_changed:
-        print("note     reopen Codex to load its new preferred editor")
+    if codex_changes:
+        print("note     reopen ChatGPT/Codex to load its new preferences")
     return 0
 
 

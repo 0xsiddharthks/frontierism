@@ -62,6 +62,11 @@ without() {
     ' "$2" "$1"
 }
 
+# Keep retired editors out of installs and --pull, even on an older Mac.
+excluded_editors="$tmp/excluded-editors"
+printf '%s\n' 'cask "visual-studio-code"' 'cask "visual-studio-code@insiders"' \
+    'cask "zed"' 'cask "zed@preview"' >"$excluded_editors"
+
 # Prints each line of $2 with the status $1, and fails the run.
 report() {
     local line
@@ -77,7 +82,8 @@ if [[ "$mode" == --pull && ! -e "$private" ]]; then
     echo "REFUSED  $private isn't there, so --pull can't tell what to keep out of this public repo; copy it from the other Mac, or make an empty one"
     failed=1
 elif [[ "$mode" == --pull ]]; then
-    without "$installed" "$private" >"$tmp/public"
+    without "$installed" "$private" >"$tmp/not-private"
+    without "$tmp/not-private" "$excluded_editors" >"$tmp/public"
     if cmp -s "$tmp/public" "$brewfile"; then
         echo "ok       Brewfile"
     else
@@ -86,7 +92,8 @@ elif [[ "$mode" == --pull ]]; then
     fi
 else
     [[ -e "$private" ]] || private=/dev/null
-    cat "$brewfile" "$private" >"$tmp/wanted"
+    cat "$brewfile" "$private" >"$tmp/combined"
+    without "$tmp/combined" "$excluded_editors" >"$tmp/wanted"
     missing="$(LC_ALL=C comm -23 <(entries "$tmp/wanted") <(entries "$installed"))"
     unlisted="$(LC_ALL=C comm -13 <(entries "$tmp/wanted") <(entries "$installed"))"
     if [[ -z "$missing$unlisted" ]]; then

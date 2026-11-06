@@ -119,5 +119,3 @@ cask "vercel"
 cask "whatsapp"
 # Auth-enabled curl-like CLI for the X API
 cask "xdevplatform/tap/xurl", trusted: true
-# High-performance code editor
-cask "zed"

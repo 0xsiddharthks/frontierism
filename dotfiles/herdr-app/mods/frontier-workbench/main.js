@@ -87,10 +87,10 @@ export default class Workbench extends View {
     const { cwd, remote } = context;
     if (!cwd || remote) return;
     try {
-      const result = await exec("zed", [cwd]);
-      if (result.code !== 0) throw new Error(result.stderr || "Zed could not open the folder.");
+      const result = await exec("cursor", [cwd]);
+      if (result.code !== 0) throw new Error(result.stderr || "Cursor could not open the folder.");
     } catch (error) {
-      notify({ title: "Could not open Zed", body: String(error), level: "error" });
+      notify({ title: "Could not open Cursor", body: String(error), level: "error" });
     }
   }
 
@@ -123,7 +123,7 @@ export default class Workbench extends View {
         .when(Boolean(detail), el => el.child(div().truncate().text_size(10.5).text_color(t.dim).child(detail))))
       .child(panelButton("files", "Files", "Files · Cmd+Shift+E"))
       .child(panelButton("changes", "Changes", "Changes · Cmd+Shift+G"))
-      .when(Boolean(cwd) && !remote, el => el.child(button("workbench-editor", "Zed", "Open this folder in Zed · Cmd+Shift+O",
+      .when(Boolean(cwd) && !remote, el => el.child(button("workbench-editor", "Cursor", "Open this folder in Cursor · Cmd+Shift+O",
         (_event, cx) => {
           const context = this.context();
           cx.spawn(async (cx) => { await this.openEditor(context); cx.notify(); });

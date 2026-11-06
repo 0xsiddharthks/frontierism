@@ -61,16 +61,16 @@ config already switches between light and dark with macOS.
 - A persistent header shows the focused terminal's title, program, folder,
   branch and status. Single terminals have no duplicate pane header; split panes
   keep their own labels and focus borders.
-- Files, Changes, Zed and the new-terminal/agent menu stay available when there is
+- Files, Changes, Cursor and the new-terminal/agent menu stay available when there is
   one tab and its strip is hidden. Files and Changes remember their selection
-  independently for each space. Zed opens the focused local folder, and is omitted
+  independently for each space. Cursor opens the focused local folder, and is omitted
   for remote spaces rather than opening a remote path on this Mac.
 - The sidebar gives more room to the attention queue. Agent rows show the task
   title, then program, space and branch; hover for the full folder and title.
   Priority sorting, pins, subagents and static status symbols remain available.
 
 The header is the personal `frontier-workbench` mod. It uses Herdr's live model
-without polling. Its Zed action runs `zed <folder>` only when requested by a click
+without polling. Its Cursor action runs `cursor <folder>` only when requested by a click
 or key; it does not start an editor on launch. Existing terminals and sessions
 are unaffected by configuration reloads.
 
@@ -123,7 +123,7 @@ existing `Ctrl+B` bindings because it runs inside another terminal.
 | `Cmd+Shift+Enter` | Zoom the focused pane |
 | `Cmd+W`, `Cmd+Shift+W` | Close tab, close pane |
 | `Cmd+Shift+E`, `Cmd+Shift+G` | Toggle Files, Changes |
-| `Cmd+Shift+O` | Open the focused local folder in Zed |
+| `Cmd+Shift+O` | Open the focused local folder in Cursor |
 | `Cmd+B`, `Cmd+,`, `Cmd+Shift+P` | Toggle sidebar, settings, command palette |
 
 Panel and editor shortcuts apply while the personal layout is shown. Plain

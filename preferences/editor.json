@@ -1,6 +1,12 @@
 {
-  "bundle_id": "dev.zed.Zed",
-  "codex_target": "zed",
+  "bundle_id": "com.todesktop.230313mzl4w4u92",
+  "codex": {
+    "desktop.open-in-target-preferences": {"global": "cursor"},
+    "file_opener": "cursor",
+    "project_root_markers": [".codex-root"],
+    "project_doc_max_bytes": 65536
+  },
+  "claude_editor": "cursor",
   "git_editor": "vim",
   "content_types": [
     "public.plain-text",

@@ -134,14 +134,14 @@ function load(name, api) {
   await send("files");
   assert.equal(panel.hidden, true, "the same shortcut closes its open panel");
   await send("editor");
-  assert.deepEqual(executions, [["zed", ["/workspace/one"]]], "Zed opens the focused terminal's folder");
+  assert.deepEqual(executions, [["cursor", ["/workspace/one"]]], "Cursor opens the focused terminal's folder");
   focus = { ...focus, terminal: "remote/fixture-terminal", cwd: "/remote/project" };
   await send("editor");
   assert.equal(executions.length, 1, "remote folders never open on the local machine");
   await view.openEditor({ cwd: null, remote: false });
   assert.equal(notices.length, 0, "an empty workspace does not try to launch an editor");
   await view.openEditor({ cwd: "/workspace/clicked", remote: false });
-  assert.deepEqual(executions.at(-1), ["zed", ["/workspace/clicked"]], "a queued click keeps the folder selected when it was pressed");
+  assert.deepEqual(executions.at(-1), ["cursor", ["/workspace/clicked"]], "a queued click keeps the folder selected when it was pressed");
   editorFails = true;
   await view.openEditor({ cwd: "/workspace/clicked", remote: false });
   assert.equal(notices[0]?.level, "error", "editor launch failures are visible");

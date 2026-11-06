@@ -17,7 +17,6 @@ My terminal, shell, editor and agent config for macOS.
 | `rex/rex`                     | `~/.local/bin/rex`                                          |
 | `rex/init.lua`                | `~/.config/rex/init.lua`                                    |
 | `rex/preferences.json`        | selected Rex Mac settings, applied with `defaults`          |
-| `zed/settings.json`            | `~/.config/zed/settings.json`                                |
 | `zsh/zprofile`                 | `~/.zprofile`                                                |
 | `zsh/zshrc`                    | `~/.zshrc`                                                   |
 
@@ -50,7 +49,7 @@ The [desktop app configuration](herdr-app/README.md) migrates the TUI preference
 `Cmd+1`–`Cmd+9` selects spaces; numeric tab switching is disabled; Tokyo Night
 follows macOS light/dark appearance; sounds are off; agents show two lines in priority order; the tab strip
 hides at one tab. A persistent header keeps the current task, folder and branch,
-Files, Changes, Zed and the new-terminal/agent menu accessible. Terminal text uses
+Files, Changes, Cursor and the new-terminal/agent menu accessible. Terminal text uses
 JetBrains Mono at a base 16 px with 120% app zoom; telemetry is off. Personal layout
 and mod copies survive app updates. The [preferences step](../preferences/README.md)
 enables macOS's automatic day/night appearance on new machines.
@@ -65,21 +64,18 @@ record the old options that have no direct desktop equivalent.
 
 ## Editors and Rust
 
-Cursor and Zed are installed by [provision](../provision/README.md) and configured
-here. Vim is the shell's preferred editor (`EDITOR` and `VISUAL` use `vim`).
+Cursor is the only GUI code editor installed by [provision](../provision/README.md)
+and configured here. Vim is the shell's preferred editor (`EDITOR` and `VISUAL` use `vim`).
 The [preferences installer](../preferences/README.md) sets Git's global
 `core.editor` to `vim` for commit messages, amend and interactive rebase.
-Vim comes with macOS, so no extra package is needed. Zed is the default for
-code/text files in macOS and for opening files and repositories from Codex.
-Cursor and Zed use JetBrains Mono at 16 px and follow the system appearance.
-Cursor uses its built-in Default Light Modern and Default Dark Modern themes;
-Zed uses the [VS Code 2026 theme extension](https://github.com/eugenebokhan/zed-vs-code-2026-theme),
-including its recommended Rust semantic highlighting. Line spacing follows
-each editor's defaults: Zed's `comfortable` setting and Cursor's automatic line height.
+Vim comes with macOS, so no extra package is needed. Cursor is the default for
+code/text files in macOS and for opening files and repositories from Codex and Herdr.
+It uses JetBrains Mono at 16 px, automatic line height and its built-in Default
+Light Modern and Default Dark Modern themes, following the system appearance.
 
 The Cursor files capture the current editor settings, keyboard shortcuts and
 installed extension IDs. Extensions use Cursor's installer, including
-its Anysphere Python and remote-development extensions. No VS Code setup is run.
+its Anysphere Python and remote-development extensions.
 The current Cursor profile has no custom snippets, tasks or named profiles.
 
 `cursor/preferences.json` also captures a selected set of app preferences:
@@ -94,30 +90,18 @@ so app upgrades may require updating this helper. Model availability still follo
 the signed-in account. To sync just these preferences, run
 `python3 dotfiles/cursor/preferences.py --pull`, `--push` or `--check` from the repo root.
 
-[Rust support is built into Zed](https://zed.dev/docs/languages/rust): rust-analyzer,
-rustfmt, Cargo run/test tasks and CodeLLDB debugging need no Rust extension. Its
-settings automatically install TOML syntax and the Tombi language server for Cargo
-manifests, plus the theme, when Zed starts. Other language settings, format-on-save,
-Cargo checks and debugger behavior retain Zed's defaults. The Cursor extension
-list includes rust-analyzer and Even Better TOML.
+The Cursor extension list includes rust-analyzer and Even Better TOML. Provision
+installs rustup's `rust-src`, `rustfmt` and `clippy` components for analysis,
+formatting and linting.
 
-Both editors exclude directories named `worktrees` or `.worktrees` at any depth,
+Cursor excludes directories named `worktrees` or `.worktrees` at any depth,
 including `.claude/worktrees/` and `.codex/worktrees/`, so opening a parent repo
 doesn't scan the nested checkouts. Open a particular worktree as its own project
 when working in it. Cursor excludes these folders from its explorer, recursive
 watcher and Git repository discovery; searches inherit the explorer exclusions.
-Zed's [`file_scan_exclusions`](https://zed.dev/docs/reference/all-settings#file-scan-exclusions)
-cover its project tree, scans and searches; `"..."` retains the built-in exclusions.
-Both also exclude Cargo's `target` build output from scanning/watching. If adding
-another worktree container name, update both editor settings here. Project settings
-that override these lists should keep these patterns; in Zed use `"..."` to extend
-the inherited exclusions.
-
-Cursor retains its existing AI integrations and extension list. Zed's
-`agent_servers` settings install Codex from the
-[ACP Registry](https://zed.dev/docs/ai/external-agents#codex); choose **Codex** from
-the Agent Panel's new-thread menu. Use the integration's sign-in flow if prompted.
-Authentication stays local, outside these dotfiles.
+It also excludes Cargo's `target` build output from scanning/watching. If adding
+another worktree container name, update Cursor's settings here. Project settings
+that override these lists should keep these patterns.
 
 ## Rex
 
@@ -177,6 +161,6 @@ Run these steps from the repo root:
    aren't kept here. The desktop app uses herdr-core and the agents' OSC 7501
    status reports; these TUI integrations do not configure the desktop app.
 5. Run the installer in my private guides repo for the other hook the Claude settings name.
-6. Run `./preferences/install.sh` to enable macOS's automatic day/night appearance, make Zed the default for code/text files in macOS and Codex's file/repository opening, and select Vim for Git editing. See [preferences](../preferences/README.md) for checking and backups.
+6. Run `./preferences/install.sh` to enable macOS's automatic day/night appearance, make Cursor the default for code/text files and app integrations, configure Codex's `.codex-root` discovery, and select Vim for Git editing. See [preferences](../preferences/README.md) for checking and backups.
 
-Not kept here: git config, `~/.zshenv`, which rustup's installer writes, anything that holds credentials, and Codex's `config.toml`, which is mostly per-machine state. Rex generates its Codex hook in `~/.codex/hooks.json` without copying that file here. The Claude settings name their hook and status line scripts by absolute path under `/Users/siddharthks`, and so do a few `PATH` lines in the zsh files.
+Not kept here: git config, `~/.zshenv`, which rustup's installer writes, anything that holds credentials, and Codex's full `config.toml`, which is mostly per-machine state. The preferences step applies only selected portable Codex settings, including `.codex-root` discovery and Cursor defaults. Rex generates its Codex hook in `~/.codex/hooks.json` without copying that file here. The Claude settings name their hook and status line scripts by absolute path under `/Users/siddharthks`, and so do a few `PATH` lines in the zsh files.

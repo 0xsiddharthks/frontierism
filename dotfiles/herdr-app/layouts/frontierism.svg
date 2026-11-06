@@ -12,7 +12,7 @@
     <text x="45" y="346" font-size="11" fill="#a9b1d6">Codex · project</text>
     <text x="204" y="20" font-size="12">Implement feature</text>
     <text x="204" y="36" font-size="10" fill="#a9b1d6">Claude Code · ~/project · feature</text>
-    <text x="438" y="28" font-size="11">Files   Changes   Zed   +</text>
+    <text x="438" y="28" font-size="11">Files   Changes   Cursor   +</text>
     <text x="210" y="80" font-size="16" fill="#9ece6a">$</text>
     <text x="232" y="80" font-size="13">One tab · tab bar hidden</text>
     <text x="214" y="380" font-size="12" fill="#a9b1d6">Cmd+1–9: spaces · follows macOS appearance</text>

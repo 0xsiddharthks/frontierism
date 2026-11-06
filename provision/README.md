@@ -55,7 +55,7 @@ From a Mac with nothing on it to one that has everything here:
    by dragging `Rex Beta.app` into `/Applications`. This stays manual during the
    beta; neither this installer nor the Brewfile downloads it.
 
-8. Carry on with the [dotfiles](../dotfiles/README.md), which copy my config into place and set up Cursor and Zed. Cursor gets its saved settings, keyboard shortcuts, extensions and selected app preferences; close Cursor first so those app preferences can be applied. Zed installs its configured TOML/Cargo and theme extensions and Codex ACP agent when it starts; Rust support is built in. The dotfiles also configure Herdr's personal layout, themes and keybindings, and the installed Rex app for Claude Code and Codex automatically. `--push` replaces starter configs written by app installers, keeping backups. Then run `./install.sh` to link the skills and mods.
+8. Carry on with the [dotfiles](../dotfiles/README.md), which copy my config into place and set up Cursor, the only GUI code editor installed here. Cursor gets its saved settings, keyboard shortcuts, extensions and selected app preferences; close Cursor first so those app preferences can be applied. The dotfiles also configure Herdr's personal layout, themes and keybindings, and the installed Rex app for Claude Code and Codex automatically. `--push` replaces starter configs written by app installers, keeping backups. Then run `./install.sh` to link the skills and mods.
 
    ```sh
    ./dotfiles/install.sh --push
@@ -67,9 +67,9 @@ From a Mac with nothing on it to one that has everything here:
    describes its shortcuts and the one-time Codex hook approval.
 
 9. Apply the [macOS and app preferences](../preferences/README.md), which enable
-   automatic day/night appearance and make Zed the default for code/text files
-   and opening files and repositories from Codex. Git editing uses Vim, matching
-   the dotfiles' `EDITOR` and `VISUAL` settings:
+   automatic day/night appearance and make Cursor the default for code/text files
+   and app integrations. This also configures Codex's `.codex-root` discovery.
+   Git editing uses Vim, matching the dotfiles' `EDITOR` and `VISUAL` settings:
 
    ```sh
    ./preferences/install.sh
@@ -91,6 +91,11 @@ From the repo root:
 ```
 
 An entry in the `Brewfile` that isn't installed here is `missing`, and one that is installed here but isn't in the `Brewfile` is `unlisted`. Nothing is uninstalled, and nothing already installed is upgraded unless a new install needs it.
+
+Cursor is the only GUI code editor in this setup. VS Code and Zed, including their
+Insiders/Preview casks, are excluded from installs and `--pull`, even if an older
+Mac or private Brewfile still lists them. Existing installations are reported as
+`unlisted`; the scripts do not uninstall apps from the current Mac.
 
 After installing or removing something with `brew`, run `./provision/install.sh --pull` and commit. After adding a line here, run `./provision/install.sh`. `--pull` replaces the whole file, so run it on the Mac that has everything; comments and ordering of your own don't survive it.
 
