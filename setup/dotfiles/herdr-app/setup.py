@@ -84,7 +84,7 @@ def sync(app_home, mode):
         if destination.is_file() and data == destination.read_bytes():
             print(f"ok       {installed}")
         elif mode == "--check":
-            print(f"drift    {installed}; run ./dotfiles/herdr-app/setup.py --push")
+            print(f"drift    {installed}. Run ./setup/dotfiles/herdr-app/setup.py --push")
             failed = True
         elif destination.exists() and mode not in ("--push", "--pull"):
             print(f"drift    {installed}; --pull keeps home's, --push keeps this repo's")
@@ -101,7 +101,7 @@ def cli_path():
     found = shutil.which("herdr-app")
     candidate = found or str(Path.home() / ".local/bin/herdr-app")
     if not os.access(candidate, os.X_OK):
-        raise RuntimeError("Herdr app is missing; run ./provision/install.sh first")
+        raise RuntimeError("Herdr app is missing. Run ./setup/provision/install.sh first")
     return candidate
 
 

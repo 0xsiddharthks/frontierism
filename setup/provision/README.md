@@ -31,7 +31,7 @@ From a Mac with nothing on it to one that has everything here:
 5. Run the installer:
 
    ```sh
-   ./provision/install.sh
+   ./setup/provision/install.sh
    ```
 
    It installs three things, in this order:
@@ -46,7 +46,7 @@ From a Mac with nothing on it to one that has everything here:
 
    ```sh
    cd ~/Developer/0xsiddharthks/frontierism
-   ./provision/install.sh --check
+   ./setup/provision/install.sh --check
    ```
 
    Every line should start with `ok`.
@@ -55,12 +55,12 @@ From a Mac with nothing on it to one that has everything here:
    by dragging `Rex Beta.app` into `/Applications`. This stays manual during the
    beta; neither this installer nor the Brewfile downloads it.
 
-8. Carry on with the [dotfiles](../dotfiles/README.md), which copy my config into place and set up Cursor, the only GUI code editor installed here. Cursor gets its saved settings, keyboard shortcuts, extensions and selected app preferences; close Cursor first so those app preferences can be applied. The dotfiles also configure Herdr's personal layout, themes and keybindings, and the installed Rex app for Claude Code and Codex automatically. `--push` replaces starter configs written by app installers, keeping backups. Then run `./install.sh` to link the skills and mods.
+8. Carry on with the [dotfiles](../dotfiles/README.md), which copy my config into place and set up Cursor, the only GUI code editor installed here. Cursor gets its saved settings, keyboard shortcuts, extensions and selected app preferences. Close Cursor first so those app preferences can be applied. The dotfiles also configure Herdr's personal layout, themes and keybindings, and the installed Rex app for Claude Code and Codex automatically. `--push` replaces starter configs written by app installers, keeping backups. Then run `./setup/install.sh` to link the skills and mods.
 
    ```sh
-   ./dotfiles/install.sh --push
-   ./dotfiles/install.sh --check
-   ./install.sh
+   ./setup/dotfiles/install.sh --push
+   ./setup/dotfiles/install.sh --check
+   ./setup/install.sh
    ```
 
    Open a fresh terminal afterwards. Rex's [workflow guide](../dotfiles/rex/README.md)
@@ -72,8 +72,8 @@ From a Mac with nothing on it to one that has everything here:
    Git editing uses Vim, matching the dotfiles' `EDITOR` and `VISUAL` settings:
 
    ```sh
-   ./preferences/install.sh
-   ./preferences/install.sh --check
+   ./setup/preferences/install.sh
+   ./setup/preferences/install.sh --check
    ```
 
    Reopen Codex after applying its editor preference.
@@ -85,9 +85,9 @@ Still to install by hand: apps from the App Store, apps that aren't in Homebrew,
 From the repo root:
 
 ```sh
-./provision/install.sh          # install Homebrew, tools, and what is missing from the Brewfile
-./provision/install.sh --check  # only report
-./provision/install.sh --pull   # rewrite the Brewfile from what is installed here, to review and commit
+./setup/provision/install.sh          # install Homebrew, tools, and what is missing from the Brewfile
+./setup/provision/install.sh --check  # only report
+./setup/provision/install.sh --pull   # rewrite the Brewfile from what is installed here, to review and commit
 ```
 
 An entry in the `Brewfile` that isn't installed here is `missing`, and one that is installed here but isn't in the `Brewfile` is `unlisted`. Nothing is uninstalled, and nothing already installed is upgraded unless a new install needs it.
@@ -97,7 +97,7 @@ Insiders/Preview casks, are excluded from installs and `--pull`, even if an olde
 Mac or private Brewfile still lists them. Existing installations are reported as
 `unlisted`; the scripts do not uninstall apps from the current Mac.
 
-After installing or removing something with `brew`, run `./provision/install.sh --pull` and commit. After adding a line here, run `./provision/install.sh`. `--pull` replaces the whole file, so run it on the Mac that has everything; comments and ordering of your own don't survive it.
+After installing or removing something with `brew`, run `./setup/provision/install.sh --pull` and commit. After adding a line here, run `./setup/provision/install.sh`. Run `--pull` on the Mac that has everything because it rewrites the Brewfile in Homebrew's order and drops custom comments.
 
 Homebrew only loads a formula or cask from a third-party tap once it has been told to trust it. The `Brewfile` carries that as `trusted: true`, so a new Mac trusts the same ones. Something that is installed but not trusted is left out by `brew bundle dump`, and reported here as `skipped`.
 

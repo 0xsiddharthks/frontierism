@@ -25,7 +25,7 @@ Claude Code loads a plugin folder it finds in `~/.claude/skills` as `<name>@skil
 Only folders containing `.claude-plugin/plugin.json` are linked; unfinished
 folders are ignored. The installer removes broken links belonging to this
 checkout's mods, preserves real files and unrelated broken links, and reports
-skill/mod name conflicts. The root `./install.sh` runs both the skills and mods
+skill/mod name conflicts. `./setup/install.sh` runs both the skills and mods
 installers.
 
 ## Working on one

@@ -14,12 +14,12 @@ Herdr's Claude hook checks its own environment and does nothing outside herdr.
 1. Run the [provisioner](../../provision/README.md).
 2. Download the [preview DMG](https://blob.superlogical.com/download/rex-app/preview/latest.dmg)
    and drag `Rex Beta.app` into `/Applications`. App installation stays manual.
-3. Run `./dotfiles/install.sh` from the repository root, then `./install.sh` for
+3. Run `./setup/dotfiles/install.sh` from the repository root, then `./setup/install.sh` for
    the shared skills and mods. Existing files that differ are reported; review
-   them before using `./dotfiles/install.sh --push`.
+   them before using `./setup/dotfiles/install.sh --push`.
 4. Open Rex and start a fresh terminal. In Codex CLI, use `/hooks` to approve
    Rex's session-start hook if prompted. Claude Code runs it in trusted folders.
-5. Run `./dotfiles/install.sh --check` to check the files and generated setup.
+5. Run `./setup/dotfiles/install.sh --check` to check the files and generated setup.
 
 The dotfile installer handles:
 
@@ -96,7 +96,7 @@ continue to reach the terminal. There is no multiplexer prefix to learn.
 The preset enables **Server → Remote Control** for agents to select a session
 or change the app's presentation. The CLI's session, pane and terminal commands
 also work when that switch is off. To turn it off permanently, change it in
-Rex and use `./dotfiles/install.sh --pull` to record the preference.
+Rex and use `./setup/dotfiles/install.sh --pull` to record the preference.
 
 Closing or quitting the GUI does not have the same meaning as stopping the
 server. Sessions run in the server; stopping it ends their programs. A machine

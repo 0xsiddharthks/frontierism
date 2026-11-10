@@ -1,11 +1,11 @@
-# install.sh links the skills into ~/.claude/skills and ~/.agents/skills, which are outside the
+# setup/install.sh links the skills into ~/.claude/skills and ~/.agents/skills, which are outside the
 # workspace, so it has to run outside the sandbox.
 prefix_rule(
-    pattern = ["./install.sh"],
+    pattern = ["./setup/install.sh"],
     decision = "allow",
     justification = "Links the skills into ~/.claude/skills and ~/.agents/skills",
     match = [
-        "./install.sh",
-        "./install.sh --check",
+        "./setup/install.sh",
+        "./setup/install.sh --check",
     ],
 )

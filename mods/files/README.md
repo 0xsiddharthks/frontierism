@@ -4,8 +4,8 @@ A native Claude Code pane for browsing the current Git working tree. It runs
 locally, without a browser, server, or model request. It needs Git, Python 3.9 or
 later, and Claude Code with mods enabled.
 
-Run the repository's `./install.sh`, then `/reload-plugins` in an existing Claude
-Code session. New sessions load `files@skills-dir` automatically.
+Run `./setup/install.sh` from the repository root, then `/reload-plugins` in an
+existing Claude Code session. New sessions load `files@skills-dir` automatically.
 
 ## Use
 

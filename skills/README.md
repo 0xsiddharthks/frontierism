@@ -36,7 +36,7 @@ Re-run it after adding a skill or moving this repo. Only folders containing
 `SKILL.md` are linked. It removes broken links belonging to this checkout's
 skills, preserves real files and unrelated broken links, and reports skill/mod
 name conflicts. `~/.agents/skills` is Codex's user skills directory.
-The root `./install.sh` runs both this installer and the mods installer.
+`./setup/install.sh` runs both this installer and the mods installer.
 
 Notion is the maintained source for the study libraries. Use `predictive-history`
 to publish the requested lecture or course there; run `notion-analyze-and-link`

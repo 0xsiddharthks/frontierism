@@ -10,7 +10,7 @@ metadata:
 
 Adapted from the official xdevplatform/xurl skill at tag v1.3.1. This local adaptation intentionally replaces the upstream write workflows and broad OAuth reauthorization advice. Preserve these boundaries when updating it.
 
-The source of truth is `skills/xurl/SKILL.md` in the frontierism repository. Keep X-specific guidance here; `install.sh` links this folder into each supported agent's skills directory.
+The source of truth is `skills/xurl/SKILL.md` in the frontierism repository. Keep X-specific guidance here. `setup/install.sh` links this folder into each supported agent's skills directory.
 
 ## Choose the reading method first
 

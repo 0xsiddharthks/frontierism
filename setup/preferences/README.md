@@ -6,8 +6,8 @@ app preferences and macOS file associations rather than copying entire settings
 stores into this public repo.
 
 ```sh
-./preferences/install.sh          # apply the defaults and verify them
-./preferences/install.sh --check  # report differences without applying changes
+./setup/preferences/install.sh          # apply the defaults and verify them
+./setup/preferences/install.sh --check  # report differences without applying changes
 ```
 
 Run it on each new Mac after provision and dotfiles. Repeated runs are safe; a run
@@ -71,7 +71,7 @@ project_doc_max_bytes = 65536
 file_opener = "cursor"
 ```
 
-The empty [`.codex-root`](../.codex-root) marker is committed at this repository's
+The empty [`.codex-root`](../../.codex-root) marker is committed at this repository's
 root, so a normal clone already includes it. Codex uses that marker instead of
 `.git` when discovering the project root, including when working inside a nested
 repository beneath this project. The instruction size limit keeps the current

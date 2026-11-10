@@ -3,7 +3,7 @@
 # --all includes the Mac setup. --check only reports.
 set -euo pipefail
 
-root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 check=false
 all=false
 usage() {
@@ -23,7 +23,7 @@ done
 
 components=(skills mods)
 if $all; then
-    components=(provision dotfiles skills mods preferences)
+    components=(setup/provision setup/dotfiles skills mods setup/preferences)
     # Newly installed commands must be visible to the later steps in this run,
     # before the user has opened a new terminal. Keep existing PATH choices first.
     export PATH="$PATH:$HOME/.local/bin:$HOME/.cargo/bin:/opt/homebrew/bin:/usr/local/bin"
@@ -35,13 +35,14 @@ fi
 failed=0
 
 for component in "${components[@]}"; do
-    printf '\n%s\n' "$component"
+    name="${component##*/}"
+    printf '\n%s\n' "$name"
     if "$root/$component/install.sh" ${mode:+"$mode"}; then
         continue
     fi
     failed=1
     if $all && ! $check; then
-        echo "stopped  $component needs attention; use its installer to resolve the reported differences" >&2
+        echo "stopped  $name needs attention. See ./$component/install.sh." >&2
         exit "$failed"
     fi
 done

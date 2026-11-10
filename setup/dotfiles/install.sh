@@ -86,7 +86,7 @@ if [[ -z "$cursor_cli" && -x /Applications/Cursor.app/Contents/Resources/app/bin
     cursor_cli=/Applications/Cursor.app/Contents/Resources/app/bin/cursor
 fi
 if [[ -z "$cursor_cli" ]]; then
-    echo "missing  Cursor: run ./provision/install.sh first"
+    echo "missing  Cursor. Run ./setup/provision/install.sh first"
     failed=1
 elif ! installed="$("$cursor_cli" --list-extensions)"; then
     echo "FAILED   Cursor extensions: couldn't list the installed ones"

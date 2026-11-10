@@ -233,15 +233,15 @@ def main():
         raise RuntimeError("These app defaults are for macOS")
     for command in ("xcrun", "codex", "git", "vim", "defaults", "pgrep"):
         if shutil.which(command) is None:
-            raise RuntimeError(f"Missing {command}; run provision/install.sh first")
+            raise RuntimeError(f"Missing {command}. Run ./setup/provision/install.sh first")
     wanted = json.loads(Path(__file__).with_name("editor.json").read_text())
-    if not (Path(__file__).resolve().parents[1] / ".codex-root").is_file():
+    if not (Path(__file__).resolve().parents[2] / ".codex-root").is_file():
         raise RuntimeError("Missing repository .codex-root marker; restore it from Git")
     app = next((p for p in (
         Path("/Applications/Cursor.app"), Path.home() / "Applications/Cursor.app",
     ) if p.exists()), None)
     if app is None:
-        raise RuntimeError("Missing Cursor; run provision/install.sh first")
+        raise RuntimeError("Missing Cursor. Run ./setup/provision/install.sh first")
     info = plistlib.loads((app / "Contents/Info.plist").read_bytes())
     if info["CFBundleIdentifier"] != wanted["bundle_id"]:
         raise RuntimeError("Cursor's bundle identifier differs from editor.json")

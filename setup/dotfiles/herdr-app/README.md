@@ -16,19 +16,19 @@ its existing shell helpers and integrations.
 On a new Mac, from the repository root:
 
 ```sh
-./provision/install.sh
-./dotfiles/install.sh --push
-./dotfiles/install.sh --check
-./preferences/install.sh
-./install.sh
+./setup/provision/install.sh
+./setup/dotfiles/install.sh --push
+./setup/dotfiles/install.sh --check
+./setup/preferences/install.sh
+./setup/install.sh
 ```
 
 `--push` is necessary when the app has already created default settings or keys.
 To apply or check only Herdr without touching the other dotfiles:
 
 ```sh
-./dotfiles/herdr-app/setup.py --push
-./dotfiles/herdr-app/setup.py --check
+./setup/dotfiles/herdr-app/setup.py --push
+./setup/dotfiles/herdr-app/setup.py --check
 ```
 
 A plain run adds missing files and reports drift. `--push` backs up changed home
@@ -142,8 +142,8 @@ herdr-app check ~/.config/herdr-app/mods/frontier-tabs
 herdr-app check ~/.config/herdr-app/mods/frontier-workbench
 herdr-app status
 herdr-app shot /tmp/herdr.png
-python3 -m unittest discover -s dotfiles/herdr-app -p 'test_*.py'
-node dotfiles/herdr-app/test_mods.mjs
+python3 -m unittest discover -s setup/dotfiles/herdr-app -p 'test_*.py'
+node setup/dotfiles/herdr-app/test_mods.mjs
 ```
 
 Read `herdr-app --skill` and the installed `~/.config/herdr-app/AGENTS.md` before

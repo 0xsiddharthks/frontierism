@@ -161,7 +161,7 @@ class ProvisionTests(unittest.TestCase):
         self.bin = self.home / ".local/bin"
         self.fake = self.root / "fake"
         self.log = self.root / "downloads"
-        self.repo = Path(__file__).resolve().parents[2]
+        self.provision_dir = Path(__file__).resolve().parents[2] / "provision"
         self.fake.mkdir()
         for name in ("claude", "codex", "herdr"):
             self.script(self.bin / name, "exit 0")
@@ -197,7 +197,7 @@ esac
 ''')
         self.env = {**os.environ, "HOME": str(self.home),
                     "PATH": f"{self.fake}:{self.bin}:/usr/bin:/bin",
-                    "HERDR_TEST_BREWFILE": str(self.repo / "provision/Brewfile"),
+                    "HERDR_TEST_BREWFILE": str(self.provision_dir / "Brewfile"),
                     "HERDR_TEST_DOWNLOADS": str(self.log),
                     "HERDR_TEST_SCRIPTS": str(self.root)}
 
@@ -208,7 +208,7 @@ esac
         path.chmod(0o755)
 
     def provision(self, *args):
-        return subprocess.run(["/bin/bash", str(self.repo / "provision/install.sh"), *args],
+        return subprocess.run(["/bin/bash", str(self.provision_dir / "install.sh"), *args],
                               env=self.env, capture_output=True, text=True, timeout=30)
 
     def test_existing_tui_does_not_hide_missing_app_and_core(self):

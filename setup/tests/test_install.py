@@ -8,8 +8,8 @@ import tempfile
 import unittest
 
 
-ROOT = Path(__file__).resolve().parents[1]
-COMPONENTS = ("provision", "dotfiles", "skills", "mods", "preferences")
+ROOT = Path(__file__).resolve().parents[2]
+COMPONENTS = ("setup/provision", "setup/dotfiles", "skills", "mods", "setup/preferences")
 
 
 class InstallerTests(unittest.TestCase):
@@ -21,7 +21,7 @@ class InstallerTests(unittest.TestCase):
         self.repo = self.directory / "test repo"
         self.home = self.directory / "test home"
         self.home.mkdir()
-        for name in ("install.sh", "lib/install-links.sh", "skills/install.sh", "mods/install.sh"):
+        for name in ("setup/install.sh", "setup/lib/install-links.sh", "skills/install.sh", "mods/install.sh"):
             destination = self.repo / name
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(ROOT / name, destination)
@@ -38,7 +38,7 @@ class InstallerTests(unittest.TestCase):
         path.write_text("# Example\n" if component == "skills" else '{"name":"example"}\n')
 
     def run_installer(self, *args, component=None, expected=0):
-        script = self.repo / component / "install.sh" if component else self.repo / "install.sh"
+        script = self.repo / (component or "setup") / "install.sh"
         result = subprocess.run(["/bin/bash", str(script), *args], cwd=self.directory,
                                 env=self.env, capture_output=True, text=True, timeout=15)
         self.assertEqual(result.returncode, expected, result.stdout + result.stderr)
@@ -82,7 +82,7 @@ class InstallerTests(unittest.TestCase):
             "old-skill": self.repo / "skills/deleted",
             "old-mod": self.repo / "mods/deleted",
             "other-checkout": self.directory / "other repo/skills/deleted",
-            "other-component": self.repo / "dotfiles/deleted",
+            "other-component": self.repo / "setup/dotfiles/deleted",
         }
         for name, target in targets.items():
             (self.claude / name).symlink_to(target)
@@ -137,35 +137,35 @@ test "${{FRONTIERISM_TEST_FAIL:-}}" != '{component}'
 
     def test_full_check_continues_after_failure_and_checks_every_component(self):
         log = self.stub_components()
-        self.env["FRONTIERISM_TEST_FAIL"] = "provision"
+        self.env["FRONTIERISM_TEST_FAIL"] = "setup/provision"
         self.run_installer("--all", "--check", expected=1)
         self.assertEqual(log.read_text().splitlines(), [f"{name}:--check" for name in COMPONENTS])
 
     def test_full_install_stops_before_later_changes_when_a_component_fails(self):
         log = self.stub_components()
-        self.env["FRONTIERISM_TEST_FAIL"] = "dotfiles"
+        self.env["FRONTIERISM_TEST_FAIL"] = "setup/dotfiles"
         self.run_installer("--all", expected=1)
-        self.assertEqual(log.read_text().splitlines(), ["provision:", "dotfiles:"])
+        self.assertEqual(log.read_text().splitlines(), ["setup/provision:", "setup/dotfiles:"])
 
     def test_full_install_runs_in_order_and_exposes_newly_installed_commands(self):
         log = self.stub_components()
-        provision = self.repo / "provision/install.sh"
+        provision = self.repo / "setup/provision/install.sh"
         provision.write_text(provision.read_text() + '''
 mkdir -p "$HOME/.local/bin"
 printf '#!/bin/sh\\nexit 0\\n' > "$HOME/.local/bin/frontierism-test-tool"
 chmod +x "$HOME/.local/bin/frontierism-test-tool"
 ''')
-        dotfiles = self.repo / "dotfiles/install.sh"
+        dotfiles = self.repo / "setup/dotfiles/install.sh"
         dotfiles.write_text(dotfiles.read_text() + "\nfrontierism-test-tool\n")
         self.run_installer("--all")
         self.assertEqual(log.read_text().splitlines(), [f"{name}:" for name in COMPONENTS])
 
     def test_invalid_arguments_fail_before_doing_any_work(self):
-        for name in ("provision/install.sh", "dotfiles/install.sh"):
+        for name in ("setup/provision/install.sh", "setup/dotfiles/install.sh"):
             path = self.repo / name
             path.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(ROOT / name, path)
-        for component in (None, "provision", "dotfiles", "skills", "mods"):
+        for component in (None, "setup/provision", "setup/dotfiles", "skills", "mods"):
             with self.subTest(component=component):
                 self.run_installer("--check", "--push", component=component, expected=2)
         self.assertEqual(list(self.home.iterdir()), [])
