@@ -30,8 +30,8 @@ appearance in their dotfiles. `--check` reports if Auto has been turned off.
 [`editor.json`](editor.json) is the list to maintain. It selects Cursor for:
 
 - Code and plain-text file types in macOS, including Rust, Cargo/TOML, Markdown,
-  TXT, source languages, scripts, configuration files and diffs. Broad text/source
-  types provide a fallback; explicit extensions replace older specific choices.
+  TXT, CSV/TSV, source languages, scripts, configuration files and diffs. Broad
+  text/source types provide a fallback; explicit extensions replace older specific choices.
 - Files and repositories opened from Codex. Existing per-project editor overrides
   are cleared so they inherit Cursor. This uses Codex's configuration API to update
   selected settings in its local `config.toml`.
@@ -56,8 +56,8 @@ rebase. The dotfiles also set `EDITOR` and `VISUAL` to `vim` for terminal editin
 Vim is included with macOS and checked by provision; no Homebrew package is needed.
 
 macOS folder handlers, web links, images, PDFs, office documents and spreadsheet
-associations are outside
-this file-type list. HTML also keeps its browser handler: macOS treats changing
+workbooks are outside this file-type list. CSV and TSV are plain-text formats and
+open in Cursor. HTML also keeps its browser handler: macOS treats changing
 the HTML default through this API as changing the default web browser.
 Extensionless files use the content type macOS recognizes.
 

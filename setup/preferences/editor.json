@@ -9,6 +9,7 @@
   "claude_editor": "cursor",
   "git_editor": "vim",
   "content_types": [
+    "public.text",
     "public.plain-text",
     "public.utf8-plain-text",
     "public.source-code",
@@ -16,19 +17,22 @@
     "public.shell-script"
   ],
   "extensions": [
-    "txt", "text", "md", "markdown", "mdx", "rst", "adoc", "log",
+    "txt", "text", "md", "markdown", "mdx", "rst", "adoc", "org", "tex", "asc", "log",
     "rs", "toml", "lock", "move", "sol",
     "c", "cc", "cpp", "cxx", "c++", "h", "hh", "hpp", "hxx", "h++",
     "m", "mm", "cu", "cuh", "asm", "s",
-    "go", "py", "pyi", "pyw", "rb", "erb", "php", "pl", "lua", "r",
+    "go", "py", "pyi", "pyw", "rb", "erb", "php", "pl", "lua", "r", "hs", "jl", "nim", "dart", "cairo",
     "java", "kt", "kts", "scala", "swift", "cs", "fs", "fsx",
-    "js", "jsx", "mjs", "cjs", "ts", "tsx", "vue", "svelte", "elm",
-    "css", "scss", "sass", "less",
-    "json", "jsonc", "json5", "yaml", "yml", "xml", "ini", "cfg", "conf",
-    "sh", "bash", "zsh", "fish", "ps1", "command",
+    "js", "jsx", "mjs", "cjs", "ts", "tsx", "vue", "svelte", "elm", "astro",
+    "css", "scss", "sass", "less", "styl",
+    "json", "jsonc", "json5", "yaml", "yml", "xml", "ini", "cfg", "conf", "properties", "plist",
+    "sh", "bash", "zsh", "fish", "ps1", "command", "bat", "cmd", "vim",
     "env", "editorconfig", "gitignore", "gitattributes", "gitmodules", "gitconfig",
-    "sql", "graphql", "gql", "proto", "cmake", "mk", "dockerfile",
+    "envrc", "eslintrc", "prettierrc", "babelrc",
+    "sql", "graphql", "gql", "proto", "thrift", "cmake", "mk", "gradle", "dockerfile", "containerfile",
     "ex", "exs", "erl", "hrl", "clj", "cljs", "scm", "rkt", "el", "zig",
+    "nix", "tf", "tfvars", "hcl", "wat",
+    "csv", "tsv",
     "diff", "patch"
   ]
 }
