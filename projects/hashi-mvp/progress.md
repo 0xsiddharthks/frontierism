@@ -106,8 +106,8 @@ not evidence that new Rust concepts were learned.
 Validation on this date: `cargo build --locked -p hashi-mvp` passed. A local smoke
 check using the sample config with an OS-assigned loopback port verified startup,
 both HTTP responses and a successful Ctrl+C shutdown. Blank node names and
-unknown config fields were rejected. Local documentation links and the
-`CLAUDE.md` link to `AGENTS.md` were checked. The Rust source was unchanged.
+unknown config fields were rejected. Local documentation links were checked.
+The Rust source was unchanged. Project instructions use `AGENTS.md` directly.
 
 ## Route after startup
 
