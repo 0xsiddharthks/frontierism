@@ -1,0 +1,11 @@
+[package]
+name = "bitcoin-privacy-lab"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+publish = false
+
+[workspace]
+
+[dependencies]
+bitcoin = { version = "0.32.102", default-features = false, features = ["std"] }
